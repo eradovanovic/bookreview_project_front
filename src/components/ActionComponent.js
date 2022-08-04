@@ -4,14 +4,9 @@ import { setResult} from "../store/simpleActions";
 import "../App.css";
 
 const ActionComponent = (props) => {
-    // const [result, setResult] = useState("");
-    //
-    // const setResultAction = (event) => {
-    //     props.setResult(result);
-    // }
 
     const dispatch = useDispatch();
-    const result = useSelector((state)=>state.simpleReducer.result)
+    const result = useSelector((state) => state.simpleReducer.result)
 
     const [newResult, setNewResult] = useState("");
     return (
