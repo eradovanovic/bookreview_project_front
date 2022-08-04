@@ -1,6 +1,5 @@
-export const setResult = (result) => (dispatch) => {
-    dispatch({
+export const setResult = (result) => ({
         type: "SET_RESULT",
         payload: result ,
     });
-};
+

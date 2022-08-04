@@ -2,7 +2,7 @@ const initialState = {
     result: ""
 };
 
-export default (state = initialState, action) => {
+const simpleReducer =  (state = initialState, action) => {
     switch (action.type) {
         case "SET_RESULT":
             return {
@@ -12,3 +12,5 @@ export default (state = initialState, action) => {
             return state;
     }
 };
+
+export default simpleReducer;
