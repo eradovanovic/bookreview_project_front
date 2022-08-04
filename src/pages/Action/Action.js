@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import ActionComponent from "../components/ActionComponent";
+import ActionComponent from "../../components/ActionComponent/ActionComponent";
 
 const Action = () => {
     return <div>
