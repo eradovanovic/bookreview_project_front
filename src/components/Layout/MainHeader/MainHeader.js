@@ -1,6 +1,6 @@
 import {Outlet, Link} from "react-router-dom";
 
-import classes from './MainHeader.module.css'
+import classes from './MainHeader.module.scss'
 
 const MainHeader = () => {
     return <div>

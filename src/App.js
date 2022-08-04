@@ -7,7 +7,7 @@ import configureStore from "./store/index";
 import Home from "./pages/Home";
 import Action from "./pages/Action";
 import Login from "./pages/Login";
-import MainHeader from "./components/Layout/MainHeader";
+import MainHeader from "./components/Layout/MainHeader/MainHeader";
 import Register from "./pages/Register";
 import Books from "./pages/Books";
 import Authors from "./pages/Authors";
@@ -16,6 +16,7 @@ import BookCollection from "./pages/BookCollection";
 import NewBook from "./pages/NewBook";
 import NewAuthor from "./pages/NewAuthor";
 import ChangePassword from "./pages/ChangePassword";
+import NotFound from "./pages/NotFound";
 
 
 const store = configureStore();
@@ -36,6 +37,7 @@ const App = (props) => {
                     <Route path='/newAuthor' element={<NewAuthor/>}/>
                     <Route path='/changePassword' element={<ChangePassword/>}/>
                     <Route path='/action' element={<Action/>}/>
+                    <Route path='*' element={<NotFound/>}/>
                 </Route>
             </Routes>
         </Provider>
