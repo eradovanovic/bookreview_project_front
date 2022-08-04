@@ -19,6 +19,7 @@ import ChangePassword from "./pages/ChangePassword";
 import NotFound from "./pages/NotFound";
 import BookDetails from "./pages/BookDetails";
 import AuthorDetails from "./pages/AuthorDetails";
+import Profile from "./pages/Profile";
 
 
 const store = configureStore();
@@ -32,11 +33,12 @@ const App = (props) => {
                 <Route path='/' element={<MainHeader/>}>
                     <Route path='/' element={<Home/>}/>
                     <Route path='/books' element={<Books/>}/>
-                    <Route path='/bookDetails' element={<BookDetails/>}/>
+                    <Route path='/books/:id' element={<BookDetails/>}/>
                     <Route path='/authors' element={<Authors/>}/>
-                    <Route path='/authorDetails' element={<AuthorDetails/>}/>
+                    <Route path='/authors/:id' element={<AuthorDetails/>}/>
+                    <Route path='/users/:id' element={<Profile/>}/>
                     <Route path='/search' element={<Search/>}/>
-                    <Route path='/collection' element={<BookCollection/>}/>
+                    <Route path='/collections/:id' element={<BookCollection/>}/>
                     <Route path='/newBook' element={<NewBook/>}/>
                     <Route path='/newAuthor' element={<NewAuthor/>}/>
                     <Route path='/changePassword' element={<ChangePassword/>}/>

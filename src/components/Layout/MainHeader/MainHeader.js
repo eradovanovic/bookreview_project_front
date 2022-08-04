@@ -12,7 +12,7 @@ const MainHeader = () => {
                 <li><Link to='/books'>Books</Link></li>
                 <li><Link to='/authors'>Authors</Link></li>
                 <li><Link to='/search'>Search</Link></li>
-                <li><Link to='/collection'>Book Collection</Link></li>
+                <li><Link to='/collections/id'>Book Collection</Link></li>
                 <li><Link to='/newBook'>New Book</Link></li>
                 <li><Link to='/newAuthor'>New Author</Link></li>
                 <li><Link to='/changePassword'>Change Password</Link></li>
