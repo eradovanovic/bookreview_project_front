@@ -2,16 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
-
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from "./theme";
 import App from './App';
 import './index.css';
+import {ThemeProvider} from "@mui/material/styles";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <BrowserRouter>
-          <App />
+          <ThemeProvider theme={theme}>
+              <CssBaseline/>
+              <App />
+          </ThemeProvider>
       </BrowserRouter>
   </React.StrictMode>
 );
