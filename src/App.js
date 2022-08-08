@@ -2,12 +2,10 @@ import React from "react";
 import { Provider } from "react-redux";
 import {Route, Routes} from "react-router-dom";
 
-import "./App.css";
 import configureStore from "./store/index";
 import Home from "./pages/Home/Home";
 import Action from "./pages/Action";
 import Login from "./pages/Login";
-import MainHeader from "./components/Layout/MainHeader";
 import Register from "./pages/Register";
 import Books from "./pages/Books";
 import Authors from "./pages/Authors";
@@ -20,7 +18,8 @@ import NotFound from "./pages/NotFound";
 import BookDetails from "./pages/BookDetails";
 import AuthorDetails from "./pages/AuthorDetails";
 import Profile from "./pages/Profile";
-
+import DrawerAppBar from "./components/Layout/DrawerAppBar";
+import "./App.css";
 
 const store = configureStore();
 
@@ -30,7 +29,7 @@ const App = (props) => {
             <Routes>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/register' element={<Register/>}/>
-                <Route path='/' element={<MainHeader/>}>
+                <Route path='/' element={<DrawerAppBar/>}>
                     <Route path='/' element={<Home/>}/>
                     <Route path='/books' element={<Books/>}/>
                     <Route path='/books/:id' element={<BookDetails/>}/>
