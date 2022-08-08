@@ -18,6 +18,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 
+import classes from './DrawerAppBar.module.scss';
+
 const drawerWidth = 240;
 const navItems = [
     {name: 'Login', path: '/login'},
@@ -169,7 +171,9 @@ function DrawerAppBar(props) {
             </Box>
             <Box component="main" sx={{ flexGrow: 1 }}>
                 <Toolbar />
-                <Outlet/>
+                <Box className={classes.outletBox}>
+                    <Outlet/>
+                </Box>
             </Box>
         </Box>
     );

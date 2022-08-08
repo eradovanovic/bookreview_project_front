@@ -1,5 +1,6 @@
-import classes from "./Home.module.scss";
 import {Button} from "@mui/material";
+
+import classes from "./Home.module.scss";
 
 const Home = () =>{
     return <div>
