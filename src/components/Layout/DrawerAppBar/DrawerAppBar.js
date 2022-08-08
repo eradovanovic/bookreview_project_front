@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -17,10 +16,10 @@ import {Outlet, useNavigate} from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import {InputBase} from "@mui/material";
+import ButtonBase from "@mui/material/ButtonBase";
 
 const drawerWidth = 240;
 const navItems = [
-    {name: 'Home', path: ''},
     {name: 'Login', path: '/login'},
     {name: 'Register', path: '/register'},
     {name: 'Books', path: '/books'},
@@ -86,8 +85,8 @@ function DrawerAppBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
-               Book App
+            <Typography variant="h6" sx={{ my: 2 }} onClick={ () => {navigate('/');}}>
+                <Button onClick={() => {navigate('/')}} sx={{color:'#000'}}>Book App</Button>
             </Typography>
             <Divider />
 
@@ -125,7 +124,7 @@ function DrawerAppBar(props) {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        Book App
+                        <Button sx={{ color: '#fff' }} onClick={() => {navigate('/')}}>Book App</Button>
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
@@ -139,8 +138,11 @@ function DrawerAppBar(props) {
                     </Box>
                     <Search>
                         <SearchIconWrapper>
-                            <SearchIcon/>
+                            <ButtonBase>
+                                <SearchIcon/>
+                            </ButtonBase>
                         </SearchIconWrapper>
+
                         <StyledInputBase
                             placeholder="Search..."
                             inputProps={{ 'aria-label': 'search' }}
@@ -165,20 +167,12 @@ function DrawerAppBar(props) {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box component="main" sx={{ p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1 }}>
                 <Toolbar />
                 <Outlet/>
             </Box>
         </Box>
     );
 }
-
-DrawerAppBar.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-};
 
 export default DrawerAppBar;
