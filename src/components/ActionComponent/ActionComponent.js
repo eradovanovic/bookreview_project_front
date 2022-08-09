@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setResult} from "../../store/simpleActions";
+import { setResult} from "../../store/simpleReducer/simpleActions";
 import "../../App.css";
 
 const ActionComponent = (props) => {

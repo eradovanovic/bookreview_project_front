@@ -2,26 +2,37 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from "@mui/material/Typography";
-
-import bookIMG from "assets/images/book_thumbnail.jpeg";
-
+import {useSelector, useDispatch} from "react-redux";
+import {useParams} from "react-router-dom";
+import {useEffect} from "react";
+import {fetchBook} from "store/books/booksActions";
 import classes from "./BookDetails.module.scss";
 
+
 const BookDetails = () => {
+    let {id} = useParams();
+    const dispatch = useDispatch();
+    const currentBook = useSelector((state) => state.booksReducer.currentBook);
+    const {title, author, description, photo} = currentBook;
+
+
+    useEffect(() => {
+        if(id != null){
+            fetchBook(id, dispatch);
+        }
+    }, [dispatch, id]);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid className={classes.gridContainer} container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 4, md: 12 }}>
                 <Grid item xs={4} sm={4} md={4} sx={{textAlign:'center'}}>
-                    <img src={bookIMG} width='50%' alt="Book Thumbnail"/>
+                    <img src={photo} width='50%' alt="Book Thumbnail"/>
                 </Grid>
                 <Grid item xs={4} sm={4} md={8} sx={{textAlign:'center'}}>
-                    <Typography variant="h4">Book title</Typography>
-                    <Typography variant="h6">Book author</Typography>
+                    <Typography variant="h4">{title}</Typography>
+                    <Typography variant="h6">{author}</Typography>
                     <Typography variant="body1">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-                        blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-                        neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-                        quasi quidem quibusdam.
+                        {description}
                     </Typography>
                 </Grid>
             </Grid>

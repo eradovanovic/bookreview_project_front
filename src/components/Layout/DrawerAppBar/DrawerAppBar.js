@@ -77,7 +77,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function DrawerAppBar(props) {
     const navigate = useNavigate();
-    const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
