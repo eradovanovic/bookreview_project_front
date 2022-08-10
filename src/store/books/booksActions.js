@@ -5,7 +5,7 @@ export const fetchBookSuccess = (data) => ({
     data: data
 });
 
-export const fetchBook= (id, dispatch) => {
+export const fetchBook = (id) => dispatch => {
     return getBookById(id)
         .then(data => {
             dispatch(fetchBookSuccess(data));

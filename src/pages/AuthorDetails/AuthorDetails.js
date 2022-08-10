@@ -17,7 +17,7 @@ const AuthorDetails = () => {
 
     useEffect(()=>{
         if(id != null ) {
-            fetchAuthor(id, dispatch);
+            dispatch(fetchAuthor(id));
         }
     }, [dispatch, id]);
 

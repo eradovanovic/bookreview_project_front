@@ -4,7 +4,6 @@ import {Route, Routes} from "react-router-dom";
 
 import configureStore from "./store/index";
 import Home from "./pages/Home/Home";
-import Action from "./pages/Action";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Books from "./pages/Books";
@@ -41,7 +40,6 @@ const App = (props) => {
                     <Route path='/newBook' element={<NewBook/>}/>
                     <Route path='/newAuthor' element={<NewAuthor/>}/>
                     <Route path='/changePassword' element={<ChangePassword/>}/>
-                    <Route path='/action' element={<Action/>}/>
                     <Route path='*' element={<NotFound/>}/>
                 </Route>
             </Routes>

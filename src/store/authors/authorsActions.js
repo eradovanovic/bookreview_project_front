@@ -5,7 +5,7 @@ export const fetchAuthorSuccess = (data) => ({
     data: data
 });
 
-export const fetchAuthor= (id, dispatch) => {
+export const fetchAuthor = (id) => dispatch => {
     return getAuthorById(id)
         .then(data => {
             dispatch(fetchAuthorSuccess(data));

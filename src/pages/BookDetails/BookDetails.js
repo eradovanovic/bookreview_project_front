@@ -18,7 +18,7 @@ const BookDetails = () => {
 
     useEffect(() => {
         if(id != null){
-            fetchBook(id, dispatch);
+            dispatch(fetchBook(id));
         }
     }, [dispatch, id]);
 

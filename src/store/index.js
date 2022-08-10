@@ -1,11 +1,9 @@
 import {createStore, applyMiddleware, compose, combineReducers} from "redux";
 import thunk from "redux-thunk";
-import simpleReducer from "./simpleReducer/simpleReducer";
 import authorsReducer from "./authors/authorsReducer";
 import booksReducer from "./books/booksReducer";
 
 export const reducer = combineReducers({
-    simpleReducer,
     authorsReducer,
     booksReducer
 });
