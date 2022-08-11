@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from "@mui/material/Typography";
+import {Link} from "@mui/material";
 import {useSelector, useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import {useEffect} from "react";
@@ -30,7 +31,9 @@ const BookDetails = () => {
                 </Grid>
                 <Grid item xs={4} sm={4} md={8} sx={{textAlign:'center'}}>
                     <Typography variant="h4">{title}</Typography>
-                    <Typography variant="h6">{author}</Typography>
+                    <Link href="/authors/detail" color="#000" underline="hover">
+                        <Typography variant="h6">{author}</Typography>
+                    </Link>
                     <Typography variant="body1">
                         {description}
                     </Typography>

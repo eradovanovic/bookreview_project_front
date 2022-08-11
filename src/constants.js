@@ -1,0 +1,9 @@
+export const BOOKS_PER_PAGE = 5;
+
+export const SORT = {
+    DEFAULT: 'DEFAULT',
+    TITLE_ASC: 'TITLE_ASC',
+    TITLE_DESC: 'TITLE_DESC',
+    RATING_ASC: 'RATING_ASC',
+    RATING_DESC: 'RATING_DESC'
+}

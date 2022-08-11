@@ -1,4 +1,5 @@
 import {mockAuthor, mockBook, mockBooks} from "./mockData";
+import {BOOKS_PER_PAGE, SORT} from "../constants";
 
 export const getAuthorById = (id) => {
     return new Promise((res, rej) => {
@@ -13,46 +14,32 @@ export const getBookById = (id) => {
 }
 
 export const getBooks = (page, genres, sortBy) => {
-    const booksPerPage = 5;
-    let filteredBooks;
-    if(genres !== null && genres.length !== 0) {
+    let filteredBooks = [...mockBooks];
+    if (genres && genres.length) {
         filteredBooks = mockBooks.filter((book)=>{
-            let filterGenres = book.genres.filter(value => genres.includes(value));
-            return (filterGenres !== null && filterGenres.length !== 0)
+            return book.genres.some(g => genres.includes(g));
         });
     }
-    else {
-        filteredBooks = [...mockBooks];
-    }
 
-    let sortedBooks = [...filteredBooks];
     switch (sortBy) {
-        case 'TITLE_ASC':
-            sortedBooks.sort((a,b) => a.title.localeCompare(b.title));
+        case SORT.TITLE_ASC:
+            filteredBooks.sort((a,b) => a.title.localeCompare(b.title));
             break;
-        case 'TITLE_DESC':
-            sortedBooks.sort((a,b) => b.title.localeCompare(a.title));
+        case SORT.TITLE_DESC:
+            filteredBooks.sort((a,b) => b.title.localeCompare(a.title));
             break;
-        case 'RATING_ASC':
-            sortedBooks.sort((a,b) => {
-                if (a.rating > b.rating) return 1;
-                if (a.rating < b.rating) return -1;
-                return 0;
-            });
+        case SORT.RATING_ASC:
+            filteredBooks.sort((a,b) => { return a.rating - b.rating;});
             break;
-        case 'RATING_DESC':
-            sortedBooks.sort((a,b) => {
-                if (a.rating < b.rating) return 1;
-                if (a.rating > b.rating) return -1;
-                return 0;
-            });
+        case SORT.RATING_DESC:
+            filteredBooks.sort((a,b) => { return b.rating - a.rating;});
             break;
         default:
             break;
     }
 
-    const booksResult = sortedBooks.slice((page-1)*booksPerPage, page*booksPerPage);
+    const booksResult = filteredBooks.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE);
     return new Promise((res, rej) => {
-        res({books: booksResult, total: filteredBooks.length});
+        res({ books: booksResult, total: filteredBooks.length });
     })
 }

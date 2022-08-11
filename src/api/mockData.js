@@ -14,6 +14,7 @@ export const mockBook = {
     author: 'Sally Rooney',
     genres: ['fiction'],
     rating: 3.74,
+    numberOfReviews: 20,
     description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
     photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
 };
@@ -25,6 +26,7 @@ export const mockBooks = [
         author: 'Sally Rooney',
         genres: ['fiction', 'romance'],
         rating: 3.74,
+        numberOfReviews: 20,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -34,6 +36,7 @@ export const mockBooks = [
         author: 'Author 2',
         genres: ['drama', 'history'],
         rating: 4.12,
+        numberOfReviews: 17,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -43,6 +46,7 @@ export const mockBooks = [
         author: 'Author 3',
         genres: ['fiction'],
         rating: 3.50,
+        numberOfReviews: 25,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -52,6 +56,7 @@ export const mockBooks = [
         author: 'Author 4',
         genres: ['drama'],
         rating: 4.05,
+        numberOfReviews: 8,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -61,6 +66,7 @@ export const mockBooks = [
         author: 'Author 5',
         genres: ['fiction', 'thriller'],
         rating: 4.76,
+        numberOfReviews: 11,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -69,7 +75,8 @@ export const mockBooks = [
         title: 'E Book 6',
         author: 'Author 6',
         genres: ['thriller'],
-        rating: 2.90 ,
+        rating: 2.90,
+        numberOfReviews: 20,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -79,6 +86,7 @@ export const mockBooks = [
         author: 'Author 7',
         genres: ['drama'],
         rating: 3.14,
+        numberOfReviews: 22,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -88,6 +96,7 @@ export const mockBooks = [
         author: 'Author 8',
         genres: ['romance', 'history'],
         rating: 3.97,
+        numberOfReviews: 15,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -96,7 +105,8 @@ export const mockBooks = [
         title: 'W Book 9',
         author: 'Author 9',
         genres: ['crime', 'thriller'],
-        rating: 4.89 ,
+        rating: 4.89,
+        numberOfReviews: 7,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -106,6 +116,7 @@ export const mockBooks = [
         author: 'Author 10',
         genres: ['fiction'],
         rating: 4.64,
+        numberOfReviews: 10,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     }
