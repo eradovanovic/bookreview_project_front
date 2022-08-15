@@ -81,64 +81,70 @@ const Books = () => {
         <Box sx={{minWidth: 120}}>
             <Grid
                 container
-                columns={{ xs: 4, sm: 8, md: 16 }}
-                alignItems="center"
-                justifyContent="center"
-                padding="20px"
+                columns={{xs: 12, sm: 12, md: 12}}
             >
-                <Grid item xs={4} sm={4} md={4} alignItems="center" justifyContent="center" textAlign="center">
-                        <FormControl sx={{width: '150px', margin: '10px'}}>
-                            <InputLabel>Sort by</InputLabel>
-                            <Select
-                                value={sort}
-                                label="Sort by"
-                                onChange={sortHandler}
-                            >
-                                <MenuItem value={SORT.DEFAULT}>Default</MenuItem>
-                                <MenuItem value={SORT.TITLE_ASC}>Title ascending</MenuItem>
-                                <MenuItem value={SORT.TITLE_DESC}>Title descending</MenuItem>
-                                <MenuItem value={SORT.RATING_ASC}>Rating ascending</MenuItem>
-                                <MenuItem value={SORT.RATING_DESC}>Rating descending</MenuItem>
-                            </Select>
-                        </FormControl>
+                <Grid item xs={12} sm={12} md={2}>
+                    <Box sx={{marginTop:'20px', marginLeft:'20px'}}>
+                        <Grid item xs={12} sm={12} md={12} sx={{height:'fit-content', display: 'flex', alignItems:'center', alignContent:'center'}}>
+                            <FormControl sx={{width: '100%', margin: '10px'}}>
+                                <InputLabel>Sort by</InputLabel>
+                                <Select
+                                    value={sort}
+                                    label="Sort by"
+                                    onChange={sortHandler}
+                                >
+                                    <MenuItem value={SORT.DEFAULT}>Default</MenuItem>
+                                    <MenuItem value={SORT.TITLE_ASC}>Title ascending</MenuItem>
+                                    <MenuItem value={SORT.TITLE_DESC}>Title descending</MenuItem>
+                                    <MenuItem value={SORT.RATING_ASC}>Rating ascending</MenuItem>
+                                    <MenuItem value={SORT.RATING_DESC}>Rating descending</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} sx={{height:'fit-content', display: 'flex', alignItems:'center', alignContent:'center'}}>
+                            <FormControl sx={{width: '100%', margin: '10px'}}>
+                                <InputLabel>Genres</InputLabel>
+                                <Select
+                                    multiple
+                                    value={genres}
+                                    onChange={genresHandler}
+                                    input={<OutlinedInput label="Genres" />}
+                                    renderValue={(selected) => selected.join(', ')}
+                                    MenuProps={MenuProps}
+                                >
+                                    {names.map((name) => (
+                                        <MenuItem key={name} value={name}>
+                                            <Checkbox checked={genres.indexOf(name) > -1} />
+                                            <ListItemText primary={name} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid container columns={{xs: 12, sm: 12, md: 12}}>
+                            <Grid item xs={6} sm={6} md={12} sx={{textAlign:'center'}}>
+                                <FormControl sx={{width: '80%', marginTop: '10px', marginBottom: '10px'}}>
+                                    <Button onClick={applyHandler}>Apply filters</Button>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={12} sx={{textAlign:'center'}}>
+                                <FormControl sx={{width: '80%', marginTop: '10px', marginBottom: '10px'}}>
+                                    <Button onClick={resetHandler}>Reset filters</Button>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Box>
                 </Grid>
-                <Grid item xs={4} sm={4} md={4} alignItems="center" justifyContent="center" textAlign="center">
-                        <FormControl sx={{width: '150px', margin: '10px'}}>
-                            <InputLabel>Genres</InputLabel>
-                            <Select
-                                multiple
-                                value={genres}
-                                onChange={genresHandler}
-                                input={<OutlinedInput label="Genres" />}
-                                renderValue={(selected) => selected.join(', ')}
-                                MenuProps={MenuProps}
-                            >
-                                {names.map((name) => (
-                                    <MenuItem key={name} value={name}>
-                                        <Checkbox checked={genres.indexOf(name) > -1} />
-                                        <ListItemText primary={name} />
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4} alignItems="center" justifyContent="center" textAlign="center">
-                    <FormControl sx={{width: '150px', margin: '10px'}}>
-                        <Button onClick={applyHandler}>Apply filters</Button>
-                    </FormControl>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4} alignItems="center" justifyContent="center" textAlign="center">
-                    <FormControl sx={{width: '150px', margin: '10px'}}>
-                        <Button onClick={resetHandler}>Reset filters</Button>
-                    </FormControl>
+                <Grid item xs={12} sm={12} md={10}>
+                    {books.map((book) => (
+                        <Book
+                            key={book.id}
+                            book={book}
+                        />
+                    ))}
                 </Grid>
             </Grid>
-            {books.map((book) => (
-                <Book
-                    key={book.id}
-                    book={book}
-                />
-            ))}
+
             <Grid
                 container
                 spacing={0}

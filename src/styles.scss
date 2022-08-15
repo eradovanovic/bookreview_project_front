@@ -1,11 +1,22 @@
 .gridContainer {
   padding-left: 20px;
   padding-right: 20px;
+  height: 400px;
 }
 
 .outletBox {
-  background-color: lightgrey;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 10px;
+}
+
+.thumbnailIMG {
+  border-radius: 15px;
+}
+
+.paperStyle{
+  border-radius: 15px;
+  flexGrow: 1;
+  padding: 20px;
+  alignContent: center;
 }

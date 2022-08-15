@@ -1,4 +1,4 @@
-import {mockAuthor, mockBook, mockBooks} from "./mockData";
+import {mockAuthor, mockBook, mockBooks, mockReviews} from "./mockData";
 import {BOOKS_PER_PAGE, SORT} from "../constants";
 
 export const getAuthorById = (id) => {
@@ -42,4 +42,10 @@ export const getBooks = (page, genres, sortBy) => {
     return new Promise((res, rej) => {
         res({ books: booksResult, total: filteredBooks.length });
     })
+}
+
+export const getReviews = (bookId) => {
+    return new Promise((res, rej) => {
+        res(mockReviews);
+    });
 }

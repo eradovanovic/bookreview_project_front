@@ -12,7 +12,7 @@ export const mockBook = {
     id:1,
     title: 'Beautiful World, Where Are You',
     author: 'Sally Rooney',
-    genres: ['fiction'],
+    genres: ['fiction', 'romance'],
     rating: 3.74,
     numberOfReviews: 20,
     description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -121,3 +121,31 @@ export const mockBooks = [
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     }
     ];
+
+
+export const mockReviews = [
+    {
+        id: 1,
+        user: 'user1',
+        date_reviewed: '03-31-18 18:53',
+        avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
+        rating: 5,
+        review: "studio blockbusters are currently in the hands of like four white guys who are all exalted for having the exact same taste in comedy, and filling their movies with expository dialogue, montages, and coked-up pacing as to leave more room for that comedy. what if fights were interrupted by someone wanting to resolve it differently. what if we called out the thing that usually happens in these kinds of movies and maybe still do it anyway. what if a man enjoyed or fought to something that is usually for women or children. "
+    },
+    {
+        id: 2,
+        user: 'user2',
+        date_reviewed: '03-31-18 18:53',
+        avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
+        rating: 3,
+        review: "Some review text"
+    },
+    {
+        id: 3,
+        user: 'user3',
+        date_reviewed: '03-31-18 18:53',
+        avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
+        rating: 4,
+        review: "Some review text"
+    }
+];
