@@ -12,7 +12,10 @@ export const mockBook = {
     id:1,
     title: 'Beautiful World, Where Are You',
     author: 'Sally Rooney',
-    genres: ['fiction', 'romance'],
+    genres: [
+        {id: 6, name: 'fiction'},
+        {id: 4, name: 'romance'}
+    ],
     rating: 3.74,
     numberOfReviews: 20,
     description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -24,7 +27,10 @@ export const mockBooks = [
         id:1,
         title: 'Beautiful World, Where Are You',
         author: 'Sally Rooney',
-        genres: ['fiction', 'romance'],
+        genres: [
+            {id: 6, name: 'fiction'},
+            {id: 4, name: 'romance'}
+        ],
         rating: 3.74,
         numberOfReviews: 20,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -34,7 +40,10 @@ export const mockBooks = [
         id:2,
         title: 'A Book 2',
         author: 'Author 2',
-        genres: ['drama', 'history'],
+        genres: [
+            {id: 1, name: 'drama'},
+            {id: 5, name: 'history'}
+        ],
         rating: 4.12,
         numberOfReviews: 17,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -44,7 +53,9 @@ export const mockBooks = [
         id:3,
         title: 'C Book 3' ,
         author: 'Author 3',
-        genres: ['fiction'],
+        genres: [
+            {id: 6, name: 'fiction'}
+        ],
         rating: 3.50,
         numberOfReviews: 25,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -54,7 +65,9 @@ export const mockBooks = [
         id:4,
         title: 'B Book 4',
         author: 'Author 4',
-        genres: ['drama'],
+        genres: [
+            {id: 1, name: 'drama'}
+        ],
         rating: 4.05,
         numberOfReviews: 8,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -64,7 +77,10 @@ export const mockBooks = [
         id:5,
         title: 'H Book 5',
         author: 'Author 5',
-        genres: ['fiction', 'thriller'],
+        genres: [
+            {id: 6, name: 'fiction'},
+            {id: 3, name: 'thriller'}
+        ],
         rating: 4.76,
         numberOfReviews: 11,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -74,7 +90,9 @@ export const mockBooks = [
         id:6,
         title: 'E Book 6',
         author: 'Author 6',
-        genres: ['thriller'],
+        genres: [
+            {id: 3, name: 'thriller'}
+        ],
         rating: 2.90,
         numberOfReviews: 20,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -84,7 +102,9 @@ export const mockBooks = [
         id:7,
         title: 'P Book 7' ,
         author: 'Author 7',
-        genres: ['drama'],
+        genres: [
+            {id: 1, name: 'drama'}
+        ],
         rating: 3.14,
         numberOfReviews: 22,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -94,7 +114,10 @@ export const mockBooks = [
         id:8,
         title: 'M Book 8',
         author: 'Author 8',
-        genres: ['romance', 'history'],
+        genres: [
+            {id: 4, name: 'romance'},
+            {id: 5, name: 'history'}
+        ],
         rating: 3.97,
         numberOfReviews: 15,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -104,7 +127,10 @@ export const mockBooks = [
         id:9,
         title: 'W Book 9',
         author: 'Author 9',
-        genres: ['crime', 'thriller'],
+        genres: [
+            {id: 2, name: 'crime'},
+            {id: 3, name: 'thriller'}
+        ],
         rating: 4.89,
         numberOfReviews: 7,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
@@ -114,7 +140,9 @@ export const mockBooks = [
         id:10,
         title: 'L Book 10',
         author: 'Author 10',
-        genres: ['fiction'],
+        genres: [
+            {id: 6, name: 'fiction'}
+        ],
         rating: 4.64,
         numberOfReviews: 10,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',

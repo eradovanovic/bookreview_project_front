@@ -8,12 +8,11 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {fetchBook} from "store/books/booksActions";
 import StarIcon from "@mui/icons-material/Star";
-import {getReviews} from "api/api";
+import api from "api/api";
 import Review from "components/Review";
-import classes from "./BookDetails.module.scss";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-
+import classes from "./BookDetails.module.scss";
 
 
 const BookDetails = () => {
@@ -25,9 +24,9 @@ const BookDetails = () => {
 
 
     useEffect(() => {
-        if(id != null){
+        if(id !== null){
             dispatch(fetchBook(id));
-            getReviews(id).then(res =>
+            api.getReviews(id).then(res =>
                 setReviews(res)
             )
         }
@@ -42,7 +41,6 @@ const BookDetails = () => {
                 <Grid item xs={4} sm={4} md={9} alignItems="center" justifyContent="center" height='100%' sx={{textAlign:'center', height: '100%'}}>
                     <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
                         <Typography variant="h6">{title}</Typography>
-
                         <Link href="/authors/detail" color="#000" underline="hover">
                             <Typography variant="subtitle1">{author}</Typography>
                         </Link>
@@ -57,9 +55,9 @@ const BookDetails = () => {
                         <Typography variant="body1">
                             {description}
                         </Typography>
-                        { genres && <Grid item sx={{ marginTop: '8px', marginBottom: '8px', }}>
-                            {genres.map((genre) => <Chip key={genre} size="small" sx={{marginRight: '5px', alignContent:'bottom'}} label={genre} variant="outlined" /> )}
-                        </Grid> }
+                        {genres && <Grid item sx={{ marginTop: '8px', marginBottom: '8px', }}>
+                            {genres.map(genre => <Chip key={genre.id} size="small" sx={{marginRight: '5px', alignContent:'bottom'}} label={genre.name} variant="outlined" /> )}
+                        </Grid>}
                     </Paper>
                 </Grid>
                 <Grid

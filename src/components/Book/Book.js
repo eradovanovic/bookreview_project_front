@@ -3,12 +3,13 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {Button, Chip, Link, Paper, Rating} from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
-import classes from "./Book.module.scss";
 import Box from "@mui/material/Box";
+import PropTypes from 'prop-types';
+import classes from "./Book.module.scss";
 
-const Book = (props) => {
+const Book = ({book}) => {
     const navigate = useNavigate();
-    const {id, title, author, genres, photo, rating, numberOfReviews} = props.book;
+    const {id, title, author, genres, photo, rating, numberOfReviews} = book;
     return <Paper elevation={5} className={classes.paperStyle} sx={{margin:'30px', borderRadius:'15px', maxWidth:'800px'}}>
         <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
             <Grid item xs={4} sm={4} md={4} sx={{textAlign:'center', padding:'0px'}}>
@@ -30,12 +31,24 @@ const Book = (props) => {
                         emptyIcon={<StarIcon fontSize="inherit" />}
                     />
                     <Grid item>
-                        {genres.map((genre) => <Chip key={genre} size="small" sx={{marginRight: '5px'}} label={genre} variant="outlined" /> )}
+                        {genres.map(genre => <Chip key={genre.id} size="small" sx={{marginRight: '5px'}} label={genre.name} variant="outlined" /> )}
                     </Grid>
                 </Box>
             </Grid>
         </Grid>
     </Paper>
+}
+
+Book.propTypes = {
+    book: PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        author: PropTypes.string,
+        genres: PropTypes.array,
+        photo: PropTypes.string,
+        rating: PropTypes.number,
+        numberOfReviews: PropTypes.number
+    })
 }
 
 export default Book;

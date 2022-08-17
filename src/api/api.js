@@ -1,23 +1,23 @@
 import {mockAuthor, mockBook, mockBooks, mockReviews} from "./mockData";
 import {BOOKS_PER_PAGE, SORT} from "../constants";
 
-export const getAuthorById = (id) => {
+const getAuthorById = (id) => {
     return new Promise((res, rej) => {
         res(mockAuthor);
     })
 }
 
-export const getBookById = (id) => {
+const getBookById = (id) => {
     return new Promise((res, rej) => {
         res(mockBook);
     })
 }
 
-export const getBooks = (page, genres, sortBy) => {
+const getBooks = (page, genres, sortBy) => {
     let filteredBooks = [...mockBooks];
     if (genres && genres.length) {
         filteredBooks = mockBooks.filter((book)=>{
-            return book.genres.some(g => genres.includes(g));
+            return book.genres.map(genre => genre.name).some(g => genres.includes(g));
         });
     }
 
@@ -44,8 +44,17 @@ export const getBooks = (page, genres, sortBy) => {
     })
 }
 
-export const getReviews = (bookId) => {
+const getReviews = (bookId) => {
     return new Promise((res, rej) => {
         res(mockReviews);
     });
 }
+
+const api = {
+    getAuthorById,
+    getBookById,
+    getBooks,
+    getReviews
+}
+
+export default api;

@@ -1,4 +1,4 @@
-import {getBookById} from "api/api";
+import api from "api/api";
 
 export const fetchBookSuccess = (data) => ({
     type: "FETCH_BOOK",
@@ -6,7 +6,7 @@ export const fetchBookSuccess = (data) => ({
 });
 
 export const fetchBook = (id) => dispatch => {
-    return getBookById(id)
+    return api.getBookById(id)
         .then(data => {
             dispatch(fetchBookSuccess(data));
         })
