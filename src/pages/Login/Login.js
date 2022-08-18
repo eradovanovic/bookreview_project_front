@@ -14,7 +14,7 @@ const Login = () => {
     const [usernameFocused, setUsernameFocused] = useState(false);
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const {currentUser, currentToken, error} = useSelector(state => state.authReducer);
+    const {loggedUser, loggedToken, error} = useSelector(state => state.authReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -38,12 +38,12 @@ const Login = () => {
     }
 
     useEffect(() => {
-        if(currentUser !== null)
+        if(loggedUser !== null)
             navigate('/');
         else if (error !== '') {
             setErrorMessage('Login failed');
         }
-    }, [currentUser, error]);
+    }, [loggedUser, error]);
 
     return <Box sx={{height:'500px', display:'flex', alignContent:'center', alignItems:'center', textAlign:'center', justifyContent:'center', padding:'20px'}}>
         <Paper sx={{display: 'flex', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
