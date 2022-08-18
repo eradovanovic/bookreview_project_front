@@ -41,12 +41,15 @@ const Book = ({book}) => {
 
 Book.propTypes = {
     book: PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        author: PropTypes.string,
-        genres: PropTypes.array,
-        photo: PropTypes.string,
-        rating: PropTypes.number,
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        genres: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number,
+            name: PropTypes.string
+        })),
+        photo: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
         numberOfReviews: PropTypes.number
     })
 }

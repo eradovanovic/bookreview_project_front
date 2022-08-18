@@ -48,11 +48,11 @@ const Books = () => {
         });
     }
 
-    const sortHandler = (event) => {
+    const sortHandler = event => {
         setSort(event.target.value);
     }
 
-    const genresHandler = (event) => {
+    const genresHandler = event => {
         const {
             target: {value},
         } = event;
