@@ -34,3 +34,11 @@ export const addUser = (name, surname, email, photo, username, password) => disp
             dispatch(addUserSuccess(data));
         }).catch(error => dispatch(addUserFailed(error)));
 }
+
+export const logoutSuccess = () => ({
+    type: 'LOGOUT'
+});
+
+export const logout = () => dispatch => {
+    dispatch(logoutSuccess())
+}

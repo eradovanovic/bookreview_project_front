@@ -1,8 +1,7 @@
 import {Button} from "@mui/material";
-
-import classes from "./Home.module.scss";
-import {useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
+import {useSelector} from "react-redux";
+import classes from "./Home.module.scss";
 
 const Home = () =>{
     const {loggedUser, loggedToken, registeredUser, registeredToken} = useSelector(state => state.authReducer);

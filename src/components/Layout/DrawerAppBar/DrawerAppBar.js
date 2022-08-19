@@ -19,18 +19,35 @@ import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 
 import classes from './DrawerAppBar.module.scss';
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {logout} from "../../../store/auth/authActions";
 
 const drawerWidth = 240;
-const navItems = [
+
+const navItemsGuest = [
     {name: 'Login', path: '/login'},
     {name: 'Register', path: '/register'},
+    {name: 'Books', path: '/books'},
+    {name: 'Authors', path: '/authors'}
+];
+
+const navItemsUser = [
     {name: 'Books', path: '/books'},
     {name: 'Authors', path: '/authors'},
     {name: 'Profile', path: '/users/id'},
     {name: 'My Books', path: '/collections/id'},
-    // {name: 'New Book', path: '/newBook'},
-    // {name: 'New Author', path: '/newAuthor'},
-    // {name: 'Change Password', path: '/changePassword'}
+    {name: 'Logout', path: '/'}
+
+];
+
+const navItemsAdmin = [
+    {name: 'Books', path: '/books'},
+    {name: 'Authors', path: '/authors'},
+    {name: 'New Book', path: '/newBook'},
+    {name: 'New Author', path: '/newAuthor'},
+    {name: 'Change Password', path: '/changePassword'},
+    {name: 'Logout', path: ''}
 ];
 
 const Search = styled('div')(({ theme }) => ({
@@ -42,7 +59,7 @@ const Search = styled('div')(({ theme }) => ({
     },
     marginLeft: 0,
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
         marginLeft: theme.spacing(1),
         width: 'auto',
     },
@@ -77,11 +94,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function DrawerAppBar(props) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const {loggedUser} = useSelector(state => state.authReducer);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    let navItems;
+    if(!loggedUser) navItems = navItemsGuest;
+    if(loggedUser && loggedUser.type === "user") navItems = navItemsUser;
+    if(loggedUser && loggedUser.type === "admin") navItems = navItemsAdmin;
 
 
     const drawer = (
@@ -95,6 +119,9 @@ function DrawerAppBar(props) {
                 {navItems.map((item) => (
                     <ListItem key={item.name} disablePadding>
                         <ListItemButton onClick={() => {
+                            if (item.name === 'Logout'){
+                                dispatch(logout());
+                            }
                             navigate(item.path);
                         }} sx={{ textAlign: 'center' }}>
                             <ListItemText primary={item.name} />
@@ -114,20 +141,23 @@ function DrawerAppBar(props) {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
+                        sx={{ mr: 2, display: { xs: 'block', sm: 'block', md: 'none' } }}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'block' } }}
                     >
                         <Button sx={{ color: '#fff' }} onClick={() => {navigate('/')}}>Book App</Button>
                     </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block'} }}>
                         {navItems.map((item) => (
                             <Button onClick={() => {
+                                if (item.name === 'Logout'){
+                                    dispatch(logout());
+                                }
                                 navigate(item.path);
                             }} key={item.name} sx={{ color: '#fff' }}>
                                 {item.name}
@@ -135,7 +165,7 @@ function DrawerAppBar(props) {
                         ))}
 
                     </Box>
-                    <Search>
+                    <Search sx={{ display: { xs: 'block', sm: 'block', md: 'block'} }}>
                         <SearchIconWrapper>
                             <ButtonBase>
                                 <SearchIcon/>
@@ -158,7 +188,7 @@ function DrawerAppBar(props) {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
+                        display: { xs: 'block', sm: 'block', md: 'none' },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                 >
