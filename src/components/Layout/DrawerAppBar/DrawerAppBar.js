@@ -22,32 +22,61 @@ import classes from './DrawerAppBar.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {logout} from "../../../store/auth/authActions";
+import {ADMIN, GUEST, USER} from "../../../Roles";
 
 const drawerWidth = 240;
 
-const navItemsGuest = [
-    {name: 'Login', path: '/login'},
-    {name: 'Register', path: '/register'},
-    {name: 'Books', path: '/books'},
-    {name: 'Authors', path: '/authors'}
-];
-
-const navItemsUser = [
-    {name: 'Books', path: '/books'},
-    {name: 'Authors', path: '/authors'},
-    {name: 'Profile', path: '/users/id'},
-    {name: 'My Books', path: '/collections/id'},
-    {name: 'Logout', path: '/'}
-
-];
-
-const navItemsAdmin = [
-    {name: 'Books', path: '/books'},
-    {name: 'Authors', path: '/authors'},
-    {name: 'New Book', path: '/newBook'},
-    {name: 'New Author', path: '/newAuthor'},
-    {name: 'Change Password', path: '/changePassword'},
-    {name: 'Logout', path: ''}
+const navigationItems = [
+    {
+        label: 'Login',
+        path: '/login',
+        role: [GUEST]
+    },
+    {
+        label: 'Register',
+        path: '/register',
+        role: [GUEST]
+    },
+    {
+        label: 'Books',
+        path: '/books',
+        role: [GUEST, USER, ADMIN]
+    },
+    {
+        label: 'Authors',
+        path: '/authors',
+        role: [GUEST, USER, ADMIN]
+    },
+    {
+        label: 'Profile',
+        path: '/users/id',
+        role: [USER]
+    },
+    {
+        label: 'My books',
+        path: '/collections/id',
+        role: [USER]
+    },
+    {
+        label: 'New Book',
+        path: '/newBook',
+        role: [ADMIN]
+    },
+    {
+        label: 'New Author',
+        path: '/newAuthor',
+        role: [ADMIN]
+    },
+    {
+        label: 'Change Password',
+        path: '/changePassword',
+        role: [ADMIN]
+    },
+    {
+        label: 'Logout',
+        path: '/',
+        role: [USER, ADMIN]
+    },
 ];
 
 const Search = styled('div')(({ theme }) => ({
@@ -102,11 +131,7 @@ function DrawerAppBar(props) {
         setMobileOpen(!mobileOpen);
     };
 
-    let navItems;
-    if(!loggedUser) navItems = navItemsGuest;
-    if(loggedUser && loggedUser.type === "user") navItems = navItemsUser;
-    if(loggedUser && loggedUser.type === "admin") navItems = navItemsAdmin;
-
+    const navItems = navigationItems.filter(item => item.role.includes(loggedUser?loggedUser.type:GUEST));
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -117,14 +142,14 @@ function DrawerAppBar(props) {
 
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item.name} disablePadding>
+                    <ListItem key={item.label} disablePadding>
                         <ListItemButton onClick={() => {
-                            if (item.name === 'Logout'){
+                            if (item.label === 'Logout'){
                                 dispatch(logout());
                             }
                             navigate(item.path);
                         }} sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item.name} />
+                            <ListItemText primary={item.label} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -155,12 +180,12 @@ function DrawerAppBar(props) {
                     <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block'} }}>
                         {navItems.map((item) => (
                             <Button onClick={() => {
-                                if (item.name === 'Logout'){
+                                if (item.label === 'Logout'){
                                     dispatch(logout());
                                 }
                                 navigate(item.path);
-                            }} key={item.name} sx={{ color: '#fff' }}>
-                                {item.name}
+                            }} key={item.label} sx={{ color: '#fff' }}>
+                                {item.label}
                             </Button>
                         ))}
 
