@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import api from "api/api";
 import Book from "components/Book";
 import Grid from "@mui/material/Grid";
-import {BOOKS_PER_PAGE, SORT} from "constants";
+import {BOOKS_PER_PAGE, SORT} from "constants/constants";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -49,7 +49,10 @@ const Books = () => {
     }
 
     const sortHandler = event => {
-        setSort(event.target.value);
+        const {
+            target: {value},
+        } = event;
+        setSort(value);
     }
 
     const genresHandler = event => {
