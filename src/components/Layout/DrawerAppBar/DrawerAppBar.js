@@ -12,17 +12,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {Outlet, useNavigate} from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
-
-import classes from './DrawerAppBar.module.scss';
+import {Outlet, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {logout} from "../../../store/auth/authActions";
-import {ADMIN, GUEST, USER} from "../../../Roles";
+import {logout} from "store/auth/authActions";
+import {ADMIN, GUEST, USER} from "roles/Roles";
+import classes from './DrawerAppBar.module.scss';
 
 const drawerWidth = 240;
 

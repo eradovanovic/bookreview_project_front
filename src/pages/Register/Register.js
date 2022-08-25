@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
-import {Button, FormControl, Paper, Stack, TextField} from "@mui/material";
+import {Button, Paper, Stack, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {addUser} from "store/auth/authActions";
 import {emailValid, passwordValid} from "utils/validators";

@@ -11,8 +11,6 @@ import classes from "./Login.module.scss";
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [usernameFocused, setUsernameFocused] = useState(false);
-    const [passwordFocused, setPasswordFocused] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const {loggedUser, loggedToken, error} = useSelector(state => state.authReducer);
 
@@ -27,8 +25,6 @@ const Login = () => {
     }
 
     const loginHandler = () => {
-        setUsernameFocused(true);
-        setPasswordFocused(true);
         if (username && password){
             dispatch(fetchUser(username, password));
         }
@@ -51,22 +47,20 @@ const Login = () => {
                 <Typography variant="h6" sx={{padding: '10px'}}>Login!</Typography>
                 <FormControl>
                     <TextField
-                        error={usernameFocused && username === ""}
-                        helperText={usernameFocused && username === "" ? 'Username is required!' : ' '}
+                        error={username === ""}
+                        helperText={username === "" ? 'Username is required!' : ' '}
                         label="Username"
                         onChange={usernameHandler}
-                        onFocus={() => setUsernameFocused(true)}
                         variant="filled"
                     />
                 </FormControl>
                 <FormControl>
                     <TextField
-                        error={passwordFocused && password === ''}
-                        helperText={passwordFocused && password === ''? 'Password is required!' : ' '}
+                        error={password === ''}
+                        helperText={password === ''? 'Password is required!' : ' '}
                         label="Password"
                         type="password"
                         onChange={passwordHandler}
-                        onFocus={() => setPasswordFocused(true)}
                         variant="filled"
                     />
                 </FormControl>
