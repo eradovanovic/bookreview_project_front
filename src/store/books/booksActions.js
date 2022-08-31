@@ -1,12 +1,12 @@
-import {getBookById} from "api/api";
+import api from "api/api";
 
-export const fetchBookSuccess = (data) => ({
+export const fetchBookSuccess = data => ({
     type: "FETCH_BOOK",
     data: data
 });
 
-export const fetchBook = (id) => dispatch => {
-    return getBookById(id)
+export const fetchBook = id => dispatch => {
+    return api.getBookById(id)
         .then(data => {
             dispatch(fetchBookSuccess(data));
         })
