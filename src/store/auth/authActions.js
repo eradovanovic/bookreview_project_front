@@ -1,42 +1,38 @@
 import api from "api/api_auth";
 
-export const fetchUserSuccess = data => ({
+export const loginSuccess = data => ({
     type: "LOGIN",
     data: data
 });
 
-export const fetchUserFailed = data => ({
+export const loginFailed = data => ({
     type: "LOGIN_FAILED",
     data: data
 });
 
-
-export const addUserSuccess = data => ({
-    type: "REGISTER",
-    data: data
-});
-
-export const addUserFailed = data => ({
+export const registerFailed = data => ({
     type: "REGISTER_FAILED",
     data: data
 });
 
-export const fetchUser = (username, password) => dispatch => {
+export const login = (username, password) => dispatch => {
+    dispatch(logoutSuccess());
     return api.login(username, password)
         .then(data => {
-            dispatch(fetchUserSuccess(data));
-        }).catch(error => dispatch(fetchUserFailed(error)));
+            dispatch(loginSuccess(data));
+        }).catch(error => dispatch(loginFailed(error)));
 }
 
-export const addUser = (name, surname, email, photo, username, password) => dispatch => {
+export const register = (name, surname, email, photo, username, password) => dispatch => {
+    dispatch(logoutSuccess());
     return api.register(name, surname, email, photo, username, password)
         .then(data => {
-            dispatch(addUserSuccess(data));
-        }).catch(error => dispatch(addUserFailed(error)));
+            dispatch(loginSuccess(data));
+        }).catch(error => dispatch(registerFailed(error)));
 }
 
 export const logoutSuccess = () => ({
-    type: 'LOGOUT'
+    type: 'CLEAR'
 });
 
 export const logout = () => dispatch => {

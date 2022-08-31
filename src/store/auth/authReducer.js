@@ -1,8 +1,6 @@
 const initialState = {
-    loggedUser: null,
-    loggedToken: '',
-    registeredUser: null,
-    registeredToken: '',
+    user: null,
+    token: '',
     error: ''
 };
 
@@ -11,8 +9,8 @@ const authReducer =  (state = initialState, action) => {
         case "LOGIN":
             return {
                 ...state,
-               loggedUser: action.data.user,
-               loggedToken: action.data.token,
+               user: action.data.user,
+               token: action.data.token,
                error: ''
             }
         case "LOGIN_FAILED":
@@ -20,23 +18,15 @@ const authReducer =  (state = initialState, action) => {
                 ...state,
                 error: action.data
             }
-        case "REGISTER":
-            return {
-                ...state,
-                registeredUser: action.data.user,
-                registeredToken: action.data.token,
-                error: ''
-            }
         case "REGISTER_FAILED":
             return {
                 ...state,
                 error: action.data
             }
-        case "LOGOUT":
+        case "CLEAR":
             return {
-                ...state,
-                loggedUser: null,
-                loggedToken: '',
+                user: null,
+                token: '',
                 error: ''
             }
         default:

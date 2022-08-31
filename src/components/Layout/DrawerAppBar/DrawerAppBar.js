@@ -18,7 +18,8 @@ import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import {Outlet, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "store/auth/authActions";
+import {useEffect} from "react";
+import {loginSuccess, logout} from "store/auth/authActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
 import classes from './DrawerAppBar.module.scss';
 
@@ -77,6 +78,7 @@ const navigationItems = [
     },
 ];
 
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -123,13 +125,32 @@ function DrawerAppBar(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const {loggedUser} = useSelector(state => state.authReducer);
+    const {user} = useSelector(state => state.authReducer);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    const navItems = navigationItems.filter(item => item.role.includes(loggedUser?loggedUser.type:GUEST));
+    const navItems = navigationItems.filter(item => item.role.includes(user?user.type:GUEST));
+
+    useEffect(() => {
+        const localStorageUser = JSON.parse(localStorage.getItem("user"));
+        const localStorageToken = localStorage.getItem("token");
+        if(!user && localStorageUser){
+            dispatch(loginSuccess({'user': localStorageUser, "token": localStorageToken}));
+        }
+    }, []);
+
+    const handleRoutePress = item => {
+        if (item.label === 'Logout') {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            dispatch(logout());
+        }
+        navigate(item.path);
+    }
+
+
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -142,10 +163,7 @@ function DrawerAppBar(props) {
                 {navItems.map((item) => (
                     <ListItem key={item.label} disablePadding>
                         <ListItemButton onClick={() => {
-                            if (item.label === 'Logout'){
-                                dispatch(logout());
-                            }
-                            navigate(item.path);
+                            handleRoutePress(item);
                         }} sx={{ textAlign: 'center' }}>
                             <ListItemText primary={item.label} />
                         </ListItemButton>
@@ -178,10 +196,7 @@ function DrawerAppBar(props) {
                     <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block'} }}>
                         {navItems.map((item) => (
                             <Button onClick={() => {
-                                if (item.label === 'Logout'){
-                                    dispatch(logout());
-                                }
-                                navigate(item.path);
+                                handleRoutePress(item);
                             }} key={item.label} sx={{ color: '#fff' }}>
                                 {item.label}
                             </Button>
