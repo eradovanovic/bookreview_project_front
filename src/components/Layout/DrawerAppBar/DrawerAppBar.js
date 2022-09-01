@@ -18,8 +18,7 @@ import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import {Outlet, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {loginSuccess, logout} from "store/auth/authActions";
+import {logout} from "store/auth/authActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
 import classes from './DrawerAppBar.module.scss';
 
@@ -69,7 +68,7 @@ const navigationItems = [
     {
         label: 'Change Password',
         path: '/changePassword',
-        role: [ADMIN]
+        role: [ADMIN, USER]
     },
     {
         label: 'Logout',
@@ -131,15 +130,8 @@ function DrawerAppBar(props) {
         setMobileOpen(!mobileOpen);
     };
 
-    const navItems = navigationItems.filter(item => item.role.includes(user?user.type:GUEST));
+    const navItems = user ? navigationItems.filter(item => item.role.includes(user.type)) : navigationItems.filter(item => item.role.includes(GUEST));
 
-    useEffect(() => {
-        const localStorageUser = JSON.parse(localStorage.getItem("user"));
-        const localStorageToken = localStorage.getItem("token");
-        if(!user && localStorageUser){
-            dispatch(loginSuccess({'user': localStorageUser, "token": localStorageToken}));
-        }
-    }, []);
 
     const handleRoutePress = item => {
         if (item.label === 'Logout') {
