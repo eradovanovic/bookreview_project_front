@@ -66,11 +66,6 @@ const navigationItems = [
         role: [ADMIN]
     },
     {
-        label: 'Change Password',
-        path: '/changePassword',
-        role: [ADMIN, USER]
-    },
-    {
         label: 'Logout',
         path: '/',
         role: [USER, ADMIN]
