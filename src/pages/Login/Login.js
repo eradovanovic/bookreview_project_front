@@ -28,8 +28,6 @@ const Login = () => {
 
     useEffect(() => {
         if(user) {
-            localStorage.setItem("user", JSON.stringify(user));
-            localStorage.setItem("token", token);
             navigate('/');
         }
         else if (error) {
@@ -49,6 +47,9 @@ const Login = () => {
     const loginHandler = () => {
         let error = "";
         if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value)) {
+            Object.values(formState).forEach(val => {
+                if (!val.value && !val.error) val.error = true;
+            });
             error = "Please enter username and password!";
         }
 

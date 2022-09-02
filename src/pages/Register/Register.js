@@ -63,8 +63,6 @@ const Register = () => {
 
     useEffect(() => {
         if(user !== null) {
-            localStorage.setItem("user", JSON.stringify(user));
-            localStorage.setItem("token", token);
             navigate('/');
         }
         else if (error) {
@@ -84,6 +82,9 @@ const Register = () => {
     const registerHandler = () => {
         let error = "";
         if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value)) {
+            Object.values(formState).forEach(val => {
+                if (!val.value && !val.error) val.error = true;
+            });
             error = "All fields are required!"
         }
 
