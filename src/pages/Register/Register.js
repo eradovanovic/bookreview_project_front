@@ -11,31 +11,31 @@ import classes from "./Register.module.scss";
 const initialState = {
     "name": {
         "value": "",
-        "error":false
+        "error": false
     },
     "surname": {
         "value": "",
-        "error":false
+        "error": false
     },
     "photo": {
-        "value": "",
-        "error":false
+        "value": "default",
+        "error": false
     },
     "email": {
         "value": "",
-        "error":false
+        "error": false
     },
     "username": {
         "value": "",
-        "error":false
+        "error": false
     },
     "password": {
         "value": "",
-        "error":false
+        "error": false
     },
     "passwordConfirmation": {
         "value": "",
-        "error":false
+        "error": false
     }
 }
 const validate = (email, password, passwordConfirmation) => {
@@ -54,30 +54,12 @@ const validate = (email, password, passwordConfirmation) => {
 
 const Register = () => {
     const [formState, setFormState] = useState(initialState);
-    //const [registrationSubmit, setRegistrationSubmit] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const {user, token, error} = useSelector(state => state.authReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-
-    // useEffect(() => {
-    //     if(registrationSubmit){
-    //         let error = "";
-    //         if (formState['name'].error || formState['surname'].error || formState['email'].error || formState['username'].error || formState['password'].error || formState['passwordConfirmation'].error){
-    //             error = "All fields are required.";
-    //         }
-    //
-    //         if (!error) error = validate(formState['email'].value, formState['password'].value, formState['passwordConfirmation'].value);
-    //         if (!error) {
-    //             dispatch(register(formState['name'].value, formState['surname'].value, formState['email'].value, formState['photo'].value, formState['username'].value, formState['password'].value));
-    //         }
-    //         setErrorMessage(error);
-    //         setRegistrationSubmit(false);
-    //     }
-    // }, [formState, registrationSubmit]);
 
     useEffect(() => {
         if(user !== null) {
@@ -90,29 +72,6 @@ const Register = () => {
         }
     }, [user, error]);
 
-    // const updateField = (name, value) => {
-    //     const error = value.trim() === "";
-    //     setFormState( prevState => ({
-    //         ...prevState,
-    //         [name] : {"value": value, "error": error}
-    //     }))
-    // }
-    //
-    // const inputHandler = event => {
-    //     const {name , value} = event.target;
-    //     updateField(name, value);
-    // }
-    //
-    // const registerHandler = () => {
-    //     updateField("name", formState["name"].value);
-    //     updateField("surname", formState["surname"].value);
-    //     updateField("email", formState["email"].value);
-    //     updateField("username", formState["username"].value);
-    //     updateField("password", formState["password"].value);
-    //     updateField("passwordConfirmation", formState["passwordConfirmation"].value);
-    //     setRegistrationSubmit(true);
-    // }
-
     const inputHandler = event => {
         const {name , value} = event.target;
         const error = value.trim() === "";
@@ -124,8 +83,8 @@ const Register = () => {
 
     const registerHandler = () => {
         let error = "";
-        if (formState['name'].error || formState['surname'].error || formState['email'].error || formState['username'].error || formState['password'].error || formState['passwordConfirmation'].error){
-            error = "All fields are required.";
+        if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value)) {
+            error = "All fields are required!"
         }
 
         if (!error) error = validate(formState['email'].value, formState['password'].value, formState['passwordConfirmation'].value);
@@ -136,7 +95,7 @@ const Register = () => {
     }
 
     return <Box sx={{height:'700px', display:'flex', alignContent:'center', alignItems:'center', textAlign:'center', justifyContent:'center', padding:'20px'}}>
-        <Paper sx={{display: 'flex', minWidth:'290px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
+        <Paper sx={{display: 'flex', width:'350px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
             <Stack sx={{display:'flex', alignContent:'center', alignItems:'center', textAlign:'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Register!</Typography>
                     <TextField error={formState['name'].error} helperText={formState['name'].error ? 'Name is required!' : ' '} label="Name" name="name" onChange={inputHandler} variant="filled"/>

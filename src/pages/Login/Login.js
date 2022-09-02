@@ -10,36 +10,21 @@ import classes from "./Login.module.scss";
 const initialState = {
     "username": {
         "value": "",
-        "error":false
+        "error": false
     },
     "password": {
         "value": "",
-        "error":false
+        "error": false
     },
 }
 
 const Login = () => {
     const [formState, setFormState] = useState(initialState);
-    //const [loginSubmit, setLoginSubmit] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const {user, token, error} = useSelector(state => state.authReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if(loginSubmit){
-    //         let error = "";
-    //         if (formState['username'].error || formState['password'].error){
-    //             error = "Please enter username and password!";
-    //         }
-    //         if (!error) {
-    //             dispatch(login(formState['username'].value, formState['password'].value));
-    //         }
-    //         setErrorMessage(error);
-    //         setLoginSubmit(false);
-    //     }
-    // }, [formState, loginSubmit]);
 
     useEffect(() => {
         if(user) {
@@ -52,25 +37,6 @@ const Login = () => {
         }
     }, [user, error]);
 
-    // const updateField = (name, value) => {
-    //     const error = value.trim() === "";
-    //     setFormState( prevState => ({
-    //         ...prevState,
-    //         [name] : {"value": value, "error": error}
-    //     }))
-    // }
-    //
-    // const inputHandler = event => {
-    //     const {name , value} = event.target;
-    //     updateField(name, value);
-    // }
-    //
-    // const loginHandler = () => {
-    //     updateField("username", formState["username"].value);
-    //     updateField("password", formState["password"].value);
-    //     setLoginSubmit(true);
-    // }
-
     const inputHandler = event => {
         const {name , value} = event.target;
         const error = value.trim() === "";
@@ -82,9 +48,10 @@ const Login = () => {
 
     const loginHandler = () => {
         let error = "";
-        if (formState['username'].error || formState['password'].error){
+        if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value)) {
             error = "Please enter username and password!";
         }
+
         if (!error) {
             dispatch(login(formState['username'].value, formState['password'].value));
         }
