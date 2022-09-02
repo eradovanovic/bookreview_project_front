@@ -12,26 +12,66 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {Outlet, useNavigate} from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
-
+import {Outlet, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "store/auth/authActions";
+import {ADMIN, GUEST, USER} from "roles/Roles";
 import classes from './DrawerAppBar.module.scss';
 
 const drawerWidth = 240;
-const navItems = [
-    {name: 'Login', path: '/login'},
-    {name: 'Register', path: '/register'},
-    {name: 'Books', path: '/books'},
-    {name: 'Authors', path: '/authors'},
-    {name: 'Profile', path: '/users/id'},
-    {name: 'My Books', path: '/collections/id'},
-    // {name: 'New Book', path: '/newBook'},
-    // {name: 'New Author', path: '/newAuthor'},
-    // {name: 'Change Password', path: '/changePassword'}
+
+const navigationItems = [
+    {
+        label: 'Login',
+        path: '/login',
+        role: [GUEST]
+    },
+    {
+        label: 'Register',
+        path: '/register',
+        role: [GUEST]
+    },
+    {
+        label: 'Books',
+        path: '/books',
+        role: [GUEST, USER, ADMIN]
+    },
+    {
+        label: 'Authors',
+        path: '/authors',
+        role: [GUEST, USER, ADMIN]
+    },
+    {
+        label: 'Profile',
+        path: '/users/id',
+        role: [USER]
+    },
+    {
+        label: 'My books',
+        path: '/collections/id',
+        role: [USER]
+    },
+    {
+        label: 'New Book',
+        path: '/newBook',
+        role: [ADMIN]
+    },
+    {
+        label: 'New Author',
+        path: '/newAuthor',
+        role: [ADMIN]
+    },
+    {
+        label: 'Logout',
+        path: '/',
+        role: [USER, ADMIN]
+    },
 ];
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -42,7 +82,7 @@ const Search = styled('div')(({ theme }) => ({
     },
     marginLeft: 0,
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
         marginLeft: theme.spacing(1),
         width: 'auto',
     },
@@ -77,11 +117,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function DrawerAppBar(props) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const {user} = useSelector(state => state.authReducer);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    const navItems = user ? navigationItems.filter(item => item.role.includes(user.type)) : navigationItems.filter(item => item.role.includes(GUEST));
+
+
+    const handleRoutePress = item => {
+        if (item.label === 'Logout') {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            dispatch(logout());
+        }
+        navigate(item.path);
+    }
+
 
 
     const drawer = (
@@ -93,11 +148,11 @@ function DrawerAppBar(props) {
 
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item.name} disablePadding>
+                    <ListItem key={item.label} disablePadding>
                         <ListItemButton onClick={() => {
-                            navigate(item.path);
+                            handleRoutePress(item);
                         }} sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item.name} />
+                            <ListItemText primary={item.label} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -114,28 +169,28 @@ function DrawerAppBar(props) {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
+                        sx={{ mr: 2, display: { xs: 'block', sm: 'block', md: 'none' } }}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'block' } }}
                     >
                         <Button sx={{ color: '#fff' }} onClick={() => {navigate('/')}}>Book App</Button>
                     </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block'} }}>
                         {navItems.map((item) => (
                             <Button onClick={() => {
-                                navigate(item.path);
-                            }} key={item.name} sx={{ color: '#fff' }}>
-                                {item.name}
+                                handleRoutePress(item);
+                            }} key={item.label} sx={{ color: '#fff' }}>
+                                {item.label}
                             </Button>
                         ))}
 
                     </Box>
-                    <Search>
+                    <Search sx={{ display: { xs: 'block', sm: 'block', md: 'block'} }}>
                         <SearchIconWrapper>
                             <ButtonBase>
                                 <SearchIcon/>
@@ -158,7 +213,7 @@ function DrawerAppBar(props) {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none' },
+                        display: { xs: 'block', sm: 'block', md: 'none' },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                 >
