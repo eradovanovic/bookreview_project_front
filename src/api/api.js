@@ -44,15 +44,42 @@ const getBooks = (page, genres, sortBy) => {
     })
 }
 
-const getReviews = bookId => {
+const getReviews = book_id => {
     return new Promise((res, rej) => {
-        res(mockReviews);
+        res(mockReviews.filter(review => review.book_id === book_id)
+            .sort((r1, r2) => new Date(r2.date_reviewed)-new Date(r1.date_reviewed)));
     });
+}
+
+const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
+    const review_id = mockReviews.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
+    const reviewObj = {
+       id: review_id,
+       user: user,
+       avatar: avatar,
+       book_id: book_id,
+       date_reviewed: date_reviewed,
+       rating: rating,
+       review: review
+    }
+
+   mockReviews.push(reviewObj);
+   return new Promise((res, rej) => {
+       res(reviewObj);
+   });
+}
+
+const deleteReview = review_id => {
+    const index = mockReviews.findIndex(review => review.id === review_id);
+    mockReviews.splice(index, 1);
+    return new Promise((res, rej) => res({data:'sth'}));
 }
 
 export default {
     getAuthorById,
     getBookById,
     getBooks,
-    getReviews
+    getReviews,
+    addReview,
+    deleteReview
 };
