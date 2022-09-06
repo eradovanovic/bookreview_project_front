@@ -58,8 +58,6 @@ const getReviews = book_id => {
 }
 
 const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
-    const index = mockBooks.findIndex(book => book.id === book_id);
-    console.log(mockBooks[index]);
     const review_id = mockReviews.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
     const reviewObj = {
        id: review_id,
@@ -72,10 +70,9 @@ const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
     }
    mockReviews.push(reviewObj);
 
-
+   const index = mockBooks.findIndex(book => book.id === book_id);
    mockBooks[index].rating = (mockBooks[index].rating * mockBooks[index].numberOfReviews + rating) /  (mockBooks[index].numberOfReviews + 1);
    mockBooks[index].numberOfReviews++;
-   console.log(mockBooks[index]);
 
    return new Promise((res, rej) => {
        res(reviewObj);
@@ -84,6 +81,14 @@ const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
 
 const deleteReview = review_id => {
     const index = mockReviews.findIndex(review => review.id === review_id);
+    const book_index = mockBooks.findIndex(book => book.id === mockReviews[index].book_id);
+
+    if(mockBooks[book_index].numberOfReviews > 1)
+        mockBooks[book_index].rating = (mockBooks[book_index].rating * mockBooks[book_index].numberOfReviews - mockReviews[index].rating) / (mockBooks[book_index].numberOfReviews - 1);
+    else
+        mockBooks[book_index].rating = 0;
+
+    mockBooks[book_index].numberOfReviews--;
     mockReviews.splice(index, 1);
     return new Promise((res, rej) => res(mockReviews));
 }
