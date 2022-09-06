@@ -1,4 +1,4 @@
-import {mockAuthor, mockBook, mockBooks, mockReviews} from "./mockData";
+import {mockAuthor, mockBooks, mockCollection, mockReviews} from "./mockData";
 import {BOOKS_PER_PAGE, SORT} from "../constants/constants";
 
 const getAuthorById = id => {
@@ -8,15 +8,24 @@ const getAuthorById = id => {
 }
 
 const getBookById = id => {
+    const books = mockBooks.filter(b => b.id === id);
     return new Promise((res, rej) => {
-        res(mockBook);
+        res(books[0]);
     })
 }
 
 const getBooks = (page, genres, sortBy) => {
-    let filteredBooks = [...mockBooks];
+    let books = [...mockBooks];
+    const booksResult = filterAndSortBooks(books, page, genres, sortBy);
+    return new Promise((res, rej) => {
+        res(booksResult);
+    })
+}
+
+const filterAndSortBooks = (books, page, genres, sortBy) => {
+    let filteredBooks = [...books];
     if (genres && genres.length) {
-        filteredBooks = mockBooks.filter((book)=>{
+        filteredBooks = books.filter((book)=>{
             return book.genres.map(genre => genre.name).some(g => genres.includes(g));
         });
     }
@@ -38,10 +47,7 @@ const getBooks = (page, genres, sortBy) => {
             break;
     }
 
-    const booksResult = filteredBooks.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE);
-    return new Promise((res, rej) => {
-        res({ books: booksResult, total: filteredBooks.length });
-    })
+    return {books: filteredBooks.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: filteredBooks.length};
 }
 
 const getReviews = book_id => {
@@ -72,7 +78,42 @@ const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
 const deleteReview = review_id => {
     const index = mockReviews.findIndex(review => review.id === review_id);
     mockReviews.splice(index, 1);
-    return new Promise((res, rej) => res({data:'sth'}));
+    return new Promise((res, rej) => res(mockReviews));
+}
+
+const getCollectionForUser = (username, page, genres, sortBy) => {
+    const books = mockCollection.map(item => item.book);
+    const booksInCollection = filterAndSortBooks(books, page, genres, sortBy);
+    return new Promise((res, rej) => res(booksInCollection));
+}
+
+const checkBookInCollection = (username, book_id) => {
+    const books = mockCollection.filter(item => item.username === username && item.book.id === book_id);
+    return new Promise((res, rej) => res(books));
+}
+
+const addBookToCollection = (book_id, title, author, genres, rating, numberOfReviews, photo, description, username ) => {
+    const collection_item = {
+        book: {
+            id: book_id,
+            title: title,
+            author: author,
+            genres: genres,
+            rating: rating,
+            numberOfReviews: numberOfReviews,
+            description: description,
+            photo: photo
+        },
+        username: username
+    }
+    mockCollection.push(collection_item);
+    return new Promise((res, rej) => res(mockCollection));
+}
+
+const removeBookFromCollection = (username, book_id) => {
+    const index = mockCollection.findIndex(item => item.username === username && item.book.id === book_id);
+    mockCollection.splice(index, 1);
+    return new Promise((res, rej) => res(mockCollection));
 }
 
 export default {
@@ -81,5 +122,9 @@ export default {
     getBooks,
     getReviews,
     addReview,
-    deleteReview
+    deleteReview,
+    getCollectionForUser,
+    checkBookInCollection,
+    addBookToCollection,
+    removeBookFromCollection
 };

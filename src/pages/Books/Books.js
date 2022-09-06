@@ -1,31 +1,11 @@
 import {useEffect, useState} from "react";
-import {FormControl, InputLabel, Pagination, Select, MenuItem, OutlinedInput, Checkbox, Button} from "@mui/material";
+import {Pagination} from "@mui/material";
 import Box from "@mui/material/Box";
-import ListItemText from "@mui/material/ListItemText";
-import api from "api/api";
-import Book from "components/Book";
 import Grid from "@mui/material/Grid";
-import {BOOKS_PER_PAGE, SORT} from "constants/constants";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-
-const names = [
-    {id:1, name:'drama'},
-    {id:2, name:'crime'},
-    {id:3, name:'thriller'},
-    {id:4, name:'romance'},
-    {id:5, name:'history'},
-    {id:6, name:'fiction'}
-];
+import api from "api/api";
+import {BOOKS_PER_PAGE} from "constants/constants";
+import BookList from "components/BookList";
+import Filter from "components/Filter";
 
 const Books = () => {
     const [page, setPage] = useState(1);
@@ -34,8 +14,8 @@ const Books = () => {
     const [books, setBooks] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
 
-    useEffect(()=>{
-        api.getBooks(page, genres, sort).then(res=>{
+    useEffect(() => {
+        api.getBooks(page, genres, sort).then(res => {
             setBooks(res.books);
             setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
         });
@@ -43,38 +23,15 @@ const Books = () => {
 
     const pageHandler = (event, value) => {
         setPage(value);
-        api.getBooks(page, genres, sort).then(res=>{
+        api.getBooks(page, genres, sort).then(res => {
             setBooks(res.books);
         });
     }
 
-    const sortHandler = event => {
-        const {
-            target: {value},
-        } = event;
-        setSort(value);
-    }
-
-    const genresHandler = event => {
-        const {
-            target: {value},
-        } = event;
-        setGenres(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    }
-
-    const applyHandler = () => {
-        api.getBooks(page, genres, sort).then(res=>{
-            setBooks(res.books);
-            setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
-        });
-    }
-
-    const resetHandler = () => {
-        setSort('DEFAULT');
-        setGenres([]);
-        api.getBooks(page, [], 'DEFAULT').then(res=>{
+    const applyHandler = (genresParam, sortParam) => {
+        setGenres(genresParam);
+        setSort(sortParam);
+        api.getBooks(page, genresParam, sortParam).then(res => {
             setBooks(res.books);
             setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
         });
@@ -82,79 +39,15 @@ const Books = () => {
 
     return (
         <Box sx={{minWidth: 120}}>
-            <Grid
-                container
-                columns={{xs: 12, sm: 12, md: 12}}
-            >
+            <Grid container columns={{xs: 12, sm: 12, md: 12}}>
                 <Grid item xs={12} sm={12} md={2}>
-                    <Box sx={{marginTop:'20px', marginLeft:'20px'}}>
-                        <Grid item xs={12} sm={12} md={12} sx={{height:'fit-content', display: 'flex', alignItems:'center', alignContent:'center'}}>
-                            <FormControl sx={{width: '100%', margin: '10px'}}>
-                                <InputLabel>Sort by</InputLabel>
-                                <Select
-                                    value={sort}
-                                    label="Sort by"
-                                    onChange={sortHandler}
-                                >
-                                    <MenuItem value={SORT.DEFAULT}>Default</MenuItem>
-                                    <MenuItem value={SORT.TITLE_ASC}>Title ascending</MenuItem>
-                                    <MenuItem value={SORT.TITLE_DESC}>Title descending</MenuItem>
-                                    <MenuItem value={SORT.RATING_ASC}>Rating ascending</MenuItem>
-                                    <MenuItem value={SORT.RATING_DESC}>Rating descending</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={12} sx={{height:'fit-content', display: 'flex', alignItems:'center', alignContent:'center'}}>
-                            <FormControl sx={{width: '100%', margin: '10px'}}>
-                                <InputLabel>Genres</InputLabel>
-                                <Select
-                                    multiple
-                                    value={genres}
-                                    onChange={genresHandler}
-                                    input={<OutlinedInput label="Genres" />}
-                                    renderValue={(selected) => selected.join(', ')}
-                                    MenuProps={MenuProps}
-                                >
-                                    {names.map(name => (
-                                        <MenuItem key={name.id} value={name.name}>
-                                            <Checkbox checked={genres.indexOf(name.name) > -1} />
-                                            <ListItemText primary={name.name} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid container columns={{xs: 12, sm: 12, md: 12}}>
-                            <Grid item xs={6} sm={6} md={12} sx={{textAlign:'center'}}>
-                                <FormControl sx={{width: '80%', marginTop: '10px', marginBottom: '10px'}}>
-                                    <Button onClick={applyHandler}>Apply filters</Button>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={12} sx={{textAlign:'center'}}>
-                                <FormControl sx={{width: '80%', marginTop: '10px', marginBottom: '10px'}}>
-                                    <Button onClick={resetHandler}>Reset filters</Button>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                    </Box>
+                    <Filter applyHandler={applyHandler}/>
                 </Grid>
                 <Grid item xs={12} sm={12} md={10}>
-                    {books.map(book => (
-                        <Book
-                            key={book.id}
-                            book={book}
-                        />
-                    ))}
+                    <BookList books={books}/>
                 </Grid>
             </Grid>
-
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-            >
+            <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
                 <Grid item xs={3}>
                     <Pagination count={totalPages} page={page} onChange={pageHandler}/>
                 </Grid>
