@@ -31,8 +31,8 @@ export const mockBooks = [
             {id: 6, name: 'fiction'},
             {id: 4, name: 'romance'}
         ],
-        rating: 3.74,
-        numberOfReviews: 20,
+        rating: 4.00,
+        numberOfReviews: 3,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },

@@ -58,6 +58,8 @@ const getReviews = book_id => {
 }
 
 const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
+    const index = mockBooks.findIndex(book => book.id === book_id);
+    console.log(mockBooks[index]);
     const review_id = mockReviews.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
     const reviewObj = {
        id: review_id,
@@ -68,8 +70,13 @@ const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
        rating: rating,
        review: review
     }
-
    mockReviews.push(reviewObj);
+
+
+   mockBooks[index].rating = (mockBooks[index].rating * mockBooks[index].numberOfReviews + rating) /  (mockBooks[index].numberOfReviews + 1);
+   mockBooks[index].numberOfReviews++;
+   console.log(mockBooks[index]);
+
    return new Promise((res, rej) => {
        res(reviewObj);
    });

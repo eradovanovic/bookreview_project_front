@@ -71,7 +71,7 @@ const BookDetails = () => {
                             <Link href="/authors/detail" color="#000" underline="hover">
                                 <Typography variant="subtitle1">{author}</Typography>
                             </Link>
-                            { rating && <Rating
+                            { rating >= 0 && <Rating
                                 name="text-feedback"
                                 value={rating}
                                 readOnly
