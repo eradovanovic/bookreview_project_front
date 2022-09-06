@@ -17,7 +17,7 @@ const Books = () => {
     useEffect(() => {
         api.getBooks(page, genres, sort).then(res => {
             setBooks(res.books);
-            setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     },[page]);
 
@@ -33,7 +33,7 @@ const Books = () => {
         setSort(sortParam);
         api.getBooks(page, genresParam, sortParam).then(res => {
             setBooks(res.books);
-            setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     }
 

@@ -20,7 +20,7 @@ const BookCollection = () => {
     useEffect(() => {
         api.getCollectionForUser(user.username, page, genres, sort).then(res => {
             setBooks(res.books);
-            setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     },[page]);
 
@@ -30,14 +30,14 @@ const BookCollection = () => {
         setGenres(genresParam);
         api.getCollectionForUser(user.username, page, genresParam, sortParam).then(res => {
             setBooks(res.books);
-            setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     }
 
     const getCollection = () => {
         api.getCollectionForUser(user.username, page, genres, sort).then(res => {
             setBooks(res.books);
-            setTotalPages(Math.ceil(res.total/BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     }
 

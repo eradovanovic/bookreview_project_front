@@ -53,7 +53,7 @@ const filterAndSortBooks = (books, page, genres, sortBy) => {
 const getReviews = book_id => {
     return new Promise((res, rej) => {
         res(mockReviews.filter(review => review.book_id === book_id)
-            .sort((r1, r2) => new Date(r2.date_reviewed)-new Date(r1.date_reviewed)));
+            .sort((r1, r2) => new Date(r2.date_reviewed) - new Date(r1.date_reviewed)));
     });
 }
 
