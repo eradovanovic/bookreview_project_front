@@ -11,6 +11,7 @@ import Divider from "@mui/material/Divider";
 import StarIcon from "@mui/icons-material/Star";
 import AddIcon from "@mui/icons-material/Add";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import DoneIcon from '@mui/icons-material/Done';
 import {fetchBook} from "store/books/booksActions";
 import api from "api/api";
 import Review from "components/Review";
@@ -26,6 +27,7 @@ const BookDetails = () => {
     const {title, author, description, photo, rating, genres, numberOfReviews} = currentBook;
     const [reviews, setReviews] = useState([]);
     const [newReviewForm, setNewReviewForm] = useState(false);
+    const [reviewed, setReviewed] = useState(false);
     const [favorite, setFavorite] = useState(false);
 
     const discardHandler = () => setNewReviewForm(false);
@@ -35,27 +37,36 @@ const BookDetails = () => {
         setNewReviewForm(false);
     }
 
+    const reviewedFunc = reviewVal => setReviewed(reviewVal);
+
     const favoriteHandler = () => {
         if (!favorite) {
             api.addBookToCollection(+id, title, author, genres, rating, numberOfReviews, photo, description, user.username).then(res => setFavorite(true));
         }
-        else api.removeBookFromCollection(user.username, +id).then(res => setFavorite(false));
+        else {
+            api.removeBookFromCollection(user.username, +id).then(res => setFavorite(false));
+        }
     }
 
     useEffect(() => {
         if(id !== null){
             dispatch(fetchBook(+id));
+            if (user && user.type === 'user'){
+                api.checkIfReviewed(user.username, +id).then(res => {
+                    console.log(res);
+                    if (res) {
+                        setReviewed(true);
+                    }
+                });
+                api.checkBookInCollection(user.username, +id).then(res => {
+                    if(res && res.length > 0) {
+                        setFavorite(true);
+                    }
+                })
+            }
             getReviews();
         }
     }, [dispatch, id]);
-
-    useEffect(() => {
-        if (user && user.type === 'user'){
-            api.checkBookInCollection(user.username, +id).then(res => {
-                if(res && res.length > 0) setFavorite(true);
-            })
-        }
-    }, [])
 
 
     return (
@@ -71,14 +82,14 @@ const BookDetails = () => {
                             <Link href="/authors/detail" color="#000" underline="hover">
                                 <Typography variant="subtitle1">{author}</Typography>
                             </Link>
-                            { rating >= 0 && <Rating
+                            {rating >= 0 && <Rating
                                 name="text-feedback"
                                 value={rating}
                                 readOnly
                                 size="small"
                                 precision={0.5}
                                 emptyIcon={<StarIcon fontSize="inherit"/>}
-                            /> }
+                            />}
                             <Typography variant="body1">
                                 {description}
                             </Typography>
@@ -101,14 +112,19 @@ const BookDetails = () => {
                             <ListItem sx={{width:'100%'}}>
                                 <Typography sx={{width: '30%'}} variant="h6">Reviews</Typography>
                                 {user && user.type === 'user' && !newReviewForm && <Box sx={{width: '70%', textAlign: 'right'}}>
-                                    <Fab variant="extended" size="small" aria-label="add" onClick={() => setNewReviewForm(true)} sx={{margin:'10px', alignContent: 'right', alignItems: 'right', textAlign: 'right'}}>
+                                    {!reviewed && <Fab variant="extended" size="small" aria-label="add"
+                                          onClick={() => setNewReviewForm(true)} sx={{margin: '10px', alignContent: 'right', alignItems: 'right', textAlign: 'right'}}>
                                         <AddIcon/>
                                         review
-                                    </Fab>
+                                    </Fab>}
+                                    {reviewed && <Fab variant="extended" disabled size="small" aria-label="add" sx={{margin: '10px', alignContent: 'right', alignItems: 'right', textAlign: 'right'}}>
+                                        <DoneIcon/>
+                                        reviewed
+                                    </Fab>}
                                 </Box>}
                             </ListItem>
                             <Divider/>
-                            {newReviewForm && <NewReview book_id={+id} discardHandler={discardHandler} getReviews={getReviews}/>}
+                            {newReviewForm && <NewReview book_id={+id} discardHandler={discardHandler} getReviews={getReviews} reviewed={reviewedFunc}/>}
                             {reviews && reviews.map(review =>
                                 <Review key={review.id} reviewObj={review} type={user ? user.type: ''} getReviews={getReviews}/>
                             )}

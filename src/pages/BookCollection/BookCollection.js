@@ -3,10 +3,11 @@ import {useSelector} from "react-redux";
 import {Pagination} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import {BOOKS_PER_PAGE, LIST_TYPES} from "constants/constants";
 import api from "api/api";
+import EmptyState from "components/Layout/EmptyState";
 import BookList from "components/BookList";
 import Filter from "components/Filter";
-import {BOOKS_PER_PAGE} from "constants/constants";
 
 const BookCollection = () => {
     const user = useSelector((state) => state.authReducer.user);
@@ -15,7 +16,6 @@ const BookCollection = () => {
     const [sort, setSort] = useState('');
     const [genres, setGenres] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
-
 
     useEffect(() => {
         api.getCollectionForUser(user.username, page, genres, sort).then(res => {
@@ -30,6 +30,7 @@ const BookCollection = () => {
         setGenres(genresParam);
         api.getCollectionForUser(user.username, page, genresParam, sortParam).then(res => {
             setBooks(res.books);
+            setPage(1);
             setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     }
@@ -54,14 +55,15 @@ const BookCollection = () => {
                     <Filter applyHandler={applyHandler}/>
                 </Grid>
                 <Grid item xs={12} sm={12} md={10}>
-                    <BookList books={books} getCollection={getCollection}/>
+                    {books && books.length > 0 && <BookList books={books} getCollection={getCollection} type={LIST_TYPES.COLLECTION}/>}
+                    {(!books || books.length === 0) && <EmptyState/>}
                 </Grid>
             </Grid>
-            <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+            {books && books.length > 0 && <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
                 <Grid item xs={3}>
                     <Pagination count={totalPages} page={page} onChange={pageHandler}/>
                 </Grid>
-            </Grid>
+            </Grid>}
         </Box>
     );
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from 'prop-types';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {Button, Chip, Fab, Link, Paper, Rating, Stack} from "@mui/material";
@@ -10,14 +10,14 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarIcon from '@mui/icons-material/Star';
-import api from 'api/api'
+import api from 'api/api';
+import {LIST_TYPES} from "constants/constants";
 import classes from "./Book.module.scss";
 
-const Book = ({book, getCollection}) => {
+const Book = ({book, getCollection, type}) => {
     const navigate = useNavigate();
     const {id, title, author, genres, photo, description, rating, numberOfReviews} = book;
     const user = useSelector(state => state.authReducer.user);
-    const location = useLocation();
     const [favorite, setFavorite] = useState(false);
 
     useEffect(() => {
@@ -29,13 +29,13 @@ const Book = ({book, getCollection}) => {
     }, [])
 
     const favoriteHandler = () => {
-        if (location.pathname === '/books' && favorite) {
+        if (type === LIST_TYPES.BOOK_LIST && favorite) {
             api.removeBookFromCollection(user.username, id).then(res => setFavorite(false));
         }
-        else if (location.pathname === '/books' && !favorite) {
+        else if (type === LIST_TYPES.BOOK_LIST && !favorite) {
             api.addBookToCollection(id, title, author, genres, rating, numberOfReviews, photo, description, user.username).then(res => setFavorite(true));
         }
-        else if (location.pathname === '/collections/id'){
+        else if (type === LIST_TYPES.COLLECTION){
             api.removeBookFromCollection(user.username, id).then(res => getCollection());
         }
     }
@@ -66,8 +66,8 @@ const Book = ({book, getCollection}) => {
                 <Stack direction="row" width="100%">
                     {user && user.type === 'user' && <Box display="flex" alignItems="flex-end" justifyContent="flex-end" margin="5px" marginRight="10px" width="100%">
                         <Fab size="small" aria-label="like" onClick={favoriteHandler}>
-                            {location.pathname === '/books' && <FavoriteIcon fontSize="small" sx={{color: favorite ? 'red' : 'inherit'}}/>}
-                            {location.pathname === '/collections/id' && <DeleteIcon fontSize="small"/>}
+                            {type === LIST_TYPES.BOOK_LIST && <FavoriteIcon fontSize="small" sx={{color: favorite ? 'red' : 'inherit'}}/>}
+                            {type === LIST_TYPES.COLLECTION && <DeleteIcon fontSize="small"/>}
                         </Fab>
                     </Box>}
                 </Stack>
@@ -89,6 +89,7 @@ Book.propTypes = {
         rating: PropTypes.number.isRequired,
         numberOfReviews: PropTypes.number
     }),
+    type: PropTypes.string.isRequired,
     getCollection: PropTypes.func
 }
 

@@ -8,9 +8,9 @@ const getAuthorById = id => {
 }
 
 const getBookById = id => {
-    const books = mockBooks.filter(b => b.id === id);
+    const book = mockBooks.find(b => b.id === id);
     return new Promise((res, rej) => {
-        res(books[0]);
+        res(book);
     })
 }
 
@@ -54,6 +54,14 @@ const getReviews = book_id => {
     return new Promise((res, rej) => {
         res(mockReviews.filter(review => review.book_id === book_id)
             .sort((r1, r2) => new Date(r2.date_reviewed) - new Date(r1.date_reviewed)));
+    });
+}
+
+const checkIfReviewed = (user, book_id) => {
+    const review = mockReviews.find(r => r.book_id === book_id && r.user === user);
+    console.log(review);
+    return new Promise((res, rej) => {
+        res(review);
     });
 }
 
@@ -133,6 +141,7 @@ export default {
     getBookById,
     getBooks,
     getReviews,
+    checkIfReviewed,
     addReview,
     deleteReview,
     getCollectionForUser,
