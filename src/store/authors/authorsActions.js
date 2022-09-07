@@ -1,4 +1,4 @@
-import api from "api/api";
+import api from "api/api_authors";
 
 export const fetchAuthorSuccess = data => ({
     type: "FETCH_AUTHOR",
