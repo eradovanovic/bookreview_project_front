@@ -10,11 +10,10 @@ const Author = ({author}) => {
         <Box sx={{width: "100%"}}>
             <Stack direction="row" sx={{width: '100%', display: 'flex', alignItems:'center'}}>
                 <Stack direction="row" sx={{width: '80%', display: 'flex', alignItems:'center', padding: '5px', margin: '5px'}} spacing={2}>
-                    <Avatar alt="Travis Howard" src={author.photo}/>
+                    <Avatar alt="Author" src={author.photo}/>
                     <Link href={`/authors/${author.id}`} color="#000" underline="hover">
                         <Typography variant="subtitle1">{author.name} {author.surname}</Typography>
                     </Link>
-
                 </Stack>
                 <Stack direction="row" sx={{display: 'flex', alignItems:'center', justifyContent: 'flex-end'}}>
                         <Typography variant="subtitle1" sx={{display: 'flex', alignItems:'center'}}> <BookIcon/> 22 books</Typography>

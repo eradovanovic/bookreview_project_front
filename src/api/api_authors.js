@@ -1,4 +1,4 @@
-import {mockAuthors} from "./mockAuthors";
+import {mockAuthors, mockBooks} from "./mockAuthors";
 
 const getAuthorById = id => {
     const authors = mockAuthors.filter(a => a.id === id);
@@ -13,9 +13,17 @@ const getAuthors = () => {
     })
 }
 
+const getBooksByAuthor = id => {
+    const books = mockBooks.filter(b => b.author_id === id);
+    return new Promise((res, rej) => {
+        res(books);
+    })
+}
+
 const api = {
     getAuthorById,
-    getAuthors
+    getAuthors,
+    getBooksByAuthor
 }
 
 export default api;
