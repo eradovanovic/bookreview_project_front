@@ -7,3 +7,18 @@ export const SORT = {
     RATING_ASC: 'RATING_ASC',
     RATING_DESC: 'RATING_DESC'
 }
+
+export const LIST_TYPES = {
+    BOOK_LIST: 'BOOK_LIST',
+    COLLECTION: 'COLLECTION'
+}
+
+export const names = [
+    {id:1, name:'drama'},
+    {id:2, name:'crime'},
+    {id:3, name:'thriller'},
+    {id:4, name:'romance'},
+    {id:5, name:'history'},
+    {id:6, name:'fiction'},
+    {id:7, name:'comedy'}
+];
