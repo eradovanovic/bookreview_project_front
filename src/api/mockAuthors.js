@@ -68,7 +68,7 @@ export const mockBooks = [
         id:3,
         title: 'C Book 3' ,
         author_id: 1,
-        author: 'Author 3',
+        author: 'Sally Rooney',
         genres: [
             {id: 6, name: 'fiction'}
         ],
@@ -81,7 +81,7 @@ export const mockBooks = [
         id:4,
         title: 'B Book 4',
         author_id: 1,
-        author: 'Author 4',
+        author: 'Sally Rooney',
         genres: [
             {id: 1, name: 'drama'}
         ],
@@ -94,7 +94,7 @@ export const mockBooks = [
         id:5,
         title: 'H Book 5',
         author_id: 1,
-        author: 'Author 5',
+        author: 'Sally Rooney',
         genres: [
             {id: 6, name: 'fiction'},
             {id: 3, name: 'thriller'}
@@ -108,7 +108,7 @@ export const mockBooks = [
         id:6,
         title: 'E Book 6',
         author_id: 1,
-        author: 'Author 6',
+        author: 'Sally Rooney',
         genres: [
             {id: 3, name: 'thriller'}
         ],
@@ -121,7 +121,7 @@ export const mockBooks = [
         id:7,
         title: 'P Book 7' ,
         author_id: 1,
-        author: 'Author 7',
+        author: 'Sally Rooney',
         genres: [
             {id: 1, name: 'drama'}
         ],
@@ -134,7 +134,7 @@ export const mockBooks = [
         id:8,
         title: 'M Book 8',
         author_id: 3,
-        author: 'Author 8',
+        author: 'Author 3',
         genres: [
             {id: 4, name: 'romance'},
             {id: 5, name: 'history'}
@@ -148,7 +148,7 @@ export const mockBooks = [
         id:9,
         title: 'W Book 9',
         author_id: 1,
-        author: 'Author 9',
+        author: 'Sally Rooney',
         genres: [
             {id: 2, name: 'crime'},
             {id: 3, name: 'thriller'}

@@ -11,7 +11,7 @@ const Author = ({author}) => {
             <Stack direction="row" sx={{width: '100%', display: 'flex', alignItems:'center'}}>
                 <Stack direction="row" sx={{width: '80%', display: 'flex', alignItems:'center', padding: '5px', margin: '5px'}} spacing={2}>
                     <Avatar alt="Author" src={author.photo}/>
-                    <Link href={`/authors/${author.id}`} color="#000" underline="hover">
+                    <Link color="#000" href={`/authors/${author.id}`} underline="hover">
                         <Typography variant="subtitle1">{author.name} {author.surname}</Typography>
                     </Link>
                 </Stack>
