@@ -4,7 +4,8 @@ export const mockAuthors = [
         name: 'Sally',
         surname: 'Rooney',
         biography: 'Sally Rooney was born in 1991 and lives in Dublin, where she graduated from Trinity College. Her work has appeared in Granta, The Dublin Review, The White Review, The Stinging Fly, and the Winter Pages anthology.',
-        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg'
+        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg',
+        bookNum: 7
 
     },
     {
@@ -12,7 +13,9 @@ export const mockAuthors = [
         name: 'Name2',
         surname: 'Surname2',
         biography: 'Sally Rooney was born in 1991 and lives in Dublin, where she graduated from Trinity College. Her work has appeared in Granta, The Dublin Review, The White Review, The Stinging Fly, and the Winter Pages anthology.',
-        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg'
+        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg',
+        bookNum: 4
+
 
     },
     {
@@ -20,15 +23,16 @@ export const mockAuthors = [
         name: 'Name3',
         surname: 'Surname3',
         biography: 'Sally Rooney was born in 1991 and lives in Dublin, where she graduated from Trinity College. Her work has appeared in Granta, The Dublin Review, The White Review, The Stinging Fly, and the Winter Pages anthology.',
-        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg'
-
+        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg',
+        bookNum: 2
     },
     {
         id:4,
         name: 'Name4',
         surname: 'Surname4',
         biography: 'Sally Rooney was born in 1991 and lives in Dublin, where she graduated from Trinity College. Her work has appeared in Granta, The Dublin Review, The White Review, The Stinging Fly, and the Winter Pages anthology.',
-        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg'
+        photo: 'https://images.gr-assets.com/authors/1534007127p5/15860970.jpg',
+        bookNum: 0
 
     }
 ];

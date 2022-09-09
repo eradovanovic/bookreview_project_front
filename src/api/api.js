@@ -21,7 +21,7 @@ const getBooks = (page, genres, sortBy) => {
 const filterAndSortBooks = (books, page, genres, sortBy) => {
     let filteredBooks = [...books];
     if (genres && genres.length) {
-        filteredBooks = books.filter((book)=>{
+        filteredBooks = books.filter((book) => {
             return book.genres.map(genre => genre.name).some(g => genres.includes(g));
         });
     }
@@ -145,6 +145,13 @@ const getAuthors = page => {
     })
 }
 
+const getBooksByAuthor = (id, page) => {
+    const books = mockBooks.filter(b => b.author_id === id);
+    return new Promise((res, rej) => {
+        res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length});
+    })
+}
+
 const changeAuthorData = (id, name, surname, photo, biography) => {
     const index = mockAuthors.findIndex(a => a.id === id);
     mockAuthors[index].name = name;
@@ -153,13 +160,6 @@ const changeAuthorData = (id, name, surname, photo, biography) => {
     mockAuthors[index].biography = biography;
     return new Promise((res, rej) => {
         res(mockAuthors[index]);
-    })
-}
-
-const getBooksByAuthor = (id, page) => {
-    const books = mockBooks.filter(b => b.author_id === id);
-    return new Promise((res, rej) => {
-        res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length});
     })
 }
 

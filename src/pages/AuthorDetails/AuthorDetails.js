@@ -51,7 +51,8 @@ const AuthorDetails = () => {
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.up('md'));
     const [formState, setFormState] = useState(initialState);
-    const {name, surname, biography, photo} = currentAuthor;
+    const [errorMessage, setErrorMessage] = useState("");
+    const {name, surname, biography, photo, bookNum} = currentAuthor;
 
     useEffect(()=>{
         if(id != null ) {
@@ -98,15 +99,21 @@ const AuthorDetails = () => {
     }, [currentAuthor]);
 
     const changeAuthorDataHandler = () => {
-        api.changeAuthorData(+id, formState.name.value, formState.surname.value, formState.photo.value, formState.biography.value).then(res => {
-            dispatch(fetchAuthor(res.id));
-        })
-        setEditable(false);
+        if (!formState.name.error) {
+            api.changeAuthorData(+id, formState.name.value, formState.surname.value, formState.photo.value, formState.biography.value).then(res => {
+                dispatch(fetchAuthor(res.id));
+            });
+            setErrorMessage("");
+            setEditable(false);
+        }
+        else {
+            setErrorMessage("Author name is required!");
+        }
     }
 
     const inputHandler = event => {
         const {name , value} = event.target;
-        const error = value.trim() === "";
+        const error = name === "name" && value.trim() === "";
         setFormState( prevState => ({
             ...prevState,
             [name] : {"value": value, "error": error}
@@ -126,14 +133,14 @@ const AuthorDetails = () => {
                 <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
                     <Grid container columns={{xs: 12, sm: 12, md: 12}}>
                         <Grid item xs={12} sm={4} md={12}>
-                            {user.type === "admin" && !editable && <IconButton color="inherit" aria-label="editAuthor" onClick={() => setEditable(true)} component="label">
+                            {user.type === "admin" && !editable && <IconButton aria-label="editAuthor" onClick={() => setEditable(true)} component="label">
                                 <EditIcon/>
                             </IconButton>}
                             {!editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
                                 <Avatar alt="Author" src={photo} sx={{width: 80, height: 80}}/>
                                 <Typography variant="h6">{name} {surname}</Typography>
                                 <Typography variant="subtitle1" sx={{display: 'flex', alignItems: 'center'}}>
-                                    <BookIcon/> 22 books</Typography>
+                                    <BookIcon/> {bookNum} books</Typography>
                             </Stack>}
                             {editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
                                 <Badge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -168,6 +175,9 @@ const AuthorDetails = () => {
                             <Button variant="contained" sx={{margin: '5px', borderRadius: '25px'}} onClick={changeAuthorDataHandler}>
                                 Save changes
                             </Button>
+                        </Grid>}
+                        {errorMessage && <Grid item xs={12} sm={12} md={12} sx={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
+                            <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>
                         </Grid>}
                     </Grid>
                 </Paper>
