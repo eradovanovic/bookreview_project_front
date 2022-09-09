@@ -15,7 +15,6 @@ import Button from '@mui/material/Button';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import {InputBase} from "@mui/material";
-import ButtonBase from "@mui/material/ButtonBase";
 import {Outlet, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "store/auth/authActions";
@@ -88,22 +87,11 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
@@ -191,12 +179,9 @@ function DrawerAppBar(props) {
 
                     </Box>
                     <Search sx={{ display: { xs: 'block', sm: 'block', md: 'block'} }}>
-                        <SearchIconWrapper>
-                            <ButtonBase>
-                                <SearchIcon/>
-                            </ButtonBase>
-                        </SearchIconWrapper>
-
+                        <IconButton type="button" sx={{ color: 'white'}} aria-label="search" onClick={() => navigate('/search')}>
+                            <SearchIcon />
+                        </IconButton>
                         <StyledInputBase
                             placeholder="Search..."
                             inputProps={{ 'aria-label': 'search' }}
