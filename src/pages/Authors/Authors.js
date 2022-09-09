@@ -5,7 +5,8 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import api from "api/api_authors";
+import api from "api/api";
+import {AUTHORS_PER_PAGE} from "constants/constants";
 import Author from "components/Author";
 import classes from "./Authors.module.scss";
 
@@ -19,7 +20,7 @@ const Authors = () => {
     useEffect(() => {
         api.getAuthors(page).then(res => {
             setAuthors(res.authors);
-            setTotalPages(Math.ceil(res.total / 3));
+            setTotalPages(Math.ceil(res.total / AUTHORS_PER_PAGE));
 
         });
     }, []);
@@ -27,7 +28,7 @@ const Authors = () => {
     useEffect(() => {
         api.getAuthors(page).then(res => {
             setAuthors(res.authors);
-            setTotalPages(Math.ceil(res.total / 3));
+            setTotalPages(Math.ceil(res.total / AUTHORS_PER_PAGE));
         });
     },[page]);
 

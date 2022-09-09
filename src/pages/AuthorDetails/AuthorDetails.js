@@ -14,9 +14,10 @@ import BookIcon from "@mui/icons-material/Book";
 import EditIcon from '@mui/icons-material/Edit';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import {fetchAuthor} from "store/authors/authorsActions";
-import api from 'api/api_authors';
-import {BOOKS_PER_PAGE} from "constants/constants";
-import Book from 'components/Book';
+import api from 'api/api';
+import {BOOKS_PER_PAGE, LIST_TYPES} from "constants/constants";
+import EmptyState from "components/Layout/EmptyState";
+import BookList from "components/BookList";
 import classes from "./AuthorDetails.module.scss";
 
 const initialState = {
@@ -49,20 +50,8 @@ const AuthorDetails = () => {
     const [totalPages, setTotalPages] = useState(1);
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.up('md'));
-    const matchesSM= useMediaQuery(theme.breakpoints.up('sm'));
     const [formState, setFormState] = useState(initialState);
     const {name, surname, biography, photo} = currentAuthor;
-
-    let height;
-    if (matchesMD) {
-        height = '1550px';
-    }
-    else if (matchesSM) {
-        height = '1550px';
-    }
-    else{
-        height = '2750px';
-    }
 
     useEffect(()=>{
         if(id != null ) {
@@ -210,7 +199,8 @@ const AuthorDetails = () => {
                             <Typography variant="h6" sx={{textAlign:'center'}}>{name} {surname}'s books</Typography>
                         </ListItem>
                         <Divider/>
-                        {books && books.length > 0 && books.map(book => <Book key={book.id} book={book}/>)}
+                        {books && books.length > 0 && <BookList books={books} type={LIST_TYPES.BOOK_LIST}/>}
+                        {!books || books.length === 0 && <EmptyState title="No books found!" subtitle="This author has no books in our database!"/>}
                     </List>
                 </Grid>
             </Grid>
