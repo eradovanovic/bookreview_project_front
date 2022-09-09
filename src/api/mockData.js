@@ -31,8 +31,8 @@ export const mockBooks = [
             {id: 6, name: 'fiction'},
             {id: 4, name: 'romance'}
         ],
-        rating: 3.74,
-        numberOfReviews: 20,
+        rating: 4.00,
+        numberOfReviews: 3,
         description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
         photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
     },
@@ -154,6 +154,7 @@ export const mockBooks = [
 export const mockReviews = [
     {
         id: 1,
+        book_id: 1,
         user: 'user1',
         date_reviewed: '03-31-18 18:53',
         avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
@@ -162,18 +163,69 @@ export const mockReviews = [
     },
     {
         id: 2,
+        book_id: 1,
         user: 'user2',
-        date_reviewed: '03-31-18 18:53',
+        date_reviewed: '03-12-18 18:53',
         avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
         rating: 3,
         review: "Some review text"
     },
     {
         id: 3,
+        book_id: 1,
         user: 'user3',
-        date_reviewed: '03-31-18 18:53',
+        date_reviewed: '04-25-18 18:53',
         avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
         rating: 4,
         review: "Some review text"
+    }
+];
+
+export const mockCollection = [
+    {
+        book: {
+            id:1,
+            title: 'Beautiful World, Where Are You',
+            author: 'Sally Rooney',
+            genres: [
+                {id: 6, name: 'fiction'},
+                {id: 4, name: 'romance'}
+            ],
+            rating: 3.74,
+            numberOfReviews: 20,
+            description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
+            photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
+        },
+        username: 'user1'
+    },
+    {
+        book: {
+            id: 4,
+            title: 'B Book 4',
+            author: 'Author 4',
+            genres: [
+                {id: 1, name: 'drama'}
+            ],
+            rating: 4.05,
+            numberOfReviews: 8,
+            description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
+            photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
+        },
+        username: 'user1'
+    },
+    {
+        book: {
+            id:3,
+            title: 'C Book 3' ,
+            author: 'Author 3',
+            genres: [
+                {id: 6, name: 'fiction'}
+            ],
+            rating: 3.50,
+            numberOfReviews: 25,
+            description: 'Alice, a novelist, meets Felix, who works in a warehouse, and asks him if he’d like to travel to Rome with her. In Dublin, her best friend, Eileen, is getting over a break-up and slips back into flirting with Simon, a man she has known since childhood. ',
+            photo: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg'
+        },
+        username: 'user1'
     }
 ];
