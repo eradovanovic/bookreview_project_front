@@ -133,7 +133,7 @@ const AuthorDetails = () => {
                 <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
                     <Grid container columns={{xs: 12, sm: 12, md: 12}}>
                         <Grid item xs={12} sm={4} md={12}>
-                            {user.type === "admin" && !editable && <IconButton aria-label="editAuthor" onClick={() => setEditable(true)} component="label">
+                            {user && user.type === "admin" && !editable && <IconButton aria-label="editAuthor" onClick={() => setEditable(true)} component="label">
                                 <EditIcon/>
                             </IconButton>}
                             {!editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
