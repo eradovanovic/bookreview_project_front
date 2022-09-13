@@ -49,7 +49,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchField = () => {
     const dispatch = useDispatch();
-    const location = useLocation();
     const navigate = useNavigate();
     const delayedUpdate = useCallback(_.debounce(value => dispatch(search(value)), 300), []);
     const [searchValueShown, setSearchValueShown] = useState('');
@@ -61,13 +60,13 @@ const SearchField = () => {
     }
 
     const searchHandler = () => {
-        navigate('/search')
+        navigate(`/search/${searchValueShown}`);
     }
 
     return <Search sx={{ display: { xs: 'inline', sm: 'inline', md: 'inline'}}}>
             <Autocomplete
                 freeSolo
-                options={location.pathname !== '/search' ? books : []}
+                options={books}
                 getOptionLabel={option => option.title}
                 renderOption={(props, option) => (
                     <li {...props} >

@@ -171,6 +171,11 @@ const search = (input) => {
     return new Promise((res, rej) => res(books));
 }
 
+const searchPagination = (input, page) => {
+    const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
+    return new Promise((res, rej) => res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length}));
+}
+
 export default {
     getBookById,
     getBooks,
@@ -186,5 +191,6 @@ export default {
     getAuthors,
     getBooksByAuthor,
     changeAuthorData,
-    search
+    search,
+    searchPagination
 };
