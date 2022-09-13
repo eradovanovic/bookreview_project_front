@@ -47,7 +47,7 @@ const Books = () => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={10}>
                     {books && books.length > 0 && <BookList books={books} type={LIST_TYPES.BOOK_LIST}/>}
-                    {(!books || books.length === 0) && <EmptyState/>}
+                    {(!books || books.length === 0) && <EmptyState title="No books found!" subtitle="Try changing the filters or search term!"/>}
                 </Grid>
             </Grid>
             {books && books.length > 0 && <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">

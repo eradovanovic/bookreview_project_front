@@ -1,11 +1,7 @@
-import {mockAuthor, mockBooks, mockCollection, mockReviews} from "./mockData";
-import {BOOKS_PER_PAGE, SORT} from "../constants/constants";
+import {mockBooks, mockCollection, mockReviews} from "./mockData";
+import {AUTHORS_PER_PAGE, BOOKS_PER_PAGE, SORT} from "../constants/constants";
+import {mockAuthors} from "./mockData";
 
-const getAuthorById = id => {
-    return new Promise((res, rej) => {
-        res(mockAuthor);
-    })
-}
 
 const getBookById = id => {
     const book = mockBooks.find(b => b.id === id);
@@ -25,7 +21,7 @@ const getBooks = (page, genres, sortBy) => {
 const filterAndSortBooks = (books, page, genres, sortBy) => {
     let filteredBooks = [...books];
     if (genres && genres.length) {
-        filteredBooks = books.filter((book)=>{
+        filteredBooks = books.filter((book) => {
             return book.genres.map(genre => genre.name).some(g => genres.includes(g));
         });
     }
@@ -136,8 +132,38 @@ const removeBookFromCollection = (username, book_id) => {
     return new Promise((res, rej) => res(mockCollection));
 }
 
+const getAuthorById = id => {
+    const author = mockAuthors.find(a => a.id === id);
+    return new Promise((res, rej) => {
+        res(author ? author : mockAuthors[0]);
+    })
+}
+
+const getAuthors = page => {
+    return new Promise((res, rej) => {
+        res({authors: mockAuthors.slice((page - 1) * AUTHORS_PER_PAGE, page * AUTHORS_PER_PAGE), total: mockAuthors.length});
+    })
+}
+
+const getBooksByAuthor = (id, page) => {
+    const books = mockBooks.filter(b => b.author_id === id);
+    return new Promise((res, rej) => {
+        res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length});
+    })
+}
+
+const changeAuthorData = (id, name, surname, photo, biography) => {
+    const index = mockAuthors.findIndex(a => a.id === id);
+    mockAuthors[index].name = name;
+    mockAuthors[index].surname = surname;
+    mockAuthors[index].photo = photo;
+    mockAuthors[index].biography = biography;
+    return new Promise((res, rej) => {
+        res(mockAuthors[index]);
+    })
+}
+
 export default {
-    getAuthorById,
     getBookById,
     getBooks,
     getReviews,
@@ -147,5 +173,9 @@ export default {
     getCollectionForUser,
     checkBookInCollection,
     addBookToCollection,
-    removeBookFromCollection
+    removeBookFromCollection,
+    getAuthorById,
+    getAuthors,
+    getBooksByAuthor,
+    changeAuthorData
 };
