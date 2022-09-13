@@ -24,7 +24,7 @@ const BookDetails = () => {
     const dispatch = useDispatch();
     const currentBook = useSelector((state) => state.booksReducer.currentBook);
     const user = useSelector((state) => state.authReducer.user);
-    const {title, author, description, photo, rating, genres, numberOfReviews} = currentBook;
+    const {title, author_id, author, description, photo, rating, genres, numberOfReviews} = currentBook;
     const [reviews, setReviews] = useState([]);
     const [newReviewForm, setNewReviewForm] = useState(false);
     const [reviewed, setReviewed] = useState(false);
@@ -79,7 +79,7 @@ const BookDetails = () => {
                     <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
                         <Box sx={{textAlign:'center', height: '85%'}}>
                             <Typography variant="h6">{title}</Typography>
-                            <Link href="/authors/detail" color="#000" underline="hover">
+                            <Link href={`/authors/${author_id}`} color="#000" underline="hover">
                                 <Typography variant="subtitle1">{author}</Typography>
                             </Link>
                             {rating >= 0 && <Rating
