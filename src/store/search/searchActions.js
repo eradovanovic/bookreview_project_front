@@ -1,4 +1,4 @@
-import api from "api/api_copy";
+import api from "api/api";
 
 export const results = data => ({
     type: "RESULTS",

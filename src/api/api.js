@@ -163,6 +163,14 @@ const changeAuthorData = (id, name, surname, photo, biography) => {
     })
 }
 
+const search = (input) => {
+    if (input.trim() === "") {
+        return new Promise((res, rej) => res([]));
+    }
+    const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
+    return new Promise((res, rej) => res(books));
+}
+
 export default {
     getBookById,
     getBooks,
@@ -177,5 +185,6 @@ export default {
     getAuthorById,
     getAuthors,
     getBooksByAuthor,
-    changeAuthorData
+    changeAuthorData,
+    search
 };
