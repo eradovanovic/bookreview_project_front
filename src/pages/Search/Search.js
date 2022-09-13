@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {Box, Pagination, Grid} from "@mui/material";
 import BookList from "components/BookList";
 import EmptyState from "components/Layout/EmptyState";
@@ -14,16 +14,17 @@ const Search = () => {
     const [books, setBooks] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
 
+    const [searchParams] = useSearchParams();
     useEffect(() => {
-        api.searchPagination(input, page).then(res => {
+        api.searchPagination(searchParams.get('query'), page).then(res => {
             setBooks(res.books);
             setPage(1);
             setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
-    },[input]);
+    },[input, searchParams]);
 
     useEffect(() => {
-        api.searchPagination(input, page).then(res => {
+        api.searchPagination(searchParams.get('query'), page).then(res => {
             setBooks(res.books);
             setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
@@ -31,7 +32,7 @@ const Search = () => {
 
     const pageHandler = (event, value) => {
         setPage(value);
-        api.searchPagination(input, page).then(res => {
+        api.searchPagination(searchParams.get('query'), page).then(res => {
             setBooks(res.books);
         });
     }

@@ -60,7 +60,10 @@ const SearchField = () => {
     }
 
     const searchHandler = () => {
-        navigate(`/search/${searchValueShown}`);
+        navigate({
+            pathname: '/search',
+            search: `?query=${searchValueShown}`
+        });
     }
 
     return <Search sx={{ display: { xs: 'inline', sm: 'inline', md: 'inline'}}}>
