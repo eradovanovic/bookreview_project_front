@@ -17,13 +17,6 @@ const Authors = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    useEffect(() => {
-        api.getAuthors(page).then(res => {
-            setAuthors(res.authors);
-            setTotalPages(Math.ceil(res.total / AUTHORS_PER_PAGE));
-
-        });
-    }, []);
 
     useEffect(() => {
         api.getAuthors(page).then(res => {
