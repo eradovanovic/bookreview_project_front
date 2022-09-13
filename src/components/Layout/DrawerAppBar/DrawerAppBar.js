@@ -11,11 +11,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {logout} from "store/auth/authActions";
+import {clear} from "store/search/searchActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
 import SearchField from "components/SearchBar/SearchField";
 import classes from './DrawerAppBar.module.scss';
@@ -76,6 +76,7 @@ function DrawerAppBar(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const {user} = useSelector(state => state.authReducer);
 
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -88,6 +89,7 @@ function DrawerAppBar(props) {
             localStorage.removeItem("token");
             dispatch(logout());
         }
+        dispatch(clear());
         navigate(item.path);
     }
 

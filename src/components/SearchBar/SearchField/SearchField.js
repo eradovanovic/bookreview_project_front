@@ -1,16 +1,14 @@
 import {useCallback, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 import _ from 'lodash';
 import {Autocomplete, InputBase, InputAdornment} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import {alpha, styled} from "@mui/material/styles";
-import {search} from "store/search/searchActions";
+import {clear, search} from "store/search/searchActions";
 import SearchResult from "../SearchResult";
-import {useLocation, useNavigate} from "react-router-dom";
 import classes from './SearchField.module.scss';
-
-
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -60,6 +58,7 @@ const SearchField = () => {
     }
 
     const searchHandler = () => {
+        dispatch(clear());
         navigate({
             pathname: '/search',
             search: `?query=${searchValueShown}`
@@ -69,6 +68,7 @@ const SearchField = () => {
     return <Search sx={{ display: { xs: 'inline', sm: 'inline', md: 'inline'}}}>
             <Autocomplete
                 freeSolo
+                id="autocomplete"
                 options={books}
                 getOptionLabel={option => option.title}
                 renderOption={(props, option) => (
@@ -76,6 +76,9 @@ const SearchField = () => {
                         <SearchResult sx={{display: 'block'}} option={option}/>
                     </li>
                 )}
+                onInputChange={(event, newInputValue) => {
+                    handleChangeText(event)
+                }}
                 renderInput={params => {
                     const {InputLabelProps,InputProps,...rest} = params;
                     return <StyledInputBase
@@ -84,7 +87,7 @@ const SearchField = () => {
                         variant="standard"
                         label="Search..."
                         placeholder="Search..."
-                        onChange={handleChangeText}
+                        value={searchValueShown}
                         startAdornment={
                             <InputAdornment position="start">
                                 <IconButton
@@ -96,7 +99,7 @@ const SearchField = () => {
                         }
                     />
                 }
-                }/>
+            }/>
     </Search>
 }
 

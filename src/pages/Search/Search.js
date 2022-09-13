@@ -43,7 +43,7 @@ const Search = () => {
                 {(!books || books.length === 0) && <EmptyState title="No books found!" subtitle="Try changing the filters or search term!"/>}
             </Grid>
         </Grid>
-        { <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
+        {books && books.length > 0 && <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
             <Grid item xs={3}>
                 <Pagination count={totalPages} page={page} onChange={pageHandler}/>
             </Grid>

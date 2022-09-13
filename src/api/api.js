@@ -164,7 +164,7 @@ const changeAuthorData = (id, name, surname, photo, biography) => {
 }
 
 const search = (input) => {
-    if (input.trim() === "") {
+    if (!input || input.trim() === "") {
         return new Promise((res, rej) => res([]));
     }
     const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
