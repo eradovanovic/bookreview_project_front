@@ -130,8 +130,6 @@ function DrawerAppBar(props) {
 
     const handleRoutePress = item => {
         if (item.label === 'Logout') {
-            localStorage.removeItem("user");
-            localStorage.removeItem("token");
             dispatch(logout());
         }
         if (item.label === 'Profile'){

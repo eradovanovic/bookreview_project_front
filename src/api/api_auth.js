@@ -60,7 +60,12 @@ const updateUser = (username, name, surname, email, photo) => {
 }
 
 const changePassword = (username, password) => {
-
+    const index = mockUsers.findIndex(u => u.username === username);
+    mockUsers[index].password = password;
+    console.log(mockUsers[index]);
+    return new Promise((res, rej) => {
+        res(mockUsers[index]);
+    })
 }
 
 const deleteUser = username => {

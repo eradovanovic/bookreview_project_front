@@ -108,8 +108,6 @@ const Profile = () => {
     const deleteUserHandler = () => {
         api_auth.deleteUser(userProfile.username).then(res => {
             if (isLogged) {
-                localStorage.removeItem("user");
-                localStorage.removeItem("token");
                 dispatch(logout());
             }
             navigate('/');

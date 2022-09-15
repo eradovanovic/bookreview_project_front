@@ -24,6 +24,7 @@ const App = (props) => {
         <Routes>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
+            <Route path='/changePassword' element={<ChangePassword/>}/>
             <Route path='/' element={<DrawerAppBar/>}>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/books' element={<Books/>}/>
@@ -35,7 +36,6 @@ const App = (props) => {
                 <Route path='/collections/:id' element={<BookCollection/>}/>
                 <Route path='/newBook' element={<NewBook/>}/>
                 <Route path='/newAuthor' element={<NewAuthor/>}/>
-                <Route path='/changePassword' element={<ChangePassword/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Route>
         </Routes>

@@ -50,6 +50,8 @@ export const logoutSuccess = () => ({
 });
 
 export const logout = () => dispatch => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     dispatch(logoutSuccess())
 }
 
