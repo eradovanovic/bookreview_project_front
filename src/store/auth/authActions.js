@@ -6,6 +6,11 @@ export const loginSuccess = data => ({
     data: data
 });
 
+export const updateSuccess = data => ({
+    type: "UPDATE",
+    data: data
+});
+
 export const loginFailed = data => ({
     type: "LOGIN_FAILED",
     data: data
@@ -16,11 +21,16 @@ export const registerFailed = data => ({
     data: data
 });
 
+export const updateFailed = data => ({
+    type: "UPDATE_FAILED",
+    data: data
+});
+
 export const login = (username, password) => dispatch => {
     dispatch(logoutSuccess());
     return api.login(username, password)
         .then(data => {
-            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("user", data.user.username);
             localStorage.setItem("token", data.token);
             dispatch(loginSuccess(data));
         }).catch(error => dispatch(loginFailed(error)));
@@ -41,4 +51,11 @@ export const logoutSuccess = () => ({
 
 export const logout = () => dispatch => {
     dispatch(logoutSuccess())
+}
+
+export const update = (username, name, surname, email, photo) => dispatch => {
+    return api.updateUser(username, name, surname, email, photo).then(data => {
+        localStorage.setItem("user", data.username);
+        dispatch(updateSuccess(data));
+    }).catch(error => dispatch(updateFailed(error)));
 }

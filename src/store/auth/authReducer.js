@@ -13,12 +13,24 @@ const authReducer =  (state = initialState, action) => {
                token: action.data.token,
                error: ''
             }
+        case "UPDATE":
+            return {
+                ...state,
+                user: action.data,
+                token: state.token,
+                error: ''
+            }
         case "LOGIN_FAILED":
             return {
                 ...state,
                 error: action.data
             }
         case "REGISTER_FAILED":
+            return {
+                ...state,
+                error: action.data
+            }
+        case "UPDATE_FAILED":
             return {
                 ...state,
                 error: action.data

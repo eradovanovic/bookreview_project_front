@@ -41,7 +41,21 @@ const getUserByUsername = username => {
     })
 }
 
-const updateUser = username => {
+const updateUser = (username, name, surname, email, photo) => {
+    const index = mockUsers.findIndex(u => u.username === username);
+    const user = mockUsers.find(u => email !== mockUsers[index].email && u.email === email);
+    if (!user) {
+        mockUsers[index].name = name;
+        mockUsers[index].surname = surname;
+        mockUsers[index].photo = photo;
+        mockUsers[index].email = email;
+        return new Promise((res, rej) => {
+            res(mockUsers[index]);
+        })
+    }
+    else {
+        return Promise.reject("Updating user's info failed!");
+    }
 
 }
 
