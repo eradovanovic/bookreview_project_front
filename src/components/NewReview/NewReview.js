@@ -9,7 +9,7 @@ import StarIcon from "@mui/icons-material/Star";
 import api from 'api/api'
 import classes from './NewReview.module.scss'
 
-const NewReview = ({book_id, discardHandler, getReviews, reviewed}) => {
+const NewReview = ({book_id, title, discardHandler, getReviews, reviewed}) => {
     const user = useSelector((state) => state.authReducer.user);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
@@ -20,7 +20,7 @@ const NewReview = ({book_id, discardHandler, getReviews, reviewed}) => {
         if (!rating) setError(true);
         else {
             const date_reviewed = new Date(Date.now()).toISOString();
-            api.addReview(user.username, user.photo, book_id, date_reviewed, rating, review).then(res => {
+            api.addReview(user.username, user.photo, book_id, title, date_reviewed, rating, review).then(res => {
                 reviewed(true);
                 getReviews();
             });
@@ -62,6 +62,7 @@ const NewReview = ({book_id, discardHandler, getReviews, reviewed}) => {
 
 NewReview.propTypes = {
     book_id: PropTypes.number,
+    title: PropTypes.string,
     discardHandler: PropTypes.func,
     getReviews: PropTypes.func,
     reviewed: PropTypes.func

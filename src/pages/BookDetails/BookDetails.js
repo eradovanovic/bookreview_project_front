@@ -17,6 +17,7 @@ import api from "api/api";
 import Review from "components/Review";
 import NewReview from "components/NewReview";
 import classes from "./BookDetails.module.scss";
+import {REVIEW_TYPES} from "constants/constants";
 
 
 const BookDetails = () => {
@@ -124,9 +125,9 @@ const BookDetails = () => {
                                 </Box>}
                             </ListItem>
                             <Divider/>
-                            {newReviewForm && <NewReview book_id={+id} discardHandler={discardHandler} getReviews={getReviews} reviewed={reviewedFunc}/>}
+                            {newReviewForm && <NewReview book_id={+id} title={title} discardHandler={discardHandler} getReviews={getReviews} reviewed={reviewedFunc}/>}
                             {reviews && reviews.map(review =>
-                                <Review key={review.id} reviewObj={review} type={user ? user.type: ''} getReviews={getReviews}/>
+                                <Review key={review.id} reviewObj={review} type={user ? user.type: ''} reviewType={REVIEW_TYPES.BOOK_REVIEWS} getReviews={getReviews}/>
                             )}
                         </List>
                     </Grid>

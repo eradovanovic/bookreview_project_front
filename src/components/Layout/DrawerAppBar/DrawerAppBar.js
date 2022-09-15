@@ -47,7 +47,7 @@ const navigationItems = [
     },
     {
         label: 'Profile',
-        path: '/users/id',
+        path: '/users',
         role: [USER]
     },
     {
@@ -134,7 +134,12 @@ function DrawerAppBar(props) {
             localStorage.removeItem("token");
             dispatch(logout());
         }
-        navigate(item.path);
+        if (item.label === 'Profile'){
+            navigate(`${item.path}/${user.username}`)
+        }
+        else {
+            navigate(item.path);
+        }
     }
 
 
