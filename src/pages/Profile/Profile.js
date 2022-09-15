@@ -170,9 +170,9 @@ const Profile = () => {
                                     <Avatar alt="Author" src={userProfile.photo} sx={{width: 80, height: 80}}/>
                                 </Badge>
                                 <Typography variant="h6">{userProfile.username}</Typography>
-                                <TextField label="Name" name="name" defaultValue={userProfile.name} onChange={inputHandler} variant="filled"/>
-                                <TextField label="Surname" name="surname" defaultValue={userProfile.surname} onChange={inputHandler} variant="filled"/>
-                                <TextField label="Email" name="email" defaultValue={userProfile.email} onChange={inputHandler} variant="filled"/>
+                                <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={userProfile.name} onChange={inputHandler} variant="filled"/>
+                                <TextField label="Surname" name="surname" error={formState.surname.error} helperText={formState.surname.error ? 'Surname is required!' : '' } defaultValue={userProfile.surname} onChange={inputHandler} variant="filled"/>
+                                <TextField label="Email" name="email" error={formState.email.error} helperText={formState.email.error ? 'Email is required!' : '' } defaultValue={userProfile.email} onChange={inputHandler} variant="filled"/>
                             </Stack>}
                         </Grid>
                         {editable && <Grid item xs={12} sm={12} md={12} sx={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
