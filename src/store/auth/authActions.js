@@ -1,5 +1,5 @@
 import api from "api/api_auth";
-import {mockUsers} from "../../api/mockAuth";
+import {mockUsers} from "api/mockAuth";
 
 export const loginSuccess = data => ({
     type: "LOGIN",

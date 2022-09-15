@@ -41,10 +41,29 @@ const getUserByUsername = username => {
     })
 }
 
+const updateUser = username => {
+
+}
+
+const changePassword = (username, password) => {
+
+}
+
+const deleteUser = username => {
+    const index = mockUsers.findIndex(user => user.username === username);
+    mockUsers.splice(index, 1);
+    return new Promise((res, rej) => {
+        res(username);
+    })
+}
+
 const api = {
     login,
     register,
-    getUserByUsername
+    getUserByUsername,
+    updateUser,
+    changePassword,
+    deleteUser
 }
 
 export default api;

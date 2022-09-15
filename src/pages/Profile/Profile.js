@@ -14,7 +14,8 @@ import {REVIEW_TYPES} from "constants/constants";
 import api_auth from "api/api_auth";
 import api from "api/api";
 import classes from "./Profile.module.scss";
-
+import ConfirmationDialog from "../../components/Layout/ConfirmationDialog";
+import {logout} from "../../store/auth/authActions";
 
 const initialState = {
     "name": {
@@ -48,6 +49,8 @@ const Profile = () => {
     const [formState, setFormState] = useState(initialState);
     const [errorMessage, setErrorMessage] = useState("");
     const [reviews, setReviews] = useState([]);
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleClose = () => setOpenDialog(false);
 
     useEffect(() => {
         if (user && username === user.username) {
@@ -71,6 +74,20 @@ const Profile = () => {
             setReviews(res);
         })
     }
+
+    const deleteUserHandler = () => {
+        api_auth.deleteUser(userProfile.username).then(res => {
+            if (isLogged) {
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                dispatch(logout());
+            }
+            navigate('/');
+        })
+
+    }
+
+    const closeHandler = () => setOpenDialog(false);
 
     const inputHandler = event => {
         const {name , value} = event.target;
@@ -121,7 +138,8 @@ const Profile = () => {
                                 </Stack>
                             </Grid>}
                             <Grid item xs={12} sm={12} md={isLogged ? 6 : 12} sx={{display: 'flex', justifyContent: {xs: 'center', sm: 'center', md: 'end'}}}>
-                                <Button variant="contained" color="error" sx={{width: {xs: '200px', sm: '200px', md: 'auto'}, margin: '5px', borderRadius: '25px'}}>Delete account</Button>
+                                <Button variant="contained" color="error" sx={{width: {xs: '200px', sm: '200px', md: 'auto'}, margin: '5px', borderRadius: '25px'}} onClick={() => setOpenDialog(true)}>Delete account</Button>
+                                <ConfirmationDialog open={openDialog} closeHandler={closeHandler} deleteHandler={deleteUserHandler}/>
                             </Grid>
                         </Grid>}
                         {errorMessage && <Grid item xs={12} sm={12} md={12} sx={{display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
@@ -129,6 +147,7 @@ const Profile = () => {
                         </Grid>}
                     </Grid>
                 </Paper>
+
             </Box>
             <Grid container columns={{xs: 12, sm: 12, md: 12}} className={classes.gridContainerAuthor} sx={{paddingTop: '15px'}}>
                 <Grid item xs={12} sm={12} md={12}>
