@@ -1,13 +1,15 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useLocation} from "react-router-dom";
 import LoadingScreen from "../components/Layout/LoadingScreen";
-import {loginSuccess} from "../store/auth/authActions";
+import {clearError, loginSuccess} from "../store/auth/authActions";
 import api_auth from "../api/api_auth";
 
 const appInitializer = WrappedComponent => props => {
     const [loaded, setLoaded] = useState(false);
     const {user} = useSelector(state => state.authReducer);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     useEffect(() => {
         const localStorageUser = localStorage.getItem("user");
@@ -22,6 +24,10 @@ const appInitializer = WrappedComponent => props => {
         }, 1000);
 
     }, []);
+
+    useEffect(() => {
+        dispatch(clearError());
+    }, [location.pathname])
 
     return loaded ? <WrappedComponent {...props} /> : <LoadingScreen/>
 }

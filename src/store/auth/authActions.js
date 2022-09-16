@@ -47,10 +47,14 @@ export const logoutSuccess = () => ({
     type: 'CLEAR'
 });
 
+export const clearError = () => ({
+    type: 'CLEAR_ERROR'
+});
+
 export const logout = () => dispatch => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    dispatch(logoutSuccess())
+    dispatch(logoutSuccess());
 }
 
 export const update = (username, name, surname, email, photo) => dispatch => {

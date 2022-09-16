@@ -41,6 +41,11 @@ const authReducer =  (state = initialState, action) => {
                 token: '',
                 error: {}
             }
+        case "CLEAR_ERROR":
+            return {
+                ...state,
+                error: {}
+            }
         default:
             return state;
     }

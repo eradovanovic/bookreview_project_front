@@ -18,7 +18,7 @@ import {InputBase} from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import {Outlet, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "store/auth/authActions";
+import {clearError, logout} from "store/auth/authActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
 import classes from './DrawerAppBar.module.scss';
 
@@ -132,6 +132,7 @@ function DrawerAppBar(props) {
         if (item.label === 'Logout') {
             dispatch(logout());
         }
+        dispatch(clearError());
         if (item.label === 'Profile'){
             navigate(`${item.path}/${user.username}`)
         }
@@ -139,8 +140,6 @@ function DrawerAppBar(props) {
             navigate(item.path);
         }
     }
-
-
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
