@@ -46,6 +46,25 @@ const filterAndSortBooks = (books, page, genres, sortBy) => {
     return {books: filteredBooks.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: filteredBooks.length};
 }
 
+const addBook = (title, author_id, author, genres, description, photo) => {
+    const id = mockBooks.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
+    const bookObj = {
+        id: id,
+        title: title,
+        author_id: author_id,
+        author: author,
+        genres: genres,
+        rating: 0,
+        numberOfReviews: 0,
+        description: description,
+        photo: photo
+    }
+    mockBooks.push(bookObj);
+    return new Promise((res, rej) => {
+        res(bookObj);
+    });
+}
+
 const getReviews = book_id => {
     return new Promise((res, rej) => {
         res(mockReviews.filter(review => review.book_id === book_id)
@@ -87,10 +106,12 @@ const deleteReview = review_id => {
     const index = mockReviews.findIndex(review => review.id === review_id);
     const book_index = mockBooks.findIndex(book => book.id === mockReviews[index].book_id);
 
-    if(mockBooks[book_index].numberOfReviews > 1)
+    if (mockBooks[book_index].numberOfReviews > 1) {
         mockBooks[book_index].rating = (mockBooks[book_index].rating * mockBooks[book_index].numberOfReviews - mockReviews[index].rating) / (mockBooks[book_index].numberOfReviews - 1);
-    else
+    }
+    else {
         mockBooks[book_index].rating = 0;
+    }
 
     mockBooks[book_index].numberOfReviews--;
     mockReviews.splice(index, 1);
@@ -145,6 +166,23 @@ const getAuthors = page => {
     })
 }
 
+const addAuthor = (name, surname, biography, photo) => {
+    const id = mockAuthors.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
+    const authorObj = {
+        id: id,
+        name: name,
+        surname: surname,
+        biography: biography,
+        photo: photo,
+        bookNum: 0,
+    }
+    mockAuthors.push(authorObj);
+    return new Promise((res, rej) => {
+        res(authorObj);
+    });
+}
+
+
 const getBooksByAuthor = (id, page) => {
     const books = mockBooks.filter(b => b.author_id === id);
     return new Promise((res, rej) => {
@@ -166,6 +204,7 @@ const changeAuthorData = (id, name, surname, photo, biography) => {
 export default {
     getBookById,
     getBooks,
+    addBook,
     getReviews,
     checkIfReviewed,
     addReview,
@@ -176,6 +215,7 @@ export default {
     removeBookFromCollection,
     getAuthorById,
     getAuthors,
+    addAuthor,
     getBooksByAuthor,
     changeAuthorData
 };
