@@ -87,11 +87,11 @@ const Profile = () => {
     }, [isLogged, user]);
 
     useEffect(() => {
-        if (error === '') {
+        if (Object.keys(error).length === 0) {
             setEditable(false);
         }
         else {
-            setErrorMessage("Updating user's info failed!");
+            setErrorMessage(error.message);
         }
     }, [user.name, user.surname, user.photo, user.email, error]);
 
@@ -142,11 +142,16 @@ const Profile = () => {
             });
             errorChange = "All fields are required!"
         }
-        if (!errorChange) errorChange = validate(formState['email'].value);
+        if (!errorChange) errorChange = validate(formState.email.value);
         if (!errorChange) {
-            dispatch(update(user.username, formState['name'].value, formState['surname'].value, formState['email'].value, formState['photo'].value));
+            dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, formState.email.value));
         }
         setErrorMessage(errorChange);
+    }
+
+    const discardHandler = () => {
+        setErrorMessage("");
+        setEditable(false);
     }
 
     return ( <Box>
@@ -155,7 +160,7 @@ const Profile = () => {
                     <Grid container columns={{xs: 12, sm: 12, md: 12}}>
                         <Grid item xs={12} sm={12} md={12}>
                             {!editable && <Stack spacing="5px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
-                                <Avatar alt="Author" src={userProfile.photo} sx={{width: 80, height: 80, margin: '5px'}}/>
+                                <Avatar alt="Author" src={userProfile.photo} sx={{width: 80, height: 80}}/>
                                 <Typography variant="h6">{userProfile.username}</Typography>
                                 <Typography variant="subtitle1" sx={{display: 'flex', alignItems: 'center'}}>{userProfile.name} {userProfile.surname}</Typography>
                                 <Typography variant="subtitle1" sx={{display: 'flex', alignItems: 'center'}}>{userProfile.email}</Typography>
@@ -163,9 +168,10 @@ const Profile = () => {
                             {editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
                                 <Badge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                                        badgeContent={<IconButton color="inherit" aria-label="editAuthor" onClick={() => setEditable(true)} component="label" sx={{backgroundColor: 'white'}}>
+                                           {/*<input hidden accept="image/*" type="file" name="photo" onChange={inputHandler} />*/}
                                            <PhotoCameraIcon />
                                        </IconButton>}>
-                                    <Avatar alt="Author" src={userProfile.photo} sx={{width: 80, height: 80}}/>
+                                    <Avatar alt="Author" src={formState.photo.value} sx={{width: 80, height: 80}}/>
                                 </Badge>
                                 <Typography variant="h6">{userProfile.username}</Typography>
                                 <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={userProfile.name} onChange={inputHandler} variant="filled"/>
@@ -177,7 +183,7 @@ const Profile = () => {
                             <Button variant="contained" sx={{margin: '5px', borderRadius: '25px'}} onClick={changeUserDataHandler}>
                                 Save changes
                             </Button>
-                            <Button variant="outlined" sx={{margin: '5px', borderRadius: '25px'}} onClick={() => setEditable(false)}>
+                            <Button variant="outlined" sx={{margin: '5px', borderRadius: '25px'}} onClick={discardHandler}>
                                 Discard
                             </Button>
                         </Grid>}
@@ -198,13 +204,7 @@ const Profile = () => {
                         </Grid>}
                     </Grid>
                 </Paper>
-
             </Box>
-            <Grid container columns={{xs: 12, sm: 12, md: 12}} className={classes.gridContainerAuthor} sx={{paddingTop: '15px'}}>
-                <Grid item xs={12} sm={12} md={12}>
-
-                </Grid>
-            </Grid>
             <Grid container className={classes.gridContainer} item xs={12} sm={12} md={12} alignItems="center" justifyContent="center">
                 <Grid item xs={12} sm={12} md={12}>
                     <List sx={{width:'100%'}}>

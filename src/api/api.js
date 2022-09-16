@@ -60,7 +60,6 @@ const getReviewsUser = username => {
 
 const checkIfReviewed = (user, book_id) => {
     const review = mockReviews.find(r => r.book_id === book_id && r.user === user);
-    console.log(review);
     return new Promise((res, rej) => {
         res(review);
     });

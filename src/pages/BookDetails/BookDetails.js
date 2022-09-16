@@ -34,7 +34,9 @@ const BookDetails = () => {
     const discardHandler = () => setNewReviewForm(false);
 
     const getReviews = () => {
-        api.getReviews(+id).then(res => setReviews(res));
+        api.getReviews(+id).then(res => {
+            setReviews(res)
+        });
         setNewReviewForm(false);
     }
 
@@ -54,7 +56,6 @@ const BookDetails = () => {
             dispatch(fetchBook(+id));
             if (user && user.type === 'user'){
                 api.checkIfReviewed(user.username, +id).then(res => {
-                    console.log(res);
                     if (res) {
                         setReviewed(true);
                     }
