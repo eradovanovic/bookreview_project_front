@@ -14,9 +14,23 @@
   border-radius: 15px;
 }
 
+.searchThumbnailIMG {
+  border-radius: 5px;
+}
+
 .paperStyle{
   border-radius: 15px;
   flexGrow: 1;
   padding: 20px;
   alignContent: center;
+}
+
+.gridContainerAuthor {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.gridContainerAuthorBio {
+  padding-top: 10px;
+  @extend .gridContainerAuthor;
 }

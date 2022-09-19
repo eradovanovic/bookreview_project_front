@@ -1,24 +1,33 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {loginSuccess} from "../store/auth/authActions";
+import {useLocation} from "react-router-dom";
 import LoadingScreen from "../components/Layout/LoadingScreen";
+import {clearError, loginSuccess} from "../store/auth/authActions";
+import api_auth from "../api/api_auth";
 
 const appInitializer = WrappedComponent => props => {
     const [loaded, setLoaded] = useState(false);
     const {user} = useSelector(state => state.authReducer);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     useEffect(() => {
-        const localStorageUser = JSON.parse(localStorage.getItem("user"));
+        const localStorageUser = localStorage.getItem("user");
         const localStorageToken = localStorage.getItem("token");
         if(!user && localStorageUser){
-            dispatch(loginSuccess({'user': localStorageUser, "token": localStorageToken}));
+            api_auth.getUserByUsername(localStorageUser).then(res => {
+                dispatch(loginSuccess({'user': res, "token": localStorageToken}));
+            })
         }
         setTimeout(() => {
             setLoaded(true);
         }, 1000);
 
     }, []);
+
+    useEffect(() => {
+        dispatch(clearError());
+    }, [location.pathname])
 
     return loaded ? <WrappedComponent {...props} /> : <LoadingScreen/>
 }

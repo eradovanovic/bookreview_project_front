@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {Outlet, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -12,14 +14,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import {InputBase} from "@mui/material";
-import ButtonBase from "@mui/material/ButtonBase";
-import {Outlet, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {logout} from "store/auth/authActions";
+import {clearError, logout} from "store/auth/authActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
+import SearchField from "components/SearchBar/SearchField";
 import classes from './DrawerAppBar.module.scss';
 
 const drawerWidth = 240;
@@ -47,7 +44,7 @@ const navigationItems = [
     },
     {
         label: 'Profile',
-        path: '/users/id',
+        path: '/users',
         role: [USER]
     },
     {
@@ -72,54 +69,12 @@ const navigationItems = [
     },
 ];
 
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
-}));
-
 function DrawerAppBar(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const {user} = useSelector(state => state.authReducer);
+
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -127,17 +82,18 @@ function DrawerAppBar(props) {
 
     const navItems = user ? navigationItems.filter(item => item.role.includes(user.type)) : navigationItems.filter(item => item.role.includes(GUEST));
 
-
     const handleRoutePress = item => {
         if (item.label === 'Logout') {
-            localStorage.removeItem("user");
-            localStorage.removeItem("token");
             dispatch(logout());
         }
-        navigate(item.path);
+        dispatch(clearError());
+        if (item.label === 'Profile'){
+            navigate(`${item.path}/${user.username}`)
+        }
+        else {
+            navigate(item.path);
+        }
     }
-
-
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -188,20 +144,8 @@ function DrawerAppBar(props) {
                                 {item.label}
                             </Button>
                         ))}
-
                     </Box>
-                    <Search sx={{ display: { xs: 'block', sm: 'block', md: 'block'} }}>
-                        <SearchIconWrapper>
-                            <ButtonBase>
-                                <SearchIcon/>
-                            </ButtonBase>
-                        </SearchIconWrapper>
-
-                        <StyledInputBase
-                            placeholder="Search..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                    <SearchField/>
                 </Toolbar>
             </AppBar>
             <Box component="nav">

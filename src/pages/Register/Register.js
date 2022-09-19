@@ -65,8 +65,8 @@ const Register = () => {
         if(user !== null) {
             navigate('/');
         }
-        else if (error) {
-            setErrorMessage('Registration failed.');
+        else if (Object.keys(error).length !== 0) {
+            setErrorMessage(error.message);
         }
     }, [user, error]);
 
@@ -88,9 +88,9 @@ const Register = () => {
             error = "All fields are required!"
         }
 
-        if (!error) error = validate(formState['email'].value, formState['password'].value, formState['passwordConfirmation'].value);
+        if (!error) error = validate(formState.email.value, formState.password.value, formState.passwordConfirmation.value);
         if (!error) {
-            dispatch(register(formState['name'].value, formState['surname'].value, formState['email'].value, formState['photo'].value, formState['username'].value, formState['password'].value));
+            dispatch(register(formState.name.value, formState.surname.value, formState.email.value, formState.photo.value, formState.username.value, formState.password.value));
         }
         setErrorMessage(error);
     }
@@ -99,15 +99,15 @@ const Register = () => {
         <Paper sx={{display: 'flex', width:'350px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
             <Stack sx={{display:'flex', alignContent:'center', alignItems:'center', textAlign:'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Register!</Typography>
-                    <TextField error={formState['name'].error} helperText={formState['name'].error ? 'Name is required!' : ' '} label="Name" name="name" onChange={inputHandler} variant="filled"/>
-                    <TextField error={formState['surname'].error} helperText={formState['surname'].error ? 'Surname is required!' : ' '} label="Surname" name="surname" type="text" onChange={inputHandler} variant="filled"/>
-                    <TextField error={formState['email'].error} helperText={formState['email'].error ? 'Email is required!' : ' '} label="Email" name="email" onChange={inputHandler} variant="filled"/>
-                    <TextField error={formState['username'].error} helperText={formState['username'].error ? 'Username is required!' : ' '} label="Username" name="username" onChange={inputHandler} variant="filled"/>
-                    <TextField error={formState['password'].error} helperText={formState['password'].error ? 'Password is required!' : ' '} label="Password" name="password" type="password" onChange={inputHandler} variant="filled"/>
-                    <TextField error={formState['passwordConfirmation'].error} helperText={formState['passwordConfirmation'].error ? 'Confirmation is required!' : ' '} label="Confirm password" name="passwordConfirmation" type="password" onChange={inputHandler} variant="filled"/>
+                    <TextField error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : ' '} label="Name" name="name" onChange={inputHandler} variant="filled"/>
+                    <TextField error={formState.surname.error} helperText={formState.surname.error ? 'Surname is required!' : ' '} label="Surname" name="surname" type="text" onChange={inputHandler} variant="filled"/>
+                    <TextField error={formState.email.error} helperText={formState.email.error ? 'Email is required!' : ' '} label="Email" name="email" onChange={inputHandler} variant="filled"/>
+                    <TextField error={formState.username.error} helperText={formState.username.error ? 'Username is required!' : ' '} label="Username" name="username" onChange={inputHandler} variant="filled"/>
+                    <TextField error={formState.password.error} helperText={formState.password.error ? 'Password is required!' : ' '} label="Password" name="password" type="password" onChange={inputHandler} variant="filled"/>
+                    <TextField error={formState.passwordConfirmation.error} helperText={formState.passwordConfirmation.error ? 'Confirmation is required!' : ' '} label="Confirm password" name="passwordConfirmation" type="password" onChange={inputHandler} variant="filled"/>
                 <Button sx={{width:'fit-content', margin: '5px'}} variant="text" onClick={registerHandler}>register</Button>
                 {errorMessage !== '' && <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>}
-                <Typography>Have an account?<Link href="/login" color="#000">Log in</Link>! </Typography>
+                <Typography>Have an account? <Link href="/login" color="#000">Log in</Link>!</Typography>
             </Stack>
         </Paper>
     </Box>

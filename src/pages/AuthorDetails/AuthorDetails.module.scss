@@ -1,11 +1,2 @@
 @import 'src/styles.scss';
 
-.gridContainerAuthor {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.gridContainerAuthorBio {
-  padding-top: 10px;
-  @extend .gridContainerAuthor;
-}

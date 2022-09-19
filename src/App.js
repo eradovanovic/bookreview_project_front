@@ -24,18 +24,18 @@ const App = (props) => {
         <Routes>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
+            <Route path='/changePassword' element={<ChangePassword/>}/>
             <Route path='/' element={<DrawerAppBar/>}>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/books' element={<Books/>}/>
                 <Route path='/books/:id' element={<BookDetails/>}/>
                 <Route path='/authors' element={<Authors/>}/>
                 <Route path='/authors/:id' element={<AuthorDetails/>}/>
-                <Route path='/users/:id' element={<Profile/>}/>
+                <Route path='/users/:username' element={<Profile/>}/>
                 <Route path='/search' element={<Search/>}/>
                 <Route path='/collections/:id' element={<BookCollection/>}/>
                 <Route path='/newBook' element={<NewBook/>}/>
                 <Route path='/newAuthor' element={<NewAuthor/>}/>
-                <Route path='/changePassword' element={<ChangePassword/>}/>
                 <Route path='*' element={<NotFound/>}/>
             </Route>
         </Routes>

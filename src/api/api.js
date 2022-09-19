@@ -2,7 +2,6 @@ import {mockBooks, mockCollection, mockReviews} from "./mockData";
 import {AUTHORS_PER_PAGE, BOOKS_PER_PAGE, SORT} from "../constants/constants";
 import {mockAuthors} from "./mockData";
 
-
 const getBookById = id => {
     const book = mockBooks.find(b => b.id === id);
     return new Promise((res, rej) => {
@@ -42,7 +41,6 @@ const filterAndSortBooks = (books, page, genres, sortBy) => {
         default:
             break;
     }
-
     return {books: filteredBooks.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: filteredBooks.length};
 }
 
@@ -72,21 +70,28 @@ const getReviews = book_id => {
     });
 }
 
+const getReviewsUser = username => {
+    return new Promise((res, rej) => {
+        res(mockReviews.filter(review => review.user === username)
+            .sort((r1, r2) => new Date(r2.date_reviewed) - new Date(r1.date_reviewed)));
+    });
+}
+
 const checkIfReviewed = (user, book_id) => {
     const review = mockReviews.find(r => r.book_id === book_id && r.user === user);
-    console.log(review);
     return new Promise((res, rej) => {
         res(review);
     });
 }
 
-const addReview = (user, avatar, book_id, date_reviewed, rating, review) => {
+const addReview = (user, avatar, book_id, title, date_reviewed, rating, review) => {
     const review_id = mockReviews.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
     const reviewObj = {
        id: review_id,
        user: user,
        avatar: avatar,
        book_id: book_id,
+       title: title,
        date_reviewed: date_reviewed,
        rating: rating,
        review: review
@@ -201,11 +206,25 @@ const changeAuthorData = (id, name, surname, photo, biography) => {
     })
 }
 
+const search = (input) => {
+    if (!input || input.trim() === "") {
+        return new Promise((res, rej) => res([]));
+    }
+    const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
+    return new Promise((res, rej) => res(books));
+}
+
+const searchPagination = (input, page) => {
+    const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
+    return new Promise((res, rej) => res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length}));
+}
+
 export default {
     getBookById,
     getBooks,
     addBook,
     getReviews,
+    getReviewsUser,
     checkIfReviewed,
     addReview,
     deleteReview,
@@ -217,5 +236,7 @@ export default {
     getAuthors,
     addAuthor,
     getBooksByAuthor,
-    changeAuthorData
+    changeAuthorData,
+    search,
+    searchPagination
 };

@@ -179,6 +179,7 @@ export const mockReviews = [
     {
         id: 1,
         book_id: 1,
+        title: 'Beautiful World, Where Are You',
         user: 'user1',
         date_reviewed: '03-31-18 18:53',
         avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
@@ -188,6 +189,7 @@ export const mockReviews = [
     {
         id: 2,
         book_id: 1,
+        title: 'Beautiful World, Where Are You',
         user: 'user2',
         date_reviewed: '03-12-18 18:53',
         avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
@@ -197,6 +199,7 @@ export const mockReviews = [
     {
         id: 3,
         book_id: 1,
+        title: 'Beautiful World, Where Are You',
         user: 'user3',
         date_reviewed: '04-25-18 18:53',
         avatar: 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg',
