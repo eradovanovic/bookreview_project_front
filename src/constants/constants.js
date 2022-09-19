@@ -14,6 +14,11 @@ export const LIST_TYPES = {
     COLLECTION: 'COLLECTION'
 }
 
+export const REVIEW_TYPES = {
+    BOOK_REVIEWS: 'BOOK_REVIEWS',
+    USER_REVIEWS: 'USER_REVIEWS'
+}
+
 export const names = [
     {id:1, name:'drama'},
     {id:2, name:'crime'},

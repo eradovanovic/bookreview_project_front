@@ -14,8 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import {logout} from "store/auth/authActions";
-import {clear} from "store/search/searchActions";
+import {clearError, logout} from "store/auth/authActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
 import SearchField from "components/SearchBar/SearchField";
 import classes from './DrawerAppBar.module.scss';
@@ -45,7 +44,7 @@ const navigationItems = [
     },
     {
         label: 'Profile',
-        path: '/users/id',
+        path: '/users',
         role: [USER]
     },
     {
@@ -85,12 +84,15 @@ function DrawerAppBar(props) {
 
     const handleRoutePress = item => {
         if (item.label === 'Logout') {
-            localStorage.removeItem("user");
-            localStorage.removeItem("token");
             dispatch(logout());
         }
-        dispatch(clear());
-        navigate(item.path);
+        dispatch(clearError());
+        if (item.label === 'Profile'){
+            navigate(`${item.path}/${user.username}`)
+        }
+        else {
+            navigate(item.path);
+        }
     }
 
     const drawer = (

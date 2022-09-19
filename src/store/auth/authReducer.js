@@ -1,7 +1,7 @@
 const initialState = {
     user: null,
     token: '',
-    error: ''
+    error: {}
 };
 
 const authReducer =  (state = initialState, action) => {
@@ -11,7 +11,14 @@ const authReducer =  (state = initialState, action) => {
                 ...state,
                user: action.data.user,
                token: action.data.token,
-               error: ''
+               error: {}
+            }
+        case "UPDATE":
+            return {
+                ...state,
+                user: action.data,
+                token: state.token,
+                error: {}
             }
         case "LOGIN_FAILED":
             return {
@@ -23,11 +30,21 @@ const authReducer =  (state = initialState, action) => {
                 ...state,
                 error: action.data
             }
+        case "UPDATE_FAILED":
+            return {
+                ...state,
+                error: action.data
+            }
         case "CLEAR":
             return {
                 user: null,
                 token: '',
-                error: ''
+                error: {}
+            }
+        case "CLEAR_ERROR":
+            return {
+                ...state,
+                error: {}
             }
         default:
             return state;
