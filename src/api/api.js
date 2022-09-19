@@ -163,6 +163,19 @@ const changeAuthorData = (id, name, surname, photo, biography) => {
     })
 }
 
+const search = (input) => {
+    if (!input || input.trim() === "") {
+        return new Promise((res, rej) => res([]));
+    }
+    const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
+    return new Promise((res, rej) => res(books));
+}
+
+const searchPagination = (input, page) => {
+    const books = mockBooks.filter(book => book.title.toLowerCase().includes(input.toLowerCase()));
+    return new Promise((res, rej) => res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length}));
+}
+
 export default {
     getBookById,
     getBooks,
@@ -177,5 +190,7 @@ export default {
     getAuthorById,
     getAuthors,
     getBooksByAuthor,
-    changeAuthorData
+    changeAuthorData,
+    search,
+    searchPagination
 };
