@@ -57,11 +57,14 @@ const AuthorDetails = () => {
     const [formState, setFormState] = useState(initialState);
     const [errorMessage, setErrorMessage] = useState("");
     const [imgFile, setImgFile] = useState();
+    const [imgPreview, setImgPreview] = useState();
+
     const {name, surname, biography, photo, photoFile, bookNum} = currentAuthor;
 
     useEffect(()=>{
         if(id != null ) {
             dispatch(fetchAuthor(+id));
+            setImgPreview(photoFile);
             api.getBooksByAuthor(+id, page).then(res => {
                 setBooks(res.books);
                 setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
@@ -124,6 +127,8 @@ const AuthorDetails = () => {
         const {name, files, value} = event.target;
         const error = formState[name].required && value.trim() === "";
         if (name === 'photo') {
+            const img = URL.createObjectURL(files[0])
+            setImgPreview(img);
             setImgFile(files[0]);
         }
         const val = name === 'photo' ? files[0].name : value;
@@ -161,7 +166,7 @@ const AuthorDetails = () => {
                                         <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler} />
                                         <PhotoCameraIcon />
                                     </IconButton>}>
-                                    <Avatar alt="Author" src={imgFile ? URL.createObjectURL(imgFile) : formState.photo.value} sx={{width: 80, height: 80}}/>
+                                    <Avatar alt="Author" src={imgPreview ? imgPreview : formState.photo.value} sx={{width: 80, height: 80}}/>
                                 </Badge>
                                 <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={name} onChange={inputHandler} variant="filled"/>
                                 <TextField label="Surname" name="surname" defaultValue={surname} onChange={inputHandler} variant="filled"/>

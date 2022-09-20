@@ -52,11 +52,14 @@ const Profile = () => {
     const [reviews, setReviews] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
     const [imgFile, setImgFile] = useState();
+    const [imgPreview, setImgPreview] = useState();
+
 
     useEffect(() => {
         if (user && username === user.username) {
             setIsLogged(true);
             setUserProfile(user);
+            setImgPreview(user.photoFile);
         }
         else {
             api_auth.getUserByUsername(username).then(res => {
@@ -130,6 +133,7 @@ const Profile = () => {
         const {name, files, value} = event.target;
         const error = formState[name].required && value.trim() === "";
         if (name === 'photo') {
+            setImgPreview(URL.createObjectURL(files[0]));
             setImgFile(files[0]);
         }
         const val = name === 'photo' ? files[0].name : value;
@@ -184,7 +188,7 @@ const Profile = () => {
                                            <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler} />
                                            <PhotoCameraIcon />
                                        </IconButton>}>
-                                    <Avatar alt="Author" src={imgFile ? URL.createObjectURL(imgFile) : formState.photo.value} sx={{width: 80, height: 80}}/>
+                                    <Avatar alt="Author" src={imgPreview ? imgPreview : formState.photo.value} sx={{width: 80, height: 80}}/>
                                 </Badge>
                                 <Typography variant="h6">{userProfile.username}</Typography>
                                 <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={userProfile.name} onChange={inputHandler} variant="filled"/>
