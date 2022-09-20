@@ -204,10 +204,11 @@ const getBooksByAuthor = (id, page) => {
 }
 
 const changeAuthorData = (id, name, surname, photo, biography) => {
-    const index = mockAuthors.findIndex(a => a.id === id);
+    const index = mockAuthors.findIndex(a => a.id === id)
     mockAuthors[index].name = name;
     mockAuthors[index].surname = surname;
-    mockAuthors[index].photo = photo;
+    mockAuthors[index].photo = photo ? photo.name : mockAuthors[index].photo;
+    mockAuthors[index].photoFile = photo ? URL.createObjectURL(photo) : null;
     mockAuthors[index].biography = biography;
     return new Promise((res, rej) => {
         res(mockAuthors[index]);

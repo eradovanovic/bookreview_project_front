@@ -66,7 +66,7 @@ const NewBook = () => {
         const val = name === 'photo' ? files[0].name : value;
         setFormState( prevState => ({
             ...prevState,
-            [name] : {"value": val, "error": error}
+            [name] : {"value": val, "error": error, "required": prevState[name].required}
         }))
     }
 
