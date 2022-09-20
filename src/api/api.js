@@ -1,5 +1,5 @@
 import {mockBooks, mockCollection, mockReviews} from "./mockData";
-import {AUTHORS_PER_PAGE, BOOKS_PER_PAGE, SORT} from "../constants/constants";
+import {AUTHORS_PER_PAGE, BOOKS_PER_PAGE, DEFAULT_AVATAR_PHOTO, DEFAULT_BOOK_PHOTO, SORT} from "../constants/constants";
 import {mockAuthors} from "./mockData";
 
 const getBookById = id => {
@@ -45,7 +45,7 @@ const filterAndSortBooks = (books, page, genres, sortBy) => {
 }
 
 const addBook = (title, author_id, author, genres, description, photo) => {
-    const id = mockBooks.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
+    const id = [...mockBooks].sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
     const bookObj = {
         id: id,
         title: title,
@@ -55,7 +55,8 @@ const addBook = (title, author_id, author, genres, description, photo) => {
         rating: 0,
         numberOfReviews: 0,
         description: description,
-        photo: photo
+        photo: photo ? photo.name : DEFAULT_BOOK_PHOTO,
+        photoFile: photo ? URL.createObjectURL(photo) : null,
     }
     mockBooks.push(bookObj);
     return new Promise((res, rej) => {
@@ -144,7 +145,7 @@ const addBookToCollection = (book_id, title, author, genres, rating, numberOfRev
             rating: rating,
             numberOfReviews: numberOfReviews,
             description: description,
-            photo: photo
+            photo: photo,
         },
         username: username
     }
@@ -171,14 +172,21 @@ const getAuthors = page => {
     })
 }
 
+const getAllAuthors = () => {
+    return new Promise((res, rej) => {
+        res({authors: mockAuthors});
+    })
+}
+
 const addAuthor = (name, surname, biography, photo) => {
-    const id = mockAuthors.sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
+    const id = [...mockAuthors].sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
     const authorObj = {
         id: id,
         name: name,
         surname: surname,
         biography: biography,
-        photo: photo,
+        photo: photo ? photo.name : DEFAULT_AVATAR_PHOTO,
+        photoFile: photo ? URL.createObjectURL(photo) : null,
         bookNum: 0,
     }
     mockAuthors.push(authorObj);
@@ -234,6 +242,7 @@ export default {
     removeBookFromCollection,
     getAuthorById,
     getAuthors,
+    getAllAuthors,
     addAuthor,
     getBooksByAuthor,
     changeAuthorData,

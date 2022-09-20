@@ -1,81 +1,168 @@
 import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import _ from 'lodash';
 import Box from "@mui/material/Box";
-import {Button, Link, Paper, Stack, TextField} from "@mui/material";
+import {Button, Checkbox, FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Paper, Select, Stack, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {register} from "store/auth/authActions";
-import {emailValid, passwordValid} from "utils/validators";
+import ListItemText from "@mui/material/ListItemText";
+import {PhotoCamera} from "@mui/icons-material";
+import api from 'api/api';
+import {names} from "constants/constants";
 import classes from "./NewBook.module.scss";
+
 
 const initialState = {
     "title": {
         "value": "",
-        "error": false
-    },
-    "author": {
-        "value": "",
-        "error": false
-    },
-    "genres": {
-        "value": [],
-        "error": false
+        "error": false,
+        "required": true
     },
     "description": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": false
     },
     "photo": {
-        "value": "default",
-        "error": false
+        "value": "",
+        "error": false,
+        "required": false
     }
 }
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250
+        },
+    },
+};
+
 const NewBook = () => {
-    const [formState, setFormState] = useState(initialState);
+    const [formState, setFormState] = useState(_.cloneDeep(initialState));
     const [errorMessage, setErrorMessage] = useState("");
-
-    //const {user, token, error} = useSelector(state => state.authReducer);
-
-    const dispatch = useDispatch();
+    const [authors, setAuthors] = useState([]);
+    const [authorId, setAuthorId] = useState('');
+    const [authorError, setAuthorError] = useState(false);
+    const [formGenres, setFormGenres] = useState({
+        "value": [],
+        "error": false
+    });
+    const [imgFile, setImgFile] = useState();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        api.getAllAuthors().then(res => setAuthors(res.authors));
+    }, []);
+
     const inputHandler = event => {
-        const {name , value} = event.target;
-        const error = value.trim() === "";
+        const {name, files, value} = event.target;
+        const error = formState[name].required && value.trim() === "" ;
+        if (name === 'photo') {
+            setImgFile(files[0]);
+        }
+        const val = name === 'photo' ? files[0].name : value;
         setFormState( prevState => ({
             ...prevState,
-            [name] : {"value": value, "error": error}
+            [name] : {"value": val, "error": error}
         }))
     }
 
-    const registerHandler = () => {
+    const addBookHandler = () => {
         let error = "";
-        if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value)) {
+        if (Object.values(formState).some(val => val.required && val.error) || Object.values(formState).some(val => val.required && !val.value)) {
             Object.values(formState).forEach(val => {
-                if (!val.value && !val.error) val.error = true;
+                if (val.required && !val.value && !val.error) val.error = true;
             });
-            error = "All fields are required!"
+            error = "Fill the required fields!"
         }
-
-        if (!error) {
-            dispatch(register(formState['name'].value, formState['surname'].value, formState['email'].value, formState['photo'].value, formState['username'].value, formState['password'].value));
+        if (!authorId){
+            setAuthorError(true);
+            error = "Fill the required fields!"
+        }
+        if (formGenres.value.length === 0){
+            setFormGenres({value: formGenres.value, error: true});
+            error = "Fill the required fields!"
+        }
+        if (!error ) {
+            const author = authors.find(a => a.id === authorId);
+            api.addBook(formState.title.value, authorId, author.name + " " + author.surname, formGenres.value, formState.description.value , imgFile).then(res => navigate('/books'));
         }
         setErrorMessage(error);
     }
 
-    return <Box sx={{height:'700px', display:'flex', alignContent:'center', alignItems:'center', textAlign:'center', justifyContent:'center', padding:'20px'}}>
-        <Paper sx={{display: 'flex', width:'350px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
-            <Stack sx={{display:'flex', alignContent:'center', alignItems:'center', textAlign:'center'}}>
+    const genresHandler = event => {
+        const {
+            target: {value},
+        } = event;
+        const arrValues = typeof value === 'string' ? value.split(',') : value;
+        let objGenres = [];
+        arrValues.forEach(val => objGenres.push(names.find(n => n.name === val)));
+        setFormGenres({
+            value: objGenres,
+            error: typeof value === 'string' ? value === "" : value.length === 0
+            }
+        );
+    }
+
+    const authorHandler = event => {
+        setAuthorError(false);
+        const {
+            target: {value},
+        } = event;
+        setAuthorId(value);
+    }
+
+    return <Box sx={{height: '700px', display: 'flex', alignContent: 'center', alignItems: 'center', textAlign: 'center', justifyContent:' center', paddingTop: '20px', paddingBottom: '20px'}}>
+        <Paper sx={{display: 'flex', width: '300px', alignContent: 'center', alignItems: 'center', textAlign: 'center', padding: '10px', justifyContent: 'center'}}>
+            <Stack sx={{display: 'flex', width:'80%',  alignContent: 'center', alignItems: 'center', textAlign: 'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Add book!</Typography>
-                <TextField error={formState.title.error} helperText={formState.title.error ? 'Title is required!' : ' '} label="Title" name="title" onChange={inputHandler} variant="filled"/>
-                <TextField error={formState.author.error} helperText={formState.author.error ? 'Author is required!' : ' '} label="Author" name="author" onChange={inputHandler} variant="filled"/>
-                <TextField error={formState.genres.error} helperText={formState.genres.error ? 'Genres are required!' : ' '} label="Genres" name="genres" onChange={inputHandler} variant="filled"/>
-                <TextField error={formState.description.error} helperText={formState.description.error ? 'Description is required!' : ' '} label="Description" name="description" onChange={inputHandler} variant="filled"/>
-                <TextField error={formState.photo.error} helperText={formState.photo.error ? 'Photo is required!' : ' '} label="Photo" name="photo" onChange={inputHandler} variant="filled"/>
-                <Button sx={{width:'fit-content', margin: '5px'}} variant="text" onClick={registerHandler}>register</Button>
+                <TextField sx={{width: '100%', marginBottom: '10px'}} defaultValue={initialState.title.value} variant="outlined" error={formState.title.error} helperText={formState.title.error ? 'Title is required!' : ' '} label="Title" name="title" onChange={inputHandler}/>
+                <FormControl  sx={{width: '100%', textAlign: 'left'}} error={authorError}>
+                    <InputLabel id="demo-simple-select-label">Author</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={authorId}
+                        label="Author"
+                        onChange={authorHandler}
+                    >
+                        {authors.map(a => <MenuItem key={a.id} value={a.id}>{a.name} {a.surname}</MenuItem> )}
+                    </Select>
+                    <FormHelperText>{authorError ? "Author is required!": ' '}</FormHelperText>
+                </FormControl>
+                <FormControl sx={{width: '100%', margin: '10px', textAlign: 'left'}} error={formGenres.error}>
+                    <InputLabel>Genres</InputLabel>
+                    <Select
+                        name="genres"
+                        multiple
+                        value={formGenres.value.map(val => val.name)} onChange={genresHandler} input={<OutlinedInput label="Genres"/>} renderValue={(selected) => selected.join(', ')} MenuProps={MenuProps}>
+                        {names.map(name => (
+                            <MenuItem key={name.id} value={name.name}>
+                                <Checkbox checked={formGenres.value.some(val => val.id === name.id)} />
+                                <ListItemText primary={name.name} />
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText>{formGenres.error ? "Pick at least one genre!": ' '}</FormHelperText>
+                </FormControl>
+                <TextField
+                    label="Description"
+                    name="description"
+                    multiline
+                    onChange={inputHandler}
+                    rows={7}
+                    sx={{width: '100%', marginBottom: '20px'}}
+                />
+                <Button variant="outlined" component="label" sx={{marginBottom: '10px', borderRadius: '25px'}} startIcon={<PhotoCamera/>}>
+                    <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler}/>
+                    Upload photo
+                </Button>
+                <Typography variant="caption">{formState.photo.value}</Typography>
+                <Button sx={{width:'fit-content', margin: '5px', borderRadius: '25px'}} variant="text" onClick={addBookHandler} variant="contained">add book</Button>
                 {errorMessage !== '' && <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>}
-                <Typography>Have an account?<Link href="/login" color="#000">Log in</Link>! </Typography>
             </Stack>
         </Paper>
     </Box>
