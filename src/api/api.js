@@ -181,6 +181,18 @@ const searchPagination = (input, page) => {
     return new Promise((res, rej) => res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length}));
 }
 
+const getMostReviewedBooks = () => {
+    return new Promise((res, rej) => res([...mockBooks].sort((b1, b2) => b2.numberOfReviews - b1.numberOfReviews).slice(0, 5)));
+}
+
+const getNewestAddedBooks = () => {
+    return new Promise((res, rej) => res([...mockBooks].sort((b1, b2) => b2.id - b1.id).slice(0, 5)));
+}
+
+const getLatestReviews = () => {
+    return new Promise((res, rej) => res([...mockReviews].sort((r1, r2) => new Date(r2.date_reviewed) - new Date(r1.date_reviewed)).slice(0, 5)));
+}
+
 export default {
     getBookById,
     getBooks,
@@ -198,5 +210,8 @@ export default {
     getBooksByAuthor,
     changeAuthorData,
     search,
-    searchPagination
+    searchPagination,
+    getMostReviewedBooks,
+    getNewestAddedBooks,
+    getLatestReviews
 };
