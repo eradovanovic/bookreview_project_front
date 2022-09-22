@@ -8,7 +8,7 @@ const searchReducer =  (state = initialState, action) => {
             return {
                 books: action.data
             }
-        case "CLEAR":
+        case "CLEAR_SEARCH":
             return initialState;
         default:
             return state;
