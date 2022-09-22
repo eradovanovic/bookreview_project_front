@@ -18,17 +18,6 @@ const Review = ({reviewObj, type, getReviews, reviewType}) => {
     }
     return <Box>
         <Paper elevation={4} className={classes.paperStyle} sx={{borderRadius:'15px', margin:'10px'}}>
-            {reviewType === REVIEW_TYPES.BOOK_REVIEWS && <Stack direction="row" spacing={2}>
-                <Avatar alt="Travis Howard" src={avatar}/>
-                <Link href={`/users/${user}`} color="#000" underline="hover">
-                    <Typography variant="h6">{user}</Typography>
-                </Link>
-                <Box sx={{alignContent: 'right', textAlign: 'right', width: '100%'}}>
-                    {type === 'admin' && <IconButton aria-label="delete" onClick={deleteHandler}>
-                        <ClearIcon/>
-                    </IconButton>}
-                </Box>
-            </Stack>}
             {reviewType === REVIEW_TYPES.USER_REVIEWS && <Stack direction="row" spacing={2}>
                 <Link href={`/books/${book_id}`} color="#000" underline="hover" sx={{width: '100%'}}>
                     <Typography variant="h6">{title}</Typography>
@@ -39,6 +28,33 @@ const Review = ({reviewObj, type, getReviews, reviewType}) => {
                     </IconButton>}
                 </Box>
             </Stack>}
+            {reviewType === REVIEW_TYPES.BOOK_REVIEWS && <Stack direction="row" spacing={2}>
+                <Avatar alt={user} src={avatar}/>
+                <Link href={`/users/${user}`} color="#000" underline="hover">
+                    <Typography variant="h6">{user}</Typography>
+                </Link>
+                <Box sx={{alignContent: 'right', textAlign: 'right', width: '100%'}}>
+                    {type === 'admin' && <IconButton aria-label="delete" onClick={deleteHandler}>
+                        <ClearIcon/>
+                    </IconButton>}
+                </Box>
+            </Stack>}
+            {reviewType === REVIEW_TYPES.HOMEPAGE_REVIEWS && <Box>
+                <Link href={`/books/${book_id}`} color="#000" underline="hover" sx={{width: '100%'}}>
+                    <Typography variant="h6">{title}</Typography>
+                </Link>
+                <Stack direction="row" spacing={1} display="flex" alignItems="center">
+                    <Avatar alt={user} src={avatar} sx={{width: 40, height: 40 }}/>
+                    <Link href={`/users/${user}`} color="#000" underline="hover">
+                        <Typography variant="subtitle1">{user}</Typography>
+                    </Link>
+                    <Box sx={{alignContent: 'right', textAlign: 'right', width: '100%'}}>
+                        {type === 'admin' && <IconButton aria-label="delete" onClick={deleteHandler}>
+                            <ClearIcon/>
+                        </IconButton>}
+                    </Box>
+                </Stack>
+            </Box>}
             {rating && <Rating
                 name="text-feedback"
                 value={rating}

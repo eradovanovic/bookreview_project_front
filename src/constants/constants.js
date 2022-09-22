@@ -16,7 +16,8 @@ export const LIST_TYPES = {
 
 export const REVIEW_TYPES = {
     BOOK_REVIEWS: 'BOOK_REVIEWS',
-    USER_REVIEWS: 'USER_REVIEWS'
+    USER_REVIEWS: 'USER_REVIEWS',
+    HOMEPAGE_REVIEWS: 'HOMEPAGE_REVIEWS'
 }
 
 export const names = [

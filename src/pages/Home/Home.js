@@ -60,7 +60,7 @@ const Home = () =>{
                                 <Typography variant="h6" sx={{textAlign:'center'}}>Latest reviews</Typography>
                             </ListItem>
                             <Divider/>
-                            {latestReviews && latestReviews.map(review => <Review key={review.id} reviewType={REVIEW_TYPES.USER_REVIEWS} type={user ? user.type : 'guest'} reviewObj={review}/> )}
+                            {latestReviews && latestReviews.map(review => <Review key={review.id} reviewType={REVIEW_TYPES.HOMEPAGE_REVIEWS} type={user ? user.type : 'guest'} reviewObj={review}/> )}
                         </List>
                     </Box>
                 </Grid>
