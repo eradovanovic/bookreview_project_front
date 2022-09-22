@@ -1,21 +1,37 @@
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {useTheme} from "@mui/material/styles";
 import {Button, Stack} from "@mui/material";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import classes from "./HomepageScreen.module.scss";
 
 const HomepageScreen = () => {
     const {user} = useSelector(state => state.authReducer);
     const navigate = useNavigate();
-    return <Box className={classes.box}>
-        <Stack direction="column" className={classes.box}>
+    const theme = useTheme();
+    const matchesMD = useMediaQuery(theme.breakpoints.up('md'));
+    const matchesSM= useMediaQuery(theme.breakpoints.up('sm'));
+
+    let height;
+    if (matchesMD) {
+        height = '500px';
+    }
+    else if (matchesSM) {
+        height = '600px';
+    }
+    else {
+        height = '650px';
+    }
+
+    return <Box className={classes.box} height={height}>
+        <Stack direction="column" className={classes.box} height={height}>
             <img className={classes.homepageIMG} src={'https://basmo.app/wp-content/uploads/2021/08/benefits-of-reading-books.jpg'}/>
-            <Typography variant="h4" sx={{maxWidth: '400px', margin: '30px'}}>Discover weekly, the best new books</Typography>
-            <Typography variant="h5">Save your favourite books!</Typography>
-            <Typography variant="h5">Discover new books and authors!</Typography>
-            <Typography variant="h5">Share your opinion with other users!</Typography>
+            <Typography variant="h4" sx={{maxWidth: '350px', margin: '30px'}}>Discover the best new books</Typography>
+            <Typography variant="h5" sx={{marginX: '10px'}}>Save your favourite books!</Typography>
+            <Typography variant="h5" sx={{marginX: '10px'}}>Discover new books and authors!</Typography>
+            <Typography variant="h5" sx={{marginX: '10px'}}>Share your opinion with other users!</Typography>
             {!user && <Button variant="contained" sx={{margin: '25px', borderRadius: '25px'}} onClick={() => navigate('/register')}>Sign up</Button>}
         </Stack>
     </Box>

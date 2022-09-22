@@ -43,7 +43,7 @@ const Home = () =>{
                             {mostReviewed && mostReviewed.length > 0 && <Stepper books={mostReviewed} maxSteps={mostReviewed.length}/>}
                         </List>
                     </Box>
-                    <Box justifyContent="center" display="flex">
+                    <Box justifyContent="center" display="flex" sx={{margin: '10px'}}>
                         <List sx={{width: '100%', maxWidth: '800px', justifyContent: 'center'}}>
                             <ListItem>
                                 <Typography variant="h6" sx={{textAlign:'center'}}>Newest added books</Typography>
@@ -67,7 +67,6 @@ const Home = () =>{
             </Grid>
         </Box>
     )
-
 }
 export default Home;
 
