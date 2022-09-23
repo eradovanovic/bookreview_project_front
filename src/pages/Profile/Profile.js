@@ -9,7 +9,7 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Review from "components/Review";
 import ConfirmationDialog from "components/Layout/ConfirmationDialog";
-import {REVIEW_TYPES} from "constants/constants";
+import {DEFAULT_AVATAR_PHOTO, REVIEW_TYPES} from "constants/constants";
 import {logout, update} from "store/auth/authActions";
 import {emailValid} from "utils/validators";
 import api_auth from "api/api_auth";
@@ -19,19 +19,23 @@ import classes from "./Profile.module.scss";
 const initialState = {
     "name": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": true
     },
     "surname": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": true
     },
     "photo": {
-        "value": "default",
-        "error": false
+        "value": DEFAULT_AVATAR_PHOTO,
+        "error": false,
+        "required": true
     },
     "email": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": true
     }
 }
 
@@ -47,11 +51,15 @@ const Profile = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [reviews, setReviews] = useState([]);
     const [openDialog, setOpenDialog] = useState(false);
+    const [imgFile, setImgFile] = useState();
+    const [imgPreview, setImgPreview] = useState();
+
 
     useEffect(() => {
         if (user && username === user.username) {
             setIsLogged(true);
             setUserProfile(user);
+            setImgPreview(user.photoFile);
         }
         else {
             api_auth.getUserByUsername(username).then(res => {
@@ -67,19 +75,23 @@ const Profile = () => {
                 {
                     "name": {
                         "value": user.name,
-                        "error": false
+                        "error": false,
+                        "required": true
                     },
                     "surname": {
                         "value": user.surname,
-                        "error": false
+                        "error": false,
+                        "required": true
                     },
                     "photo": {
                         "value": user.photo,
-                        "error": false
+                        "error": false,
+                        "required": false
                     },
                     "email": {
                         "value": user.email,
-                        "error": false
+                        "error": false,
+                        "required": true
                     }
                 }
             )
@@ -93,7 +105,7 @@ const Profile = () => {
         else {
             setErrorMessage(error.message);
         }
-    }, [user.name, user.surname, user.photo, user.email, error]);
+    }, [user.name, user.surname, user.photo, user.photoFile, user.email, error]);
 
     useEffect(() => {
         getReviews();
@@ -118,11 +130,16 @@ const Profile = () => {
     const closeHandler = () => setOpenDialog(false);
 
     const inputHandler = event => {
-        const {name , value} = event.target;
-        const error = value.trim() === "";
+        const {name, files, value} = event.target;
+        const error = formState[name].required && value.trim() === "";
+        if (name === 'photo') {
+            setImgPreview(URL.createObjectURL(files[0]));
+            setImgFile(files[0]);
+        }
+        const val = name === 'photo' ? files[0].name : value;
         setFormState( prevState => ({
             ...prevState,
-            [name] : {"value": value, "error": error}
+            [name] : {"value": val, "error": error, "required": prevState[name].required}
         }))
     }
 
@@ -144,7 +161,7 @@ const Profile = () => {
         }
         if (!errorChange) errorChange = validate(formState.email.value);
         if (!errorChange) {
-            dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, formState.email.value));
+            dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, imgFile));
         }
         setErrorMessage(errorChange);
     }
@@ -160,7 +177,7 @@ const Profile = () => {
                     <Grid container columns={{xs: 12, sm: 12, md: 12}}>
                         <Grid item xs={12} sm={12} md={12}>
                             {!editable && <Stack spacing="5px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
-                                <Avatar alt="Author" src={userProfile.photo} sx={{width: 80, height: 80}}/>
+                                <Avatar alt="User" src={userProfile.photoFile ? userProfile.photoFile : userProfile.photo} sx={{width: 80, height: 80}}/>
                                 <Typography variant="h6">{userProfile.username}</Typography>
                                 <Typography variant="subtitle1" sx={{display: 'flex', alignItems: 'center'}}>{userProfile.name} {userProfile.surname}</Typography>
                                 <Typography variant="subtitle1" sx={{display: 'flex', alignItems: 'center'}}>{userProfile.email}</Typography>
@@ -168,10 +185,10 @@ const Profile = () => {
                             {editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
                                 <Badge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                                        badgeContent={<IconButton color="inherit" aria-label="editAuthor" onClick={() => setEditable(true)} component="label" sx={{backgroundColor: 'white'}}>
-                                           {/*<input hidden accept="image/*" type="file" name="photo" onChange={inputHandler} />*/}
+                                           <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler} />
                                            <PhotoCameraIcon />
                                        </IconButton>}>
-                                    <Avatar alt="Author" src={formState.photo.value} sx={{width: 80, height: 80}}/>
+                                    <Avatar alt="Author" src={imgPreview ? imgPreview : formState.photo.value} sx={{width: 80, height: 80}}/>
                                 </Badge>
                                 <Typography variant="h6">{userProfile.username}</Typography>
                                 <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={userProfile.name} onChange={inputHandler} variant="filled"/>

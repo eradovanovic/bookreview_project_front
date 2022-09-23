@@ -16,7 +16,7 @@ import classes from "./Book.module.scss";
 
 const Book = ({book, getCollection, type}) => {
     const navigate = useNavigate();
-    const {id, title, author_id, author, genres, photo, description, rating, numberOfReviews} = book;
+    const {id, title, author_id, author, genres, photo, description, rating, numberOfReviews, photoFile} = book;
     const user = useSelector(state => state.authReducer.user);
     const [favorite, setFavorite] = useState(false);
 
@@ -43,7 +43,7 @@ const Book = ({book, getCollection, type}) => {
         <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
             <Grid item xs={4} sm={4} md={4} sx={{textAlign:'center', padding:'0px'}}>
                 <Button sx={{maxWidth:'150px', margin:'0px', padding:'0px'}} onClick={() => {navigate(`/books/${id}`)}}>
-                    <img className={classes.thumbnailIMG} src={photo} width="100%" alt="Book Thumbnail"/>
+                    <img className={classes.thumbnailIMG} src={photoFile ? photoFile : photo} width="100%" alt="Book Thumbnail"/>
                 </Button>
             </Grid>
             <Grid item xs={4} sm={4} md={8} height="100%" alignItems="center" justifyContent="center" paddingTop="30px" >
@@ -86,6 +86,7 @@ Book.propTypes = {
             name: PropTypes.string
         })),
         photo: PropTypes.string.isRequired,
+        photoFile: PropTypes.string,
         rating: PropTypes.number.isRequired,
         numberOfReviews: PropTypes.number
     }),
