@@ -22,6 +22,9 @@ const theme = createTheme({
             color: 'grey',
             fontStretch: 'extra-condensed'
         }
+    },
+    shape: {
+        borderRadius: '25px'
     }
 });
 
