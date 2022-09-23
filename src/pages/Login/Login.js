@@ -1,9 +1,10 @@
-import {Button, FormControl, Link, Paper, Stack, TextField} from "@mui/material";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import _ from 'lodash';
+import {Button, Link, Paper, Stack, TextField} from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import {login} from "store/auth/authActions";
 import classes from "./Login.module.scss";
 
@@ -19,9 +20,9 @@ const initialState = {
 }
 
 const Login = () => {
-    const [formState, setFormState] = useState(initialState);
+    const [formState, setFormState] = useState(_.cloneDeep(initialState));
     const [errorMessage, setErrorMessage] = useState('');
-    const {user, token, error} = useSelector(state => state.authReducer);
+    const {user, error} = useSelector(state => state.authReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

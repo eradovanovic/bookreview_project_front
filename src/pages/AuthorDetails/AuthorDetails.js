@@ -23,19 +23,23 @@ import classes from "./AuthorDetails.module.scss";
 const initialState = {
     "name": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": true
     },
     "surname": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": false
     },
     "photo": {
         "value": "default",
-        "error": false
+        "error": false,
+        "required": false
     },
     "biography": {
         "value": "",
-        "error": false
+        "error": false,
+        "required": false
     }
 }
 
@@ -52,11 +56,15 @@ const AuthorDetails = () => {
     const matchesMD = useMediaQuery(theme.breakpoints.up('md'));
     const [formState, setFormState] = useState(initialState);
     const [errorMessage, setErrorMessage] = useState("");
-    const {name, surname, biography, photo, bookNum} = currentAuthor;
+    const [imgFile, setImgFile] = useState();
+    const [imgPreview, setImgPreview] = useState();
+
+    const {name, surname, biography, photo, photoFile, bookNum} = currentAuthor;
 
     useEffect(()=>{
         if(id != null ) {
             dispatch(fetchAuthor(+id));
+            setImgPreview(photoFile);
             api.getBooksByAuthor(+id, page).then(res => {
                 setBooks(res.books);
                 setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
@@ -76,19 +84,23 @@ const AuthorDetails = () => {
             {
                 "name": {
                     "value": name,
-                    "error": false
+                    "error": false,
+                    "required": true
                 },
                 "surname": {
                     "value": surname,
-                    "error": false
+                    "error": false,
+                    "required": false
                 },
                 "photo": {
                     "value": photo,
-                    "error": false
+                    "error": false,
+                    "required": false
                 },
                 "biography": {
                     "value": biography,
-                    "error": false
+                    "error": false,
+                    "required": false
                 }
             }
        )
@@ -100,7 +112,7 @@ const AuthorDetails = () => {
 
     const changeAuthorDataHandler = () => {
         if (!formState.name.error) {
-            api.changeAuthorData(+id, formState.name.value, formState.surname.value, formState.photo.value, formState.biography.value).then(res => {
+            api.changeAuthorData(+id, formState.name.value, formState.surname.value, imgFile, formState.biography.value).then(res => {
                 dispatch(fetchAuthor(res.id));
             });
             setErrorMessage("");
@@ -112,11 +124,17 @@ const AuthorDetails = () => {
     }
 
     const inputHandler = event => {
-        const {name , value} = event.target;
-        const error = name === "name" && value.trim() === "";
+        const {name, files, value} = event.target;
+        const error = formState[name].required && value.trim() === "";
+        if (name === 'photo') {
+            const img = URL.createObjectURL(files[0])
+            setImgPreview(img);
+            setImgFile(files[0]);
+        }
+        const val = name === 'photo' ? files[0].name : value;
         setFormState( prevState => ({
             ...prevState,
-            [name] : {"value": value, "error": error}
+            [name] : {"value": val, "error": error, "required": prevState[name].required}
         }))
     }
 
@@ -137,7 +155,7 @@ const AuthorDetails = () => {
                                 <EditIcon/>
                             </IconButton>}
                             {!editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
-                                <Avatar alt="Author" src={photo} sx={{width: 80, height: 80}}/>
+                                <Avatar alt="Author" src={photoFile ? photoFile : photo} sx={{width: 80, height: 80}}/>
                                 <Typography variant="h6">{name} {surname}</Typography>
                                 <Typography variant="subtitle1" sx={{display: 'flex', alignItems: 'center'}}>
                                     <BookIcon/> {bookNum} books</Typography>
@@ -145,11 +163,12 @@ const AuthorDetails = () => {
                             {editable && <Stack spacing="10px" direction="column" sx={{flexGrow: 1, display: 'flex', alignContent: 'center', justifyContent: 'center', alignItems: 'center'}}>
                                 <Badge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                                     badgeContent={<IconButton color="inherit" aria-label="editAuthor" onClick={() => setEditable(true)} component="label" sx={{backgroundColor: 'white'}}>
+                                        <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler} />
                                         <PhotoCameraIcon />
                                     </IconButton>}>
-                                    <Avatar alt="Author" src={photo} sx={{width: 80, height: 80}}/>
+                                    <Avatar alt="Author" src={imgPreview ? imgPreview : formState.photo.value} sx={{width: 80, height: 80}}/>
                                 </Badge>
-                                <TextField label="Name" name="name" defaultValue={name} onChange={inputHandler} variant="filled"/>
+                                <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={name} onChange={inputHandler} variant="filled"/>
                                 <TextField label="Surname" name="surname" defaultValue={surname} onChange={inputHandler} variant="filled"/>
                             </Stack>}
                         </Grid>

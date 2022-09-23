@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import _ from 'lodash';
 import Box from "@mui/material/Box";
 import {Button, Link, Paper, Stack, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -26,7 +27,7 @@ const initialState = {
 
 
 const ChangePassword = () => {
-    const [formState, setFormState] = useState(initialState);
+    const [formState, setFormState] = useState(_.cloneDeep(initialState));
     const [errorMessage, setErrorMessage] = useState("");
     const [changed, setChanged] = useState(false);
 

@@ -1,10 +1,12 @@
 import {mockUsers} from "./mockAuth";
+import {DEFAULT_AVATAR_PHOTO} from "../constants/constants";
 
 const userInfoObject = (user) => {
     return {
         name: user.name,
         surname: user.surname,
         photo: user.photo,
+        photoFile: user.photoFile,
         email: user.email,
         username: user.username,
         type: user.type
@@ -27,7 +29,7 @@ const login = (username, password) => {
     }
 }
 
-const register = (name, surname, email, photo, username, password) => {
+const register = (name, surname, email, username, password) => {
     const userRes = mockUsers.find(u => u.username === username || u.email === email);
     if(userRes){
         const error = new Error('Username or email is already in use!');
@@ -39,7 +41,7 @@ const register = (name, surname, email, photo, username, password) => {
             name: name,
             surname: surname,
             email: email,
-            photo: photo,
+            photo: DEFAULT_AVATAR_PHOTO,
             username: username,
             password: password,
             type: 'user'
@@ -74,7 +76,8 @@ const updateUser = (username, name, surname, email, photo) => {
     if (!user) {
         mockUsers[index].name = name;
         mockUsers[index].surname = surname;
-        mockUsers[index].photo = photo;
+        mockUsers[index].photo = photo ? photo.name : mockUsers[index].photo;
+        mockUsers[index].photoFile = photo ? URL.createObjectURL(photo) : null;
         mockUsers[index].email = email;
         return new Promise((res, rej) => {
             res(userInfoObject(mockUsers[index]));
