@@ -24,10 +24,15 @@ const Home = () =>{
         api.getNewestAddedBooks().then(res => {
             setNewestAdded(res);
         });
+        getReviews();
+
+    }, []);
+
+    const getReviews = () => {
         api.getLatestReviews().then(res => {
             setLatestReviews(res);
         });
-    }, []);
+    }
 
     return (
         <Box>
@@ -60,7 +65,7 @@ const Home = () =>{
                                 <Typography variant="h6" sx={{textAlign:'center'}}>Latest reviews</Typography>
                             </ListItem>
                             <Divider/>
-                            {latestReviews && latestReviews.map(review => <Review key={review.id} reviewType={REVIEW_TYPES.HOMEPAGE_REVIEWS} type={user ? user.type : 'guest'} reviewObj={review}/> )}
+                            {latestReviews && latestReviews.map(review => <Review key={review.id} reviewType={REVIEW_TYPES.HOMEPAGE_REVIEWS} type={user ? user.type : 'guest'} reviewObj={review} getReviews={getReviews}/> )}
                         </List>
                     </Box>
                 </Grid>

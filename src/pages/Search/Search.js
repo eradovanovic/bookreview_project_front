@@ -39,7 +39,7 @@ const Search = () => {
     return <Box sx={{minWidth: 120, height: '100%'}}>
         <Grid container columns={{xs: 12, sm: 12, md: 12}}>
             <Grid item xs={12} sm={12} md={12} sx={{display: 'flex', justifyContent: 'center'}}>
-                <Box width="60%">
+                <Box sx={{width: {xs: '100%', sm: '100%', md: '60%'}}}>
                     {books && books.length > 0 && <BookList books={books} type={LIST_TYPES.BOOK_LIST}/>}
                     {(!books || books.length === 0) && <EmptyState title="No books found!" subtitle="Try changing the filters or search term!"/>}
                 </Box>

@@ -40,19 +40,21 @@ const Review = ({reviewObj, type, getReviews, reviewType}) => {
                 </Box>
             </Stack>}
             {reviewType === REVIEW_TYPES.HOMEPAGE_REVIEWS && <Box>
-                <Link href={`/books/${book_id}`} color="#000" underline="hover" sx={{width: '100%'}}>
-                    <Typography variant="h6">{title}</Typography>
-                </Link>
                 <Stack direction="row" spacing={1} display="flex" alignItems="center">
-                    <Avatar alt={user} src={avatar} sx={{width: 40, height: 40 }}/>
-                    <Link href={`/users/${user}`} color="#000" underline="hover">
-                        <Typography variant="subtitle1">{user}</Typography>
+                    <Link href={`/books/${book_id}`} color="#000" underline="hover" sx={{width: '100%'}}>
+                        <Typography variant="h6">{title}</Typography>
                     </Link>
                     <Box sx={{alignContent: 'right', textAlign: 'right', width: '100%'}}>
                         {type === 'admin' && <IconButton aria-label="delete" onClick={deleteHandler}>
                             <ClearIcon/>
                         </IconButton>}
                     </Box>
+                </Stack>
+                <Stack direction="row" spacing={1} display="flex" alignItems="center">
+                    <Avatar alt={user} src={avatar} sx={{width: 40, height: 40 }}/>
+                    <Link href={`/users/${user}`} color="#000" underline="hover">
+                        <Typography variant="subtitle1">{user}</Typography>
+                    </Link>
                 </Stack>
             </Box>}
             {rating && <Rating
