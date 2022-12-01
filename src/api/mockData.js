@@ -37,6 +37,8 @@ export const mockAuthors = [
     }
 ];
 
+//TODO replace author with author name and author surname
+// it's easier than fetching it in backend
 export const mockBooks = [
     {
         id:1,

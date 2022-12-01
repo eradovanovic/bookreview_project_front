@@ -53,7 +53,7 @@ const SearchField = () => {
     let books = useSelector(state => state.searchReducer.books);
 
     const handleChangeText = (event) => {
-        setSearchValueShown(event.target.value);
+        setSearchValueShown(event.target.value ? event.target.value : '');
         delayedUpdate(event.target.value);
     }
 

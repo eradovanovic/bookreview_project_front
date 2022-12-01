@@ -1,8 +1,99 @@
 import {mockBooks, mockCollection, mockReviews} from "./mockData";
 import {AUTHORS_PER_PAGE, BOOKS_PER_PAGE, DEFAULT_AVATAR_PHOTO, DEFAULT_BOOK_PHOTO, SORT} from "../constants/constants";
 import {mockAuthors} from "./mockData";
+import {fetchAuthor} from "../store/authors/authorsActions";
+
+// const bookDetailsInForm = data => {
+//     return {
+//         id: data.key,
+//         photo: `https://covers.openlibrary.org/b/id/${data.details.covers?.[0]}-L.jpg`,
+//         author_id: data.details.authors?.[0].key,
+//         author: data.details.authors?.[0].name,
+//         title: data.details.title,
+//         description: data.details.description
+//     }
+// }
+
+const bookDetailsInForm = data => {
+    return {
+        id: data.key.replace('/works','/books'),
+        photo: `https://covers.openlibrary.org/b/id/${data.covers?.[0]}-L.jpg`,
+        author_id: data.authors?.[0].author.key.replace('/authors/', ''),
+        // author: fetchAuthor(data.authors?.[0].author.key.replace('/authors','')).name,
+        title: data.title,
+        description: data.description.value ? data.description.value : data.description,
+    }
+}
+
+const bookByAuthorInForm = data => {
+    return {
+        id: data.key.replace('/works','/books'),
+        photo: `https://covers.openlibrary.org/b/id/${data.covers?.[0]}-L.jpg`,
+        // author_id: data.details.authors?.[0].key,
+        // author: data.details.authors?.[0].name,
+        title: data.title,
+    }
+}
+
+const bookInForm = data => {
+    return {
+        photo: `https://covers.openlibrary.org/b/id/${data.cover_i}-L.jpg`,
+        id: data.key.replace('/works', '/books'),
+        author_id: data.author_key.toString(),
+        author: data.author_name.toString(),
+        title: data.title,
+        genres: [],
+    }
+}
+
+const booksByAuthorInForm = data => {
+   const books = []
+    data.entries.forEach(d => {
+        books.push(bookByAuthorInForm(d))
+    })
+    return {total: data.size, books}
+}
+
+const booksInForm = data => {
+    const books = []
+    data.docs.forEach(d => {
+        books.push(bookInForm(d))
+    })
+    return {total: data.numFound, books}
+}
+
+const authorDetailsInForm = data => {
+    return {
+        photo: data.photos?.[0] && `https://covers.openlibrary.org/a/id/${data.photos[0]}-L.jpg`,
+        name: data.name,
+        biography: data.bio?.value ? data.bio.value : data.bio,
+    }
+}
+
+const authorsInForm = data => {
+    const authors = []
+    data.docs.forEach(d => {
+        authors.push(authorInForm(d))
+    })
+    return {total: data.numFound, authors}
+}
+
+const authorInForm = data => {
+    return {
+        id: data.key,
+        photo: `https://covers.openlibrary.org/a/id/${data.name}-L.jpg`,
+        name: data.name,
+        bookNum: data.work_count,
+    }
+}
 
 const getBookById = id => {
+    // return fetch(`https://openlibrary.org/works/${id}.json`)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         const bookDetails = bookDetailsInForm(data)
+    //         return bookDetails
+    //     })
     const book = mockBooks.find(b => b.id === id);
     return new Promise((res, rej) => {
         res(book);
@@ -15,6 +106,9 @@ const getBooks = (page, genres, sortBy) => {
     return new Promise((res, rej) => {
         res(booksResult);
     })
+    // return fetch(`http://openlibrary.org/search.json?q=title:* subject:large_type_books&page=${page}&limit=${BOOKS_PER_PAGE}`)
+    //     .then(response => response.json())
+    //     .then(data => booksInForm(data))
 }
 
 const filterAndSortBooks = (books, page, genres, sortBy) => {
@@ -44,6 +138,8 @@ const filterAndSortBooks = (books, page, genres, sortBy) => {
     return {books: filteredBooks.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: filteredBooks.length};
 }
 
+//TODO - remove author from params, it's not necessary
+// backend does not require author name and surname in order to add new book
 const addBook = (title, author_id, author, genres, description, photo) => {
     const id = [...mockBooks].sort((r1, r2) => r2.id - r1.id).at(0).id + 1;
     const bookObj = {
@@ -164,12 +260,21 @@ const getAuthorById = id => {
     return new Promise((res, rej) => {
         res(author ? author : mockAuthors[0]);
     })
+    // return fetch(` https://openlibrary.org/authors/${id}.json`)
+    //     .then(response => response.json())
+    //     .then(data => authorDetailsInForm(data))
 }
 
 const getAuthors = page => {
+
     return new Promise((res, rej) => {
         res({authors: mockAuthors.slice((page - 1) * AUTHORS_PER_PAGE, page * AUTHORS_PER_PAGE), total: mockAuthors.length});
     })
+    // return fetch(`http://openlibrary.org/search.json?q=title:* subject:large_type_books&page=${page}&limit=${BOOKS_PER_PAGE}`)
+    // console.log(page)
+    // return fetch(`http://openlibrary.org/search/authors.json?&q=top_subjects:("Large type books")&offset=${(page - 1) * AUTHORS_PER_PAGE}&limit=${AUTHORS_PER_PAGE}&sort:["name asc"]`)
+    //     .then(response => response.json())
+    //     .then(data => authorsInForm(data))
 }
 
 const getAllAuthors = () => {
@@ -201,6 +306,9 @@ const getBooksByAuthor = (id, page) => {
     return new Promise((res, rej) => {
         res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length});
     })
+    // return fetch(`https://openlibrary.org/authors/${id}/works.json?limit=${BOOKS_PER_PAGE}&offset=${(page - 1) * BOOKS_PER_PAGE}`)
+    //     .then(response => response.json())
+    //     .then(data => booksByAuthorInForm(data))
 }
 
 const changeAuthorData = (id, name, surname, photo, biography) => {
@@ -228,6 +336,18 @@ const searchPagination = (input, page) => {
     return new Promise((res, rej) => res({books: books.slice((page - 1) * BOOKS_PER_PAGE, page * BOOKS_PER_PAGE), total: books.length}));
 }
 
+const getMostReviewedBooks = () => {
+    return new Promise((res, rej) => res([...mockBooks].sort((b1, b2) => b2.numberOfReviews - b1.numberOfReviews).slice(0, 5)));
+}
+
+const getNewestAddedBooks = () => {
+    return new Promise((res, rej) => res([...mockBooks].sort((b1, b2) => b2.id - b1.id).slice(0, 5)));
+}
+
+const getLatestReviews = () => {
+    return new Promise((res, rej) => res([...mockReviews].sort((r1, r2) => new Date(r2.date_reviewed) - new Date(r1.date_reviewed)).slice(0, 5)));
+}
+
 export default {
     getBookById,
     getBooks,
@@ -248,5 +368,8 @@ export default {
     getBooksByAuthor,
     changeAuthorData,
     search,
-    searchPagination
+    searchPagination,
+    getMostReviewedBooks,
+    getNewestAddedBooks,
+    getLatestReviews
 };

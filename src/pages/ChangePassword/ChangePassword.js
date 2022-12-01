@@ -98,15 +98,15 @@ const ChangePassword = () => {
                 <TextField sx={{width: '80%'}} error={formState.oldPassword.error}
                            helperText={formState.oldPassword.error ? 'Old password is required!' : ' '}
                            label="Old password" name="oldPassword" type="password" onChange={inputHandler}
-                           variant="filled"/>
+                           variant="outlined"/>
                 <TextField sx={{width: '80%'}} error={formState.newPassword.error}
                            helperText={formState.newPassword.error ? 'New password is required!' : ' '}
                            label="New password" name="newPassword" type="password" onChange={inputHandler}
-                           variant="filled"/>
+                           variant="outlined"/>
                 <TextField sx={{width: '80%'}} error={formState.newPasswordConfirmation.error}
                            helperText={formState.newPasswordConfirmation.error ? 'Confirmation is required!' : ' '}
                            label="Confirm new password" name="newPasswordConfirmation" type="password"
-                           onChange={inputHandler} variant="filled"/>
+                           onChange={inputHandler} variant="outlined"/>
                 <Button sx={{width: 'fit-content', margin: '5px'}} variant="text" onClick={changePasswordHandler}>change
                     password</Button>
                 {errorMessage !== '' && <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>}

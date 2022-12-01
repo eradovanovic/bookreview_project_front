@@ -35,7 +35,7 @@ const Books = () => {
         api.getBooks(page, genresParam, sortParam).then(res => {
             setBooks(res.books);
             setPage(1);
-            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.books / BOOKS_PER_PAGE));
         });
     }
 

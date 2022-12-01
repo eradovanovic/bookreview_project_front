@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import {clearError, logout} from "store/auth/authActions";
 import {ADMIN, GUEST, USER} from "roles/Roles";
 import SearchField from "components/SearchBar/SearchField";
+import logo from 'assets/logo.png';
 import classes from './DrawerAppBar.module.scss';
 
 const drawerWidth = 240;
@@ -97,11 +98,12 @@ function DrawerAppBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }} onClick={ () => {navigate('/');}}>
-                <Button onClick={() => {navigate('/')}} sx={{color:'#000'}}>Book App</Button>
+            <Typography variant="h6">
+                <Button onClick={() => {navigate('/')}} sx={{color:'#000', width: '250px', height: '70px'}}>
+                    <img src={logo} className={classes.logoIMG} width="40%" height="auto"/>
+                </Button>
             </Typography>
             <Divider />
-
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item.label} disablePadding>
@@ -134,7 +136,9 @@ function DrawerAppBar(props) {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'block' } }}
                     >
-                        <Button sx={{ color: '#fff' }} onClick={() => {navigate('/')}}>Book App</Button>
+                        <Button sx={{ color: '#fff', height: '40px', borderRadius: '15px', padding: '2px'}}   onClick={() => {navigate('/')}}>
+                            <img src={logo} height="100%" className={classes.logoIMG} width="auto"/>
+                        </Button>
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block'} }}>
                         {navItems.map((item) => (

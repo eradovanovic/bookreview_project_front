@@ -87,6 +87,10 @@ const NewBook = () => {
             error = "Fill the required fields!"
         }
         if (!error ) {
+            //TODO - skip finding author object
+            // just pass the authorID when adding the book, do not pass author name and surname
+            // when you fetch book data in backend, you can also fetch authors name and surname
+
             const author = authors.find(a => a.id === authorId);
             api.addBook(formState.title.value, authorId, author.name + " " + author.surname, formGenres.value, formState.description.value , imgFile).then(res => navigate('/books'));
         }

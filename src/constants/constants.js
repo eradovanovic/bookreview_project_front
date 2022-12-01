@@ -1,5 +1,5 @@
 export const BOOKS_PER_PAGE = 5;
-export const AUTHORS_PER_PAGE = 3;
+export const AUTHORS_PER_PAGE = 10;
 
 export const SORT = {
     DEFAULT: 'DEFAULT',
@@ -16,7 +16,8 @@ export const LIST_TYPES = {
 
 export const REVIEW_TYPES = {
     BOOK_REVIEWS: 'BOOK_REVIEWS',
-    USER_REVIEWS: 'USER_REVIEWS'
+    USER_REVIEWS: 'USER_REVIEWS',
+    HOMEPAGE_REVIEWS: 'HOMEPAGE_REVIEWS'
 }
 
 export const names = [

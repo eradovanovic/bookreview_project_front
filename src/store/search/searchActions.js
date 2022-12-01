@@ -6,7 +6,7 @@ export const results = data => ({
 });
 
 export const clear = () => ({
-    type: "CLEAR"
+    type: "CLEAR_SEARCH"
 });
 
 export const search = input => dispatch => {

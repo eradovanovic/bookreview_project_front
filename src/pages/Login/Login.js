@@ -64,8 +64,8 @@ const Login = () => {
         <Paper sx={{display: 'flex', width:'350px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
             <Stack sx={{display:'flex', alignContent:'center', alignItems:'center', textAlign:'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Login!</Typography>
-                <TextField error={formState.username.error} helperText={formState.username.error ? 'Username is required!' : ' '} label="Username" name="username" onChange={inputHandler} variant="filled"/>
-                <TextField error={formState.password.error} helperText={formState.password.error ? 'Password is required!' : ' '} label="Password" name="password" type="password" onChange={inputHandler} variant="filled"/>
+                <TextField error={formState.username.error} helperText={formState.username.error ? 'Username is required!' : ' '} label="Username" name="username" onChange={inputHandler} variant="outlined"/>
+                <TextField error={formState.password.error} helperText={formState.password.error ? 'Password is required!' : ' '} label="Password" name="password" type="password" onChange={inputHandler} variant="outlined"/>
                 <Button sx={{width:'fit-content', margin: '5px'}} variant="text" onClick={loginHandler}>login</Button>
                 {errorMessage !== '' && <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>}
                 <Typography>Don't have an account? <Link href="/register" color="#000">Register</Link>! </Typography>

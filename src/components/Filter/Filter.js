@@ -43,7 +43,7 @@ const Filter = ({applyHandler}) => {
         applyHandler([], SORT.DEFAULT);
     }
 
-    return ( <Box sx={{marginTop:'20px', marginLeft:'20px'}}>
+    return ( <Box sx={{marginTop:'20px', marginLeft:'20px', marginRight: {xs: '20px', sm: '20px', md: '0px'}}}>
         <Grid item xs={12} sm={12} md={12} sx={{height:'fit-content', display: 'flex', alignItems:'center', alignContent:'center'}}>
             <FormControl sx={{width: '100%', margin: '10px'}}>
                 <InputLabel>Sort by</InputLabel>

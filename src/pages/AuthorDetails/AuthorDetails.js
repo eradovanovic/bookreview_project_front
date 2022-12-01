@@ -168,8 +168,8 @@ const AuthorDetails = () => {
                                     </IconButton>}>
                                     <Avatar alt="Author" src={imgPreview ? imgPreview : formState.photo.value} sx={{width: 80, height: 80}}/>
                                 </Badge>
-                                <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={name} onChange={inputHandler} variant="filled"/>
-                                <TextField label="Surname" name="surname" defaultValue={surname} onChange={inputHandler} variant="filled"/>
+                                <TextField label="Name" name="name" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : '' } defaultValue={name} onChange={inputHandler} variant="outlined"/>
+                                <TextField label="Surname" name="surname" defaultValue={surname} onChange={inputHandler} variant="outlined"/>
                             </Stack>}
                         </Grid>
                         {!matchesMD && <Grid item xs={12} sm={8} md={12} className={classes.gridContainerAuthorBio}>
