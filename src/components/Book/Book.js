@@ -62,7 +62,7 @@ const Book = ({book, getCollection, type}) => {
                         emptyIcon={<StarIcon fontSize="inherit" />}
                     />
                     <Grid item>
-                        {genres.map(genre => <Chip key={genre.id} size="small" sx={{marginRight: '5px'}} label={genre.name} variant="outlined" /> )}
+                        {genres?.map(genre => <Chip key={genre.id} size="small" sx={{marginRight: '5px'}} label={genre.name} variant="outlined" /> )}
                     </Grid>
                 </Box>
                 <Stack direction="row" spacing={2} width="100%" display="flex" alignItems="center" justifyContent="flex-end" margin="5px" marginRight="10px">

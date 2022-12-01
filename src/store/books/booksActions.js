@@ -6,8 +6,9 @@ export const fetchBookSuccess = data => ({
 });
 
 export const fetchBook = id => dispatch => {
-    return api.getBookById(id)
-        .then(data => {
-            dispatch(fetchBookSuccess(data));
+    return api.getBookById(+id)
+        .then(bookData => {
+            api.getAuthorById(bookData.author_id)
+                .then(authorData => dispatch(fetchBookSuccess({ ...bookData, author: authorData.name})))
         })
 }

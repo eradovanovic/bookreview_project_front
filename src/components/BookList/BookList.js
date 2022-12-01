@@ -23,7 +23,7 @@ const BookList = ({books, getCollection, type}) => {
     }
 
     return <Box height={height}>
-        {books.map(book => (
+        {books?.map(book => (
             <Book key={book.id} book={book} getCollection={getCollection} type={type}/>
         ))}
     </Box>

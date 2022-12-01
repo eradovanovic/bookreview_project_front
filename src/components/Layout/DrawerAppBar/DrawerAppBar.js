@@ -19,7 +19,6 @@ import {ADMIN, GUEST, USER} from "roles/Roles";
 import SearchField from "components/SearchBar/SearchField";
 import logo from 'assets/logo.png';
 import classes from './DrawerAppBar.module.scss';
-import {Stack} from "@mui/material";
 
 const drawerWidth = 240;
 
