@@ -6,7 +6,7 @@ import {Button, Paper, Rating, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
-import api from 'api/api'
+import api from 'services/api/api'
 import classes from './NewReview.module.scss'
 
 const NewReview = ({book_id, title, discardHandler, getReviews, reviewed}) => {
@@ -19,8 +19,7 @@ const NewReview = ({book_id, title, discardHandler, getReviews, reviewed}) => {
         setError(false);
         if (!rating) setError(true);
         else {
-            const date_reviewed = new Date(Date.now()).toISOString();
-            api.addReview(user.username, user.photo, book_id, title, date_reviewed, rating, review).then(res => {
+            api.addReview(user.username, book_id, rating, review).then(res => {
                 reviewed(true);
                 getReviews();
             });

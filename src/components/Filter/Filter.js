@@ -1,10 +1,12 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {Button, Checkbox, FormControl, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
-import {names, SORT} from "constants/constants";
+import { SORT } from "constants/constants";
+import api from "services/api/api";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -20,6 +22,12 @@ const MenuProps = {
 const Filter = ({applyHandler}) => {
     const [sort, setSort] = useState('DEFAULT');
     const [genres, setGenres] = useState([]);
+    const [names, setNames] = useState([]);
+
+    useEffect(() => {
+        api.getGenres()
+            .then(res => setNames(res))
+    }, [])
 
     const sortHandler = event => {
         const {
@@ -64,10 +72,10 @@ const Filter = ({applyHandler}) => {
         <Grid item xs={12} sm={12} md={12} sx={{height:'fit-content', display: 'flex', alignItems:'center', alignContent:'center'}}>
             <FormControl sx={{width: '100%', margin: '10px'}}>
                 <InputLabel>Genres</InputLabel>
-                <Select multiple value={genres} onChange={genresHandler} input={<OutlinedInput label="Genres"/>} renderValue={(selected) => selected.join(', ')} MenuProps={MenuProps}>
+                <Select multiple value={genres} onChange={genresHandler} input={<OutlinedInput label="Genres"/>} renderValue={(selected) => selected.map(s => s.name).join(', ')} MenuProps={MenuProps}>
                     {names.map(name => (
-                        <MenuItem key={name.id} value={name.name}>
-                            <Checkbox checked={genres.indexOf(name.name) > -1} />
+                        <MenuItem key={name.id} value={name}>
+                            <Checkbox checked={genres.indexOf(name) > -1} />
                             <ListItemText primary={name.name} />
                         </MenuItem>
                     ))}

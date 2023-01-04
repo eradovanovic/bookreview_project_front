@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Box from "@mui/material/Box";
 import {Button, Link, Paper, Stack, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import api_auth from "api/api_auth";
+import api_auth from "services/api/api_auth";
 import {logout} from "store/auth/authActions";
 import {passwordValid} from "utils/validators";
 import classes from "./ChangePassword.module.scss";
@@ -66,11 +66,11 @@ const ChangePassword = () => {
         }
         if (!validationError) validationError = validate(formState.newPassword.value, formState.newPasswordConfirmation.value);
         if (!validationError) {
-            api_auth.changePassword(user.username, formState.oldPassword.value, formState.newPassword.value).then(res => {
+            api_auth.changePassword(user.username, formState.oldPassword.value, formState.newPassword.value).then(() => {
                 dispatch(logout());
                 setChanged(true);
                 setTimeout(() => navigate('/login'), 1000)
-            }).catch(error => setErrorMessage(error.message));
+            }).catch(error => setErrorMessage(error.message ? error.message : error ));
         }
         else{
             setErrorMessage(validationError);

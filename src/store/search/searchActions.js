@@ -1,4 +1,4 @@
-import api from "api/api";
+import api from "services/api/api";
 
 export const results = data => ({
     type: "RESULTS",
@@ -12,6 +12,6 @@ export const clear = () => ({
 export const search = input => dispatch => {
     return api.search(input)
         .then(data => {
-            dispatch(results(data));
+            dispatch(results(data.books));
         })
 }

@@ -50,7 +50,7 @@ const navigationItems = [
     },
     {
         label: 'My books',
-        path: '/collections/id',
+        path: '/collections',
         role: [USER]
     },
     {
@@ -88,7 +88,7 @@ function DrawerAppBar(props) {
             dispatch(logout());
         }
         dispatch(clearError());
-        if (item.label === 'Profile'){
+        if (item.label === 'Profile' || item.label === 'My books'){
             navigate(`${item.path}/${user.username}`)
         }
         else {

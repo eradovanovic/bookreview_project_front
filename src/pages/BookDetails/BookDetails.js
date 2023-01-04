@@ -13,7 +13,7 @@ import AddIcon from "@mui/icons-material/Add";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DoneIcon from '@mui/icons-material/Done';
 import {fetchBook} from "store/books/booksActions";
-import api from "api/api";
+import api from "services/api/api";
 import Review from "components/Review";
 import NewReview from "components/NewReview";
 import classes from "./BookDetails.module.scss";
@@ -68,7 +68,7 @@ const BookDetails = () => {
             }
             getReviews();
         }
-    }, [dispatch, id]);
+    }, [dispatch, id, user]);
 
 
     return (

@@ -33,7 +33,7 @@ const App = (props) => {
                 <Route path='/authors/:id' element={<AuthorDetails/>}/>
                 <Route path='/users/:username' element={<Profile/>}/>
                 <Route path='/search' element={<Search/>}/>
-                <Route path='/collections/:id' element={<BookCollection/>}/>
+                <Route path='/collections/:username' element={<BookCollection/>}/>
                 <Route path='/newBook' element={<NewBook/>}/>
                 <Route path='/newAuthor' element={<NewAuthor/>}/>
                 <Route path='*' element={<NotFound/>}/>

@@ -1,4 +1,5 @@
-import api from "api/api_auth";
+import api from "services/api/api_auth";
+import {setAccessToken} from "services/common";
 
 export const loginSuccess = data => ({
     type: "LOGIN",
@@ -28,10 +29,9 @@ export const updateFailed = data => ({
 export const login = (username, password) => dispatch => {
     dispatch(logoutSuccess());
     return api.login(username, password)
-        .then(data => {
-            localStorage.setItem("user", data.user.username);
-            localStorage.setItem("token", data.token);
-            dispatch(loginSuccess(data));
+        .then(result => {
+            localStorage.setItem("token", result.token);
+            dispatch(loginSuccess(result));
         }).catch(error => dispatch(loginFailed(error)));
 }
 
@@ -39,7 +39,7 @@ export const register = (name, surname, email, photo, username, password) => dis
     dispatch(logoutSuccess());
     return api.register(name, surname, email, photo, username, password)
         .then(data => {
-            dispatch(login(data.user.username, password));
+            dispatch(login(data.username, data.password));
         }).catch(error => dispatch(registerFailed(error)));
 }
 
@@ -52,14 +52,16 @@ export const clearError = () => ({
 });
 
 export const logout = () => dispatch => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+   localStorage.removeItem("token");
+   setAccessToken()
     dispatch(logoutSuccess());
 }
 
 export const update = (username, name, surname, email, photo) => dispatch => {
-    return api.updateUser(username, name, surname, email, photo).then(data => {
-        localStorage.setItem("user", data.username);
-        dispatch(updateSuccess(data));
-    }).catch(error => dispatch(updateFailed(error)));
+   return api.updateUser(username, name, surname, email, photo)
+       .then(() => {
+           return api.getLoggedUser()
+               .then(data => dispatch(updateSuccess(data.user)))
+       })
+        .catch(error => dispatch(updateFailed(error)));
 }

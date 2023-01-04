@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Avatar, Badge, Button, Box, Grid, ListItem, Paper, Stack, TextField} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -12,9 +12,11 @@ import ConfirmationDialog from "components/Layout/ConfirmationDialog";
 import {DEFAULT_AVATAR_PHOTO, REVIEW_TYPES} from "constants/constants";
 import {logout, update} from "store/auth/authActions";
 import {emailValid} from "utils/validators";
-import api_auth from "api/api_auth";
-import api from "api/api";
+import api_auth from "services/api/api_auth";
+import api from "services/api/api";
 import classes from "./Profile.module.scss";
+import EmptyState from "../../components/Layout/EmptyState";
+import LoadingScreen from "../../components/Layout/LoadingScreen";
 
 const initialState = {
     "name": {
@@ -46,6 +48,7 @@ const Profile = () => {
     const {user, error} = useSelector((state) => state.authReducer);
     const [userProfile, setUserProfile] = useState({});
     const [isLogged, setIsLogged] = useState(false);
+    const [loaded, setLoaded] = useState(false)
     const [editable, setEditable] = useState(false);
     const [formState, setFormState] = useState(initialState);
     const [errorMessage, setErrorMessage] = useState("");
@@ -53,6 +56,7 @@ const Profile = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [imgFile, setImgFile] = useState();
     const [imgPreview, setImgPreview] = useState();
+    const [title, setTitle] = useState('')
 
 
     useEffect(() => {
@@ -60,36 +64,45 @@ const Profile = () => {
             setIsLogged(true);
             setUserProfile(user);
             setImgPreview(user.photoFile);
+            setLoaded(true)
         }
         else {
-            api_auth.getUserByUsername(username).then(res => {
-                setUserProfile(res);
-                setIsLogged(false);
-            })
+            api_auth.getUserByUsername(username)
+                .then(res => {
+                    setUserProfile(res);
+                    setIsLogged(false);
+                    setLoaded(true)
+                })
+                .catch(error => {
+                    setUserProfile(null)
+                    setIsLogged(false)
+                    setLoaded(true)
+                    setTitle(error)
+                })
         }
     }, [user, username]);
 
     useEffect(() => {
-        if (isLogged) {
+        if (isLogged && user) {
             setFormState(
                 {
                     "name": {
-                        "value": user.name,
+                        "value": user?.name,
                         "error": false,
                         "required": true
                     },
                     "surname": {
-                        "value": user.surname,
+                        "value": user?.surname,
                         "error": false,
                         "required": true
                     },
                     "photo": {
-                        "value": user.photo,
+                        "value": user?.photo,
                         "error": false,
                         "required": false
                     },
                     "email": {
-                        "value": user.email,
+                        "value": user?.email,
                         "error": false,
                         "required": true
                     }
@@ -103,28 +116,31 @@ const Profile = () => {
             setEditable(false);
         }
         else {
-            setErrorMessage(error.message);
+            setErrorMessage(error.message ?? error);
         }
-    }, [user.name, user.surname, user.photo, user.photoFile, user.email, error]);
+    }, [user?.name, user?.surname, user?.photo, user?.photoFile, user?.email, error]);
 
     useEffect(() => {
         getReviews();
     }, [userProfile])
 
     const getReviews = () => {
-        api.getReviewsUser(userProfile.username).then(res => {
-            setReviews(res);
-        })
+        if (userProfile) {
+            api.getReviewsUser(userProfile.username).then(res => {
+                setReviews(res);
+            })
+        }
     }
 
     const deleteUserHandler = () => {
         api_auth.deleteUser(userProfile.username).then(res => {
             if (isLogged) {
                 dispatch(logout());
+                setIsLogged(false)
+                setUserProfile(null)
             }
-            navigate('/');
+            navigate('/')
         })
-
     }
 
     const closeHandler = () => setOpenDialog(false);
@@ -153,9 +169,12 @@ const Profile = () => {
 
     const changeUserDataHandler = () => {
         let errorChange = "";
-        if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value)) {
+        if (Object.values(formState).some(val => val.error) || Object.values(formState).some(val => !val.value && val.required)) {
             Object.values(formState).forEach(val => {
-                if (!val.value && !val.error) val.error = true;
+                console.log(val)
+                if (!val.value && !val.error) {
+                    val.error = true;
+                }
             });
             errorChange = "All fields are required!"
         }
@@ -171,7 +190,7 @@ const Profile = () => {
         setEditable(false);
     }
 
-    return ( <Box>
+    return ( loaded ? (userProfile ? <Box>
             <Box className={classes.gridContainerAuthor}>
                 <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
                     <Grid container columns={{xs: 12, sm: 12, md: 12}}>
@@ -235,7 +254,8 @@ const Profile = () => {
                     </List>
                 </Grid>
             </Grid>
-        </Box>
+        </Box> : <EmptyState title={title} subtitle=""/>) :
+            <LoadingScreen/>
     );
 }
 

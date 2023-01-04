@@ -67,7 +67,7 @@ const Register = () => {
             navigate('/');
         }
         else if (Object.keys(error).length !== 0) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.message ? errorMessage : error);
         }
     }, [user, error]);
 
@@ -91,7 +91,7 @@ const Register = () => {
 
         if (!error) error = validate(formState.email.value, formState.password.value, formState.passwordConfirmation.value);
         if (!error) {
-            dispatch(register(formState.name.value, formState.surname.value, formState.email.value, formState.photo.value, formState.username.value, formState.password.value));
+            dispatch(register(formState.name.value, formState.surname.value, formState.email.value, formState.username.value, formState.password.value));
         }
         setErrorMessage(error);
     }

@@ -54,7 +54,7 @@ const SearchField = () => {
 
     const handleChangeText = (event) => {
         setSearchValueShown(event.target.value ? event.target.value : '');
-        delayedUpdate(event.target.value);
+        delayedUpdate(event.target.value ? event.target.value : '');
     }
 
     const searchHandler = () => {
@@ -72,8 +72,8 @@ const SearchField = () => {
                 options={books}
                 getOptionLabel={option => option.title}
                 renderOption={(props, option) => (
-                    <li {...props} >
-                        <SearchResult sx={{display: 'block'}} option={option}/>
+                    <li {...props} key={option.id}>
+                        <SearchResult sx={{display: 'block'}} option={option}  key={option.id}/>
                     </li>
                 )}
                 onInputChange={(event, newInputValue) => {

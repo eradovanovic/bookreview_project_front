@@ -1,12 +1,11 @@
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import _ from 'lodash';
 import Box from "@mui/material/Box";
 import {Button, Paper, Stack, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {PhotoCamera} from "@mui/icons-material";
-import api from 'api/api';
-import classes from "./NewAuthor.module.scss";
+import api from 'services/api/api';
 
 
 const initialState = {
@@ -84,7 +83,7 @@ const NewAuthor = () => {
                     Upload photo
                 </Button>
                 <Typography variant="caption">{formState.photo.value}</Typography>
-                <Button sx={{width:'fit-content', margin: '5px', borderRadius: '25px'}} variant="text" onClick={addAuthorHandler} variant="contained">add author</Button>
+                <Button sx={{width:'fit-content', margin: '5px', borderRadius: '25px'}} onClick={addAuthorHandler} variant="contained">add author</Button>
                 {errorMessage !== '' && <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>}
             </Stack>
         </Paper>

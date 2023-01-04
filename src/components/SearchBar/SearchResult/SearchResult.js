@@ -16,8 +16,8 @@ const SearchResult = ({option}) => {
             <Grid item xs={6} sm={7} md={9}>
                 <Stack direction="column" sx={{height: '100%', width: '100%', display: 'flex', paddingLeft: '8px', justifyContent: 'center', alignContent: 'center'}}>
                     <Typography variant="subtitle2">{option.title}</Typography>
-                    <Typography variant="subtitle1">{option.author}</Typography>
-                    <Typography variant="subtitle1">{option.genres.map(g => g.name).join(', ')}</Typography>
+                    <Typography variant="subtitle1">{option.name} {option.surname}</Typography>
+                    <Typography variant="subtitle1">{option.genres?.map(g => g.name).join(', ')}</Typography>
                 </Stack>
             </Grid>
         </Grid>
@@ -28,7 +28,8 @@ SearchResult.propTypes = {
     option: PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
+        name: PropTypes.string,
+        surname: PropTypes.string,
         genres: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.number,
             name: PropTypes.string

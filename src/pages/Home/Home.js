@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import api from "api/api";
+import api from "services/api/api";
 import {REVIEW_TYPES} from "constants/constants";
 import Stepper from "components/Layout/Stepper";
 import Review from "components/Review";
@@ -19,10 +19,10 @@ const Home = () =>{
 
     useEffect(() => {
         api.getMostReviewedBooks().then(res => {
-            setMostReviewed(res);
+            setMostReviewed(res.books);
         });
         api.getNewestAddedBooks().then(res => {
-            setNewestAdded(res);
+            setNewestAdded(res.books);
         });
         getReviews();
 

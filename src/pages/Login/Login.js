@@ -32,7 +32,7 @@ const Login = () => {
             navigate('/');
         }
         else if (Object.keys(error).length !== 0) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.message ?? error);
         }
     }, [user, error]);
 

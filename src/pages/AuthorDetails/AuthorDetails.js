@@ -14,7 +14,7 @@ import BookIcon from "@mui/icons-material/Book";
 import EditIcon from '@mui/icons-material/Edit';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import {fetchAuthor} from "store/authors/authorsActions";
-import api from 'api/api';
+import api from 'services/api/api';
 import {BOOKS_PER_PAGE, LIST_TYPES} from "constants/constants";
 import EmptyState from "components/Layout/EmptyState";
 import BookList from "components/BookList";
@@ -52,6 +52,7 @@ const AuthorDetails = () => {
     const [editable, setEditable] = useState(false);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [bookNum, setBookNum] = useState()
     const theme = useTheme();
     const matchesMD = useMediaQuery(theme.breakpoints.up('md'));
     const [formState, setFormState] = useState(initialState);
@@ -59,7 +60,7 @@ const AuthorDetails = () => {
     const [imgFile, setImgFile] = useState();
     const [imgPreview, setImgPreview] = useState();
 
-    const {name, surname, biography, photo, photoFile, bookNum} = currentAuthor;
+    const {name, surname, biography, photo, photoFile} = currentAuthor;
 
     useEffect(()=>{
         if(id != null ) {
@@ -75,6 +76,7 @@ const AuthorDetails = () => {
     useEffect(() => {
         api.getBooksByAuthor(+id, page).then(res => {
             setBooks(res.books);
+            setBookNum(res.total)
             setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     },[page]);
@@ -113,7 +115,9 @@ const AuthorDetails = () => {
     const changeAuthorDataHandler = () => {
         if (!formState.name.error) {
             api.changeAuthorData(+id, formState.name.value, formState.surname.value, imgFile, formState.biography.value).then(res => {
-                dispatch(fetchAuthor(res.id));
+                if (res) {
+                    dispatch(fetchAuthor(+id));
+                }
             });
             setErrorMessage("");
             setEditable(false);

@@ -3,9 +3,8 @@ import {useParams, useSearchParams} from "react-router-dom";
 import {Box, Pagination, Grid} from "@mui/material";
 import BookList from "components/BookList";
 import EmptyState from "components/Layout/EmptyState";
-import api from "api/api";
+import api from "services/api/api";
 import {BOOKS_PER_PAGE, LIST_TYPES} from "constants/constants";
-import classes from "./Search.module.scss";
 
 
 const Search = () => {
