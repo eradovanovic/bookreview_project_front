@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {Pagination} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import api from "api/api";
+import api from "services/api/api";
 import {BOOKS_PER_PAGE, LIST_TYPES} from "constants/constants";
 import BookList from "components/BookList";
 import Filter from "components/Filter";
@@ -35,7 +35,7 @@ const Books = () => {
         api.getBooks(page, genresParam, sortParam).then(res => {
             setBooks(res.books);
             setPage(1);
-            setTotalPages(Math.ceil(res.books / BOOKS_PER_PAGE));
+            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
         });
     }
 

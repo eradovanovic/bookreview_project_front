@@ -3,26 +3,32 @@ import {useSelector} from "react-redux";
 import {Pagination} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import {BOOKS_PER_PAGE, LIST_TYPES} from "constants/constants";
-import api from "api/api";
+import {BOOKS_PER_PAGE, LIST_TYPES, SORT} from "constants/constants";
+import api from "services/api/api";
 import EmptyState from "components/Layout/EmptyState";
 import BookList from "components/BookList";
 import Filter from "components/Filter";
+import {useParams} from "react-router-dom";
 
 const BookCollection = () => {
     const user = useSelector((state) => state.authReducer.user);
+    const username = useParams('username')
     const [books, setBooks] = useState([]);
     const [page, setPage] = useState(1);
-    const [sort, setSort] = useState('');
+    const [sort, setSort] = useState(SORT.DEFAULT);
     const [genres, setGenres] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        api.getCollectionForUser(user.username, page, genres, sort).then(res => {
-            setBooks(res.books);
-            setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
-        });
-    },[page]);
+        if (user) {
+            api.getCollectionForUser(username, page, genres, sort)
+                .then(res => {
+                    setBooks(res.books);
+                    setTotalPages(Math.ceil(res.total / BOOKS_PER_PAGE));
+                })
+                .catch(error => console.log(error))
+        }
+    },[page, user]);
 
 
     const applyHandler = (genresParam, sortParam) => {

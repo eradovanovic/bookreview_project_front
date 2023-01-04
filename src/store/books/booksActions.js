@@ -1,4 +1,4 @@
-import api from "api/api";
+import api from "services/api/api";
 
 export const fetchBookSuccess = data => ({
     type: "FETCH_BOOK",
@@ -8,7 +8,6 @@ export const fetchBookSuccess = data => ({
 export const fetchBook = id => dispatch => {
     return api.getBookById(+id)
         .then(bookData => {
-            api.getAuthorById(bookData.author_id)
-                .then(authorData => dispatch(fetchBookSuccess({ ...bookData, author: authorData.name})))
+            dispatch(fetchBookSuccess({ ...bookData }))
         })
 }
