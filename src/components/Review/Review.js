@@ -20,7 +20,7 @@ const Review = ({reviewObj, type, getReviews, reviewType}) => {
         <Paper elevation={4} className={classes.paperStyle} sx={{borderRadius:'15px', margin:'10px'}}>
             {reviewType === REVIEW_TYPES.USER_REVIEWS && <Stack direction="row" spacing={2}>
                 <Link href={`/books/${book_id}`} color="#000" underline="hover" sx={{width: '100%'}}>
-                    <Typography variant="h6">{title ?? 'something'}</Typography>
+                    <Typography variant="h6">{title}</Typography>
                 </Link>
                 <Box sx={{alignContent: 'right', textAlign: 'right', width: '100%'}}>
                     {type === 'admin' && <IconButton aria-label="delete" onClick={deleteHandler}>

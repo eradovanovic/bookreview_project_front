@@ -19,7 +19,6 @@ const NewReview = ({book_id, title, discardHandler, getReviews, reviewed}) => {
         setError(false);
         if (!rating) setError(true);
         else {
-            // const date_reviewed = new Date(Date.now()).toISOString();
             api.addReview(user.username, book_id, rating, review).then(res => {
                 reviewed(true);
                 getReviews();

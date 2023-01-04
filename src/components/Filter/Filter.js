@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {Button, Checkbox, FormControl, InputLabel, MenuItem, OutlinedInput, Select} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import ListItemText from "@mui/material/ListItemText";
-import { SORT} from "constants/constants";
+import { SORT } from "constants/constants";
 import api from "services/api/api";
 
 
