@@ -59,7 +59,10 @@ const NewAuthor = () => {
             error = "Fill the required fields!";
         }
         if (!error ) {
-            api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, imgFile).then(res => navigate('/authors'));
+            api.uploadPhoto(imgFile)
+                .then(res => {
+                    api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
+                })
         }
         setErrorMessage(error);
     }

@@ -50,22 +50,10 @@ const NewBook = () => {
         "value": [],
         "error": false
     });
-    const [imgFile, setImgFile] = useState();
+    const [imgFile, setImgFile] = useState("");
     const navigate = useNavigate();
 
-    const convertBlob = (file) => {
-        return new Promise((res, rej) => {
-            let fileBlob = file
 
-            let reader = new FileReader();
-
-            reader.readAsText(fileBlob);
-            reader.onload = function() {
-                console.log('blabla')
-                return res(reader.result)
-            }
-        })
-    }
 
     useEffect(() => {
         api.getAllAuthors().then(res => setAuthors(res.authors));
@@ -76,9 +64,7 @@ const NewBook = () => {
         const {name, files, value} = event.target;
         const error = formState[name].required && value.trim() === "" ;
         if (name === 'photo') {
-            console.log(files[0])
-            const fileBlob = await convertBlob(files[0])
-            setImgFile(fileBlob);
+            setImgFile(files[0])
         }
         const val = name === 'photo' ? files[0].name : value;
         setFormState( prevState => ({
@@ -104,7 +90,11 @@ const NewBook = () => {
             error = "Fill the required fields!"
         }
         if (!error ) {
-            api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , imgFile).then(res => navigate('/books'));
+            api.uploadPhoto(imgFile)
+                .then(res => {
+                    console.log(res)
+                    api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
+                })
         }
         setErrorMessage(error);
     }
@@ -172,10 +162,12 @@ const NewBook = () => {
                     rows={7}
                     sx={{width: '100%', marginBottom: '20px'}}
                 />
-                <Button variant="outlined" component="label" sx={{marginBottom: '10px', borderRadius: '25px'}} startIcon={<PhotoCamera/>}>
-                    <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler}/>
-                    Upload photo
-                </Button>
+                <FormControl encType='multipart/form-data'>
+                    <Button variant="outlined" component="label" sx={{marginBottom: '10px', borderRadius: '25px'}} startIcon={<PhotoCamera/>}>
+                        <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler}/>
+                        Upload photo
+                    </Button>
+                </FormControl>
                 <Typography variant="caption">{formState.photo.value}</Typography>
                 <Button sx={{width:'fit-content', margin: '5px', borderRadius: '25px'}} onClick={addBookHandler} variant="contained">add book</Button>
                 {errorMessage !== '' && <Typography sx={{color: '#d32f2f'}}>{errorMessage}</Typography>}

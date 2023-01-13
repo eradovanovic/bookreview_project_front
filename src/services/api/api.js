@@ -483,6 +483,17 @@ const getGenres = () => {
     return axios.get('/genres')
 }
 
+const uploadPhoto = (imgFile) => {
+    const formData= new FormData();
+    // formData.append('name', name);
+    formData.append('image',imgFile);
+    return fetch('https://api.imgbb.com/1/upload?key=054e02d81609aa2bba6579bb124c2202', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+}
+
 export default {
     getBookById,
     getBooks,
@@ -508,4 +519,5 @@ export default {
     getNewestAddedBooks,
     getLatestReviews,
     getGenres,
+    uploadPhoto,
 };
