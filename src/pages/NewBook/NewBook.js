@@ -90,11 +90,15 @@ const NewBook = () => {
             error = "Fill the required fields!"
         }
         if (!error ) {
-            api.uploadPhoto(imgFile)
-                .then(res => {
-                    console.log(res)
-                    api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
-                })
+            if (imgFile) {
+                api.uploadPhoto(imgFile)
+                    .then(res => {
+                        console.log(res)
+                        api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
+                    })
+            } else {
+                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
+            }
         }
         setErrorMessage(error);
     }

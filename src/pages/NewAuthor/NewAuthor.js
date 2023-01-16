@@ -59,10 +59,14 @@ const NewAuthor = () => {
             error = "Fill the required fields!";
         }
         if (!error ) {
-            api.uploadPhoto(imgFile)
-                .then(res => {
-                    api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
-                })
+            if (imgFile) {
+                api.uploadPhoto(imgFile)
+                    .then(res => {
+                        api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
+                    })
+            } else {
+                api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
+            }
         }
         setErrorMessage(error);
     }
