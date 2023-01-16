@@ -65,7 +65,7 @@ const NewAuthor = () => {
                         api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
                     })
             } else {
-                api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
+                api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value).then(res => navigate('/authors'));
             }
         }
         setErrorMessage(error);

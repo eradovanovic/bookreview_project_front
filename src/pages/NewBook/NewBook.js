@@ -97,7 +97,7 @@ const NewBook = () => {
                         api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
                     })
             } else {
-                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
+                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value).then(res => navigate('/books'));
             }
         }
         setErrorMessage(error);
