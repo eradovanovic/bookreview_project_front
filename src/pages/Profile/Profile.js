@@ -187,7 +187,7 @@ const Profile = () => {
                     })
             }
             else {
-                dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value));
+                dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, formState.photo.value));
             }
         }
         setErrorMessage(errorChange);

@@ -125,7 +125,7 @@ const AuthorDetails = () => {
                     })
 
             } else {
-                api.changeAuthorData(+id, formState.name.value, formState.surname.value, null, formState.biography.value).then(res => {
+                api.changeAuthorData(+id, formState.name.value, formState.surname.value, formState.photo.value, formState.biography.value).then(res => {
                     if (res) {
                         dispatch(fetchAuthor(+id));
                     }

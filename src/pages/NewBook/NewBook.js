@@ -24,7 +24,7 @@ const initialState = {
     "photo": {
         "value": "",
         "error": false,
-        "required": false
+        "required": true
     }
 }
 
@@ -94,10 +94,10 @@ const NewBook = () => {
                 api.uploadPhoto(imgFile)
                     .then(res => {
                         console.log(res)
-                        api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(res => navigate('/books'));
+                        api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(() => navigate('/books'));
                     })
             } else {
-                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value).then(res => navigate('/books'));
+                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value).then(() => navigate('/books'));
             }
         }
         setErrorMessage(error);
@@ -167,7 +167,7 @@ const NewBook = () => {
                     sx={{width: '100%', marginBottom: '20px'}}
                 />
                 <FormControl encType='multipart/form-data'>
-                    <Button variant="outlined" component="label" sx={{marginBottom: '10px', borderRadius: '25px'}} startIcon={<PhotoCamera/>}>
+                    <Button variant="outlined" component="label" sx={{marginBottom: '10px', borderRadius: '25px'}} color={formState.photo.error ? 'error' : 'primary'} startIcon={<PhotoCamera/>}>
                         <input hidden accept="image/*" type="file" name="photo" onChange={inputHandler}/>
                         Upload photo
                     </Button>
