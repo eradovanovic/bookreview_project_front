@@ -180,7 +180,15 @@ const Profile = () => {
         }
         if (!errorChange) errorChange = validate(formState.email.value);
         if (!errorChange) {
-            dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, imgFile));
+            if(imgFile) {
+                api.uploadPhoto(imgFile)
+                    .then(res => {
+                        dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, res.data.url));
+                    })
+            }
+            else {
+                dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, formState.photo.value));
+            }
         }
         setErrorMessage(errorChange);
     }

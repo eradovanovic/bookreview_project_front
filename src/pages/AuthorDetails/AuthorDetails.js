@@ -114,11 +114,23 @@ const AuthorDetails = () => {
 
     const changeAuthorDataHandler = () => {
         if (!formState.name.error) {
-            api.changeAuthorData(+id, formState.name.value, formState.surname.value, imgFile, formState.biography.value).then(res => {
-                if (res) {
-                    dispatch(fetchAuthor(+id));
-                }
-            });
+            if (imgFile) {
+                api.uploadPhoto(imgFile)
+                    .then(resPhoto => {
+                        api.changeAuthorData(+id, formState.name.value, formState.surname.value, resPhoto.data.url, formState.biography.value).then(res => {
+                            if (res) {
+                                dispatch(fetchAuthor(+id));
+                            }
+                        });
+                    })
+
+            } else {
+                api.changeAuthorData(+id, formState.name.value, formState.surname.value, formState.photo.value, formState.biography.value).then(res => {
+                    if (res) {
+                        dispatch(fetchAuthor(+id));
+                    }
+                });
+            }
             setErrorMessage("");
             setEditable(false);
         }
