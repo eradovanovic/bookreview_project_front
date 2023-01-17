@@ -18,25 +18,27 @@ import AuthorDetails from "./pages/AuthorDetails";
 import Profile from "./pages/Profile";
 import DrawerAppBar from "./components/Layout/DrawerAppBar";
 import "./App.css";
+import ProtectedRoute from "./components/Router";
 
 const App = (props) => {
     return (
         <Routes>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
-            <Route path='/changePassword' element={<ChangePassword/>}/>
-            <Route path='/' element={<DrawerAppBar/>}>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/books' element={<Books/>}/>
-                <Route path='/books/:id' element={<BookDetails/>}/>
-                <Route path='/authors' element={<Authors/>}/>
-                <Route path='/authors/:id' element={<AuthorDetails/>}/>
-                <Route path='/users/:username' element={<Profile/>}/>
-                <Route path='/search' element={<Search/>}/>
-                <Route path='/collections/:username' element={<BookCollection/>}/>
-                <Route path='/newBook' element={<NewBook/>}/>
-                <Route path='/newAuthor' element={<NewAuthor/>}/>
-                <Route path='*' element={<NotFound/>}/>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/changePassword' element={<ChangePassword />} />
+            <Route path='/' element={<DrawerAppBar />}>
+                <Route path='/' element={<Home />} />
+                <Route path='/books' element={<Books />} />
+                <Route path='/books/:id' element={<BookDetails />} />
+                <Route path='/authors' element={<Authors />} />
+                <Route path='/authors/:id' element={<AuthorDetails />} />
+                <Route path='/users/:username' element={<Profile />} />
+                <Route path='/search' element={<Search />} />
+                <Route path='/collections/:username' element={<BookCollection />} />
+                <Route path='/newBook' element={<ProtectedRoute types={['admin']}><NewBook /></ProtectedRoute>} />
+                <Route path='/newAuthor'  element={<ProtectedRoute types={['admin']}><NewAuthor /></ProtectedRoute>} />
+                <Route path='/notFound' element={<NotFound />} />
+                <Route path='*' element={<NotFound />} />
             </Route>
         </Routes>
     );
