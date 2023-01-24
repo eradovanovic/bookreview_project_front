@@ -483,11 +483,19 @@ const getGenres = () => {
     return axios.get('/genres')
 }
 
-const uploadPhoto = (imgFile) => {
+const getBooksPhotoUploadKey = () => {
+    return axios.get('books/uploadPhoto')
+}
+
+const getAuthorsPhotoUploadKey = () => {
+    return axios.get('authors/uploadPhoto')
+}
+
+const uploadPhoto = (imgFile, key) => {
     const formData= new FormData();
     // formData.append('name', name);
     formData.append('image',imgFile);
-    return fetch('https://api.imgbb.com/1/upload?key=054e02d81609aa2bba6579bb124c2202', {
+    return fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
         method: 'POST',
         body: formData
     })
@@ -525,6 +533,8 @@ export default {
     getNewestAddedBooks,
     getLatestReviews,
     getGenres,
+    getBooksPhotoUploadKey,
+    getAuthorsPhotoUploadKey,
     uploadPhoto,
     getBestsellers,
 };

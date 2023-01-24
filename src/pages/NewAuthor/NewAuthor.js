@@ -60,12 +60,18 @@ const NewAuthor = () => {
         }
         if (!error ) {
             if (imgFile) {
-                api.uploadPhoto(imgFile)
-                    .then(res => {
-                        api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
+                api.getAuthorsPhotoUploadKey()
+                    .then(key => {
+                        api.uploadPhoto(imgFile, key)
+                            .then(res => {
+                                api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value, res.data.url).then(res => navigate('/authors'));
+                            })
                     })
+                    .catch(error => setErrorMessage(error))
+
             } else {
-                api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value).then(res => navigate('/authors'));
+                api.addAuthor(formState.name.value, formState.surname.value, formState.biography.value).then(res => navigate('/authors'))
+                .catch(error => setErrorMessage(error))
             }
         }
         setErrorMessage(error);
