@@ -21,16 +21,6 @@ export const REVIEW_TYPES = {
     HOMEPAGE_REVIEWS: 'HOMEPAGE_REVIEWS'
 }
 
-// export const names = [
-//     {id:1, name:'drama'},
-//     {id:2, name:'crime'},
-//     {id:3, name:'thriller'},
-//     {id:4, name:'romance'},
-//     {id:5, name:'history'},
-//     {id:6, name:'fiction'},
-//     {id:7, name:'comedy'}
-// ];
-
 export const BESTSELLER_TYPES = {
     COMBINED: {
         'label': 'Combined print and e-book',
