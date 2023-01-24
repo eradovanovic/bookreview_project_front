@@ -17,6 +17,7 @@ import api from "services/api/api";
 import classes from "./Profile.module.scss";
 import EmptyState from "../../components/Layout/EmptyState";
 import LoadingScreen from "../../components/Layout/LoadingScreen";
+import {fetchAuthor} from "../../store/authors/authorsActions";
 
 const initialState = {
     "name": {
@@ -181,9 +182,12 @@ const Profile = () => {
         if (!errorChange) errorChange = validate(formState.email.value);
         if (!errorChange) {
             if(imgFile) {
-                api.uploadPhoto(imgFile)
-                    .then(res => {
-                        dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, res.data.url));
+                api_auth.getUsersPhotoUploadKey(user.username)
+                    .then(key => {
+                        api.uploadPhoto(imgFile, key)
+                            .then(res => {
+                                dispatch(update(user.username, formState.name.value, formState.surname.value, formState.email.value, res.data.url));
+                            })
                     })
             }
             else {

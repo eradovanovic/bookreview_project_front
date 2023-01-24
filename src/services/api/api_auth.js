@@ -148,6 +148,11 @@ const deleteUser = username => {
     // })
 }
 
+const getUsersPhotoUploadKey = (username) => {
+    return axios.get(`users/${username}/uploadPhoto`)
+}
+
+
 const api = {
     login,
     register,
@@ -155,7 +160,8 @@ const api = {
     getLoggedUser,
     updateUser,
     changePassword,
-    deleteUser
+    deleteUser,
+    getUsersPhotoUploadKey,
 }
 
 export default api;
