@@ -17,7 +17,6 @@ import api from "services/api/api";
 import classes from "./Profile.module.scss";
 import EmptyState from "../../components/Layout/EmptyState";
 import LoadingScreen from "../../components/Layout/LoadingScreen";
-import {fetchAuthor} from "../../store/authors/authorsActions";
 
 const initialState = {
     "name": {
