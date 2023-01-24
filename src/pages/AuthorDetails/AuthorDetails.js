@@ -115,13 +115,16 @@ const AuthorDetails = () => {
     const changeAuthorDataHandler = () => {
         if (!formState.name.error) {
             if (imgFile) {
-                api.uploadPhoto(imgFile)
-                    .then(resPhoto => {
-                        api.changeAuthorData(+id, formState.name.value, formState.surname.value, resPhoto.data.url, formState.biography.value).then(res => {
-                            if (res) {
-                                dispatch(fetchAuthor(+id));
-                            }
-                        });
+                api.getAuthorsPhotoUploadKey()
+                    .then(key => {
+                        api.uploadPhoto(imgFile, key)
+                            .then(resPhoto => {
+                                api.changeAuthorData(+id, formState.name.value, formState.surname.value, resPhoto.data.url, formState.biography.value).then(res => {
+                                    if (res) {
+                                        dispatch(fetchAuthor(+id));
+                                    }
+                                });
+                            })
                     })
 
             } else {

@@ -483,15 +483,29 @@ const getGenres = () => {
     return axios.get('/genres')
 }
 
-const uploadPhoto = (imgFile) => {
+const getBooksPhotoUploadKey = () => {
+    return axios.get('books/uploadPhoto')
+}
+
+const getAuthorsPhotoUploadKey = () => {
+    return axios.get('authors/uploadPhoto')
+}
+
+const uploadPhoto = (imgFile, key) => {
     const formData= new FormData();
     // formData.append('name', name);
     formData.append('image',imgFile);
-    return fetch('https://api.imgbb.com/1/upload?key=054e02d81609aa2bba6579bb124c2202', {
+    return fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
+}
+
+const getBestsellers = (type, genre) => {
+    const query =  (type === 'paperback' && genre === 'fiction') ? 'trade-fiction-paperback' : type + '-' + genre
+    return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${query}.json?api-key=pI5bu9tpJuaY3cP6StHn7GGuwFt5G8Ne`)
+        .then(res => res.json())
 }
 
 export default {
@@ -519,5 +533,8 @@ export default {
     getNewestAddedBooks,
     getLatestReviews,
     getGenres,
+    getBooksPhotoUploadKey,
+    getAuthorsPhotoUploadKey,
     uploadPhoto,
+    getBestsellers,
 };

@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import ListItemText from "@mui/material/ListItemText";
 import {PhotoCamera} from "@mui/icons-material";
 import api from 'services/api/api';
-import {DEFAULT_BOOK_PHOTO} from "constants/constants";
 
 
 const initialState = {
@@ -91,13 +90,19 @@ const NewBook = () => {
         }
         if (!error ) {
             if (imgFile) {
-                api.uploadPhoto(imgFile)
-                    .then(res => {
-                        console.log(res)
-                        api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(() => navigate('/books'));
+                api.getBooksPhotoUploadKey()
+                    .then(key => {
+                        api.uploadPhoto(imgFile, key)
+                            .then(res => {
+                                console.log(res)
+                                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(() => navigate('/books'));
+                            })
                     })
+                    .catch(error => setErrorMessage(error))
             } else {
-                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value).then(() => navigate('/books'));
+                api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value).then(() => navigate('/books'))
+                    .catch(error => setErrorMessage(error))
+
             }
         }
         setErrorMessage(error);

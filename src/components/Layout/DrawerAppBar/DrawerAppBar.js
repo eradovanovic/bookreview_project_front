@@ -44,6 +44,11 @@ const navigationItems = [
         role: [GUEST, USER, ADMIN]
     },
     {
+        label: 'Bestsellers',
+        path: '/bestsellers',
+        role: [GUEST, USER, ADMIN]
+    },
+    {
         label: 'Profile',
         path: '/users',
         role: [USER]
