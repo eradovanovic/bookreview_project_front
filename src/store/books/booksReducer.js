@@ -16,7 +16,7 @@ const booksReducer =  (state = initialState, action) => {
             return  {
                 ...state,
                 bestsellers: action.data.books,
-                bestsellersTitle: action.data.list_name,
+                bestsellersTitle: action.data.display_name,
                 bestsellersPublishedDate: action.data.published_date
             }
         default:

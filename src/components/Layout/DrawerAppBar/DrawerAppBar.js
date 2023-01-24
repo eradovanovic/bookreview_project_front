@@ -59,7 +59,7 @@ const navigationItems = [
         role: [USER]
     },
     {
-        label: 'New BestsellerBook',
+        label: 'New Book',
         path: '/newBook',
         role: [ADMIN]
     },
