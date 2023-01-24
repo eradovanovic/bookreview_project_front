@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Book from "../Book";
-import classes from './BookList.module.scss'
+import {LIST_TYPES} from "../../constants/constants";
+import BestsellerBook from "../BestsellerBook";
 
+import classes from './BookList.module.scss';
 
 const BookList = ({books, getCollection, type}) => {
     const theme = useTheme();
@@ -13,19 +15,20 @@ const BookList = ({books, getCollection, type}) => {
 
     let height;
     if (matchesMD) {
-        height = '1550px';
+        height = type === LIST_TYPES.BESTSELLERS ? '1650px' : '1550px';
     }
     else if (matchesSM) {
-        height = '1550px';
+        height = type === LIST_TYPES.BESTSELLERS ? '1750px' : '1550px';
     }
     else{
-        height = '2750px';
+        height = type === LIST_TYPES.BESTSELLERS ? '3325px' : '2750px';
     }
 
     return <Box height={height}>
-        {books?.map(book => (
-            <Book key={book.id} book={book} getCollection={getCollection} type={type}/>
-        ))}
+        {type === LIST_TYPES.BESTSELLERS ?
+            books?.map(book => (<BestsellerBook key={book.id} book={book} getCollection={getCollection} type={type}/>)):
+            books?.map(book => (<Book key={book.id} book={book} getCollection={getCollection} type={type}/>))
+        }
     </Box>
 }
 

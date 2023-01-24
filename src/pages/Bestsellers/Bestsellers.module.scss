@@ -1,0 +1,11 @@
+@import "src/styles";
+
+.box {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

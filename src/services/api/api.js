@@ -494,6 +494,12 @@ const uploadPhoto = (imgFile) => {
         .then(response => response.json())
 }
 
+const getBestsellers = (type, genre) => {
+    const query =  (type === 'paperback' && genre === 'fiction') ? 'trade-fiction-paperback' : type + '-' + genre
+    return fetch(`https://api.nytimes.com/svc/books/v3/lists/current/${query}.json?api-key=pI5bu9tpJuaY3cP6StHn7GGuwFt5G8Ne`)
+        .then(res => res.json())
+}
+
 export default {
     getBookById,
     getBooks,
@@ -520,4 +526,5 @@ export default {
     getLatestReviews,
     getGenres,
     uploadPhoto,
+    getBestsellers,
 };
