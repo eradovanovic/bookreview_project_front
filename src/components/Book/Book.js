@@ -17,7 +17,7 @@ import classes from "./Book.module.scss";
 
 const Book = ({book, getCollection, type}) => {
     const navigate = useNavigate();
-    const {id, title, author_id, name, surname, genres, photo, description, rating, number_of_reviews: numberOfReviews, photoFile} = book;
+    const {id, title, author_id, name, surname, genres, photo, description, rating, number_of_reviews: numberOfReviews} = book;
     const author = name + ' ' + surname
     const user = useSelector(state => state.authReducer.user);
     const [favorite, setFavorite] = useState(false);
@@ -48,7 +48,7 @@ const Book = ({book, getCollection, type}) => {
         <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
             <Grid item xs={4} sm={4} md={4} sx={{textAlign:'center', padding:'0px'}}>
                 <Button sx={{maxWidth:'150px', margin:'0px', padding:'0px'}} onClick={() => {navigate(`/books/${id}`)}}>
-                    <img className={classes.thumbnailIMG} src={photo ? photo : DEFAULT_BOOK_PHOTO} width="100%" alt="Book Thumbnail"/>
+                    <img className={classes.thumbnailIMG} src={photo ? photo : DEFAULT_BOOK_PHOTO} width="100%" alt="BestsellerBook Thumbnail"/>
                 </Button>
             </Grid>
             <Grid item xs={4} sm={4} md={8} height="100%" alignItems="center" justifyContent="center" paddingTop="30px" >

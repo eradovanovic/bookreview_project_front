@@ -56,7 +56,7 @@ export const mockBooks = [
     },
     {
         id:2,
-        title: 'A Book 2',
+        title: 'A BestsellerBook 2',
         author_id: 2,
         author: 'Name2 Surname2',
         genres: [
@@ -70,7 +70,7 @@ export const mockBooks = [
     },
     {
         id:3,
-        title: 'C Book 3' ,
+        title: 'C BestsellerBook 3' ,
         author_id: 1,
         author: 'Sally Rooney',
         genres: [
@@ -83,7 +83,7 @@ export const mockBooks = [
     },
     {
         id:4,
-        title: 'B Book 4',
+        title: 'B BestsellerBook 4',
         author_id: 1,
         author: 'Sally Rooney',
         genres: [
@@ -96,7 +96,7 @@ export const mockBooks = [
     },
     {
         id:5,
-        title: 'H Book 5',
+        title: 'H BestsellerBook 5',
         author_id: 1,
         author: 'Sally Rooney',
         genres: [
@@ -110,7 +110,7 @@ export const mockBooks = [
     },
     {
         id:6,
-        title: 'E Book 6',
+        title: 'E BestsellerBook 6',
         author_id: 1,
         author: 'Sally Rooney',
         genres: [
@@ -123,7 +123,7 @@ export const mockBooks = [
     },
     {
         id:7,
-        title: 'P Book 7' ,
+        title: 'P BestsellerBook 7' ,
         author_id: 1,
         author: 'Sally Rooney',
         genres: [
@@ -136,7 +136,7 @@ export const mockBooks = [
     },
     {
         id:8,
-        title: 'M Book 8',
+        title: 'M BestsellerBook 8',
         author_id: 3,
         author: 'Name3 Surname3',
         genres: [
@@ -150,7 +150,7 @@ export const mockBooks = [
     },
     {
         id:9,
-        title: 'W Book 9',
+        title: 'W BestsellerBook 9',
         author_id: 1,
         author: 'Sally Rooney',
         genres: [
@@ -164,7 +164,7 @@ export const mockBooks = [
     },
     {
         id:10,
-        title: 'L Book 10',
+        title: 'L BestsellerBook 10',
         author_id: 2,
         author: 'Name2 Surname2',
         genres: [
@@ -230,7 +230,7 @@ export const mockCollection = [
     {
         book: {
             id: 4,
-            title: 'B Book 4',
+            title: 'B BestsellerBook 4',
             author: 'Author 4',
             genres: [
                 {id: 1, name: 'drama'}
@@ -245,7 +245,7 @@ export const mockCollection = [
     {
         book: {
             id:3,
-            title: 'C Book 3' ,
+            title: 'C BestsellerBook 3' ,
             author: 'Author 3',
             genres: [
                 {id: 6, name: 'fiction'}

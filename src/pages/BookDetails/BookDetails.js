@@ -75,7 +75,7 @@ const BookDetails = () => {
         <Box sx={{ flexGrow: 1 }}>
             <Grid className={classes.gridContainer} container columns={{ xs: 4, sm: 4, md: 12 }}>
                 <Grid item xs={4} sm={4} md={3} height='100%' sx={{textAlign:'center'}}>
-                    <img className={classes.thumbnailIMG} src={photoFile ? photoFile : photo} height='100%' alt="Book Thumbnail"/>
+                    <img className={classes.thumbnailIMG} src={photoFile ? photoFile : photo} height='100%' alt="BestsellerBook Thumbnail"/>
                 </Grid>
                 <Grid item xs={4} sm={4} md={9} alignItems="center" justifyContent="center" height='100%' >
                     <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>

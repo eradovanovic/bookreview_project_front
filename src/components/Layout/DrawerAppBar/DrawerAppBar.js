@@ -44,6 +44,11 @@ const navigationItems = [
         role: [GUEST, USER, ADMIN]
     },
     {
+        label: 'Bestsellers',
+        path: '/bestsellers',
+        role: [GUEST, USER, ADMIN]
+    },
+    {
         label: 'Profile',
         path: '/users',
         role: [USER]
@@ -54,7 +59,7 @@ const navigationItems = [
         role: [USER]
     },
     {
-        label: 'New Book',
+        label: 'New BestsellerBook',
         path: '/newBook',
         role: [ADMIN]
     },

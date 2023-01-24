@@ -17,6 +17,7 @@ import BookDetails from "./pages/BookDetails";
 import AuthorDetails from "./pages/AuthorDetails";
 import Profile from "./pages/Profile";
 import DrawerAppBar from "./components/Layout/DrawerAppBar";
+import Bestsellers from "./pages/Bestsellers";
 import "./App.css";
 
 const App = (props) => {
@@ -33,6 +34,7 @@ const App = (props) => {
                 <Route path='/authors/:id' element={<AuthorDetails/>}/>
                 <Route path='/users/:username' element={<Profile/>}/>
                 <Route path='/search' element={<Search/>}/>
+                <Route path='/bestsellers' element={<Bestsellers/>}/>
                 <Route path='/collections/:username' element={<BookCollection/>}/>
                 <Route path='/newBook' element={<NewBook/>}/>
                 <Route path='/newAuthor' element={<NewAuthor/>}/>
