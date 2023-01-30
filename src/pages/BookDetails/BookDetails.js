@@ -19,7 +19,6 @@ import NewReview from "components/NewReview";
 import classes from "./BookDetails.module.scss";
 import {REVIEW_TYPES} from "constants/constants";
 
-
 const BookDetails = () => {
     let {id} = useParams();
     const dispatch = useDispatch();
@@ -73,13 +72,13 @@ const BookDetails = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid className={classes.gridContainer} container columns={{ xs: 4, sm: 4, md: 12 }}>
-                <Grid item xs={4} sm={4} md={3} height='100%' sx={{textAlign:'center'}}>
+            <Grid className={classes.gridContainer} container columns={{ xs: 4, sm: 4, md: 12 }} sx={{height: {md: '400px', sm: '500px', xs: '1000px'} }}>
+                <Grid item xs={4} sm={4} md={3} height='100%' sx={{textAlign:'center', height: '400px'}}>
                     <img className={classes.thumbnailIMG} src={photo} height='100%' alt="Book Thumbnail"/>
                 </Grid>
                 <Grid item xs={4} sm={4} md={9} alignItems="center" justifyContent="center" height='100%' >
                     <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
-                        <Box sx={{textAlign:'center', height: '85%'}}>
+                        <Box sx={{textAlign:'center', height: '85%', paddingBottom: '15px'}}>
                             <Typography variant="h6">{title}</Typography>
                             <Link href={`/authors/${author_id}`} color="#000" underline="hover">
                                 <Typography variant="subtitle1">{author}</Typography>
@@ -127,9 +126,8 @@ const BookDetails = () => {
                             </ListItem>
                             <Divider/>
                             {newReviewForm && <NewReview book_id={+id} title={title} discardHandler={discardHandler} getReviews={getReviews} reviewed={reviewedFunc}/>}
-                            {reviews && reviews.map(review =>
-                                <Review key={review.id} reviewObj={review} type={user ? user.type: ''} reviewType={REVIEW_TYPES.BOOK_REVIEWS} getReviews={getReviews}/>
-                            )}
+                            {!!reviews?.length && reviews.map(review =>
+                                <Review key={review.id} reviewObj={review} type={user ? user.type: ''} reviewType={REVIEW_TYPES.BOOK_REVIEWS} getReviews={getReviews}/>)}
                         </List>
                     </Grid>
                 </Grid>

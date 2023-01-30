@@ -60,26 +60,31 @@ const Profile = () => {
 
 
     useEffect(() => {
-        if (user && username === user.username) {
-            setIsLogged(true);
-            setUserProfile(user);
-            setImgPreview(user.photoFile);
-            setLoaded(true)
+        if(username !== 'admin') {
+            if (user && username === user.username) {
+                setIsLogged(true);
+                setUserProfile(user);
+                setImgPreview(user.photoFile);
+                setLoaded(true)
+            }
+            else {
+                api_auth.getUserByUsername(username)
+                    .then(res => {
+                        setUserProfile(res);
+                        setIsLogged(false);
+                        setLoaded(true)
+                    })
+                    .catch(error => {
+                        setUserProfile(null)
+                        setIsLogged(false)
+                        setLoaded(true)
+                        setTitle(error)
+                    })
+            }
         }
-        else {
-            api_auth.getUserByUsername(username)
-                .then(res => {
-                    setUserProfile(res);
-                    setIsLogged(false);
-                    setLoaded(true)
-                })
-                .catch(error => {
-                    setUserProfile(null)
-                    setIsLogged(false)
-                    setLoaded(true)
-                    setTitle(error)
-                })
-        }
+        // else {
+        //     setLoaded(true)
+        // }
     }, [user, username]);
 
     useEffect(() => {
@@ -201,7 +206,7 @@ const Profile = () => {
         setEditable(false);
     }
 
-    return ( loaded ? (userProfile ? <Box>
+    return (username !== 'admin' ? ( loaded ? (userProfile ? <Box>
             <Box className={classes.gridContainerAuthor}>
                 <Paper elevation={5} className={classes.paperStyle} sx={{borderRadius:'15px', height:'100%'}}>
                     <Grid container columns={{xs: 12, sm: 12, md: 12}}>
@@ -266,7 +271,7 @@ const Profile = () => {
                 </Grid>
             </Grid>
         </Box> : <EmptyState title={title} subtitle=""/>) :
-            <LoadingScreen/>
+            <LoadingScreen/>) :  <EmptyState title="User doesn't exist" subtitle=""/>
     );
 }
 
