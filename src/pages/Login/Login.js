@@ -61,7 +61,7 @@ const Login = () => {
     }
 
     return <Box sx={{height:'500px', display:'flex', alignContent:'center', alignItems:'center', textAlign:'center', justifyContent:'center', padding:'20px'}}>
-        <Paper sx={{display: 'flex', width:'350px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
+        <Paper elevation={6} sx={{display: 'flex', width:'350px', alignContent:'center', alignItems:'center', textAlign:'center', padding:'10px', justifyContent:'center'}}>
             <Stack sx={{display:'flex', alignContent:'center', alignItems:'center', textAlign:'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Login!</Typography>
                 <TextField error={formState.username.error} helperText={formState.username.error ? 'Username is required!' : ' '} label="Username" name="username" onChange={inputHandler} variant="outlined"/>
