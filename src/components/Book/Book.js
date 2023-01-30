@@ -53,7 +53,9 @@ const Book = ({book, getCollection, type}) => {
             </Grid>
             <Grid item xs={4} sm={4} md={8} height="100%" alignItems="center" justifyContent="center" paddingTop="30px" >
                 <Box className={classes.paperStyle}>
-                    <Typography variant="h6">{title}</Typography>
+                    <Link href={`/books/${id}`} color="#000" underline="none">
+                        <Typography variant="h6">{title}</Typography>
+                    </Link>
                     <Link href={`/authors/${author_id}`} color="#000" underline="hover">
                         <Typography variant="subtitle1">{author}</Typography>
                     </Link>
