@@ -86,7 +86,7 @@ const ChangePassword = () => {
             textAlign: 'center',
             padding: '10px',
             justifyContent: 'center'
-        }}>
+        }} elevation={6}>
             <Stack sx={{
                 display: 'flex',
                 width: '250px',

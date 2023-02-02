@@ -15,7 +15,7 @@ const BookList = ({books, getCollection, type}) => {
 
     let height;
     if (matchesMD) {
-        height = type === LIST_TYPES.BESTSELLERS ? '1650px' : '1550px';
+        height = type === LIST_TYPES.BESTSELLERS ? '1750px' : '1550px';
     }
     else if (matchesSM) {
         height = type === LIST_TYPES.BESTSELLERS ? '1750px' : '1550px';

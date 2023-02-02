@@ -8,11 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import api from 'services/api/api'
 import {REVIEW_TYPES} from "constants/constants";
 import classes from "./Review.module.scss";
+import moment from "moment";
 
 
 const Review = ({reviewObj, type, getReviews, reviewType}) => {
     const {id, book_id, title, review, rating, username: user, avatar, date_reviewed} = reviewObj;
-    const date = new Date(date_reviewed);
     const deleteHandler = () => {
         api.deleteReview(id).then(res => getReviews());
     }
@@ -66,7 +66,7 @@ const Review = ({reviewObj, type, getReviews, reviewType}) => {
                 emptyIcon={<StarIcon fontSize="inherit"/>}
             /> }
             <Typography variant="caption" display="block" gutterBottom>
-                {date.getMonth()+1}-{date.getDate()}-{date.getFullYear()} {date.getHours()}:{date.getMinutes()}
+                {moment(date_reviewed).format('MMMM Do YYYY, hh:mm')}
             </Typography>
             <Typography variant="body1">
                 {review}
