@@ -66,7 +66,7 @@ const Review = ({reviewObj, type, getReviews, reviewType}) => {
                 emptyIcon={<StarIcon fontSize="inherit"/>}
             /> }
             <Typography variant="caption" display="block" gutterBottom>
-                {moment(date_reviewed).format('MMMM Do YYYY, hh:mm')}
+                {moment(date_reviewed).format('MMMM Do YYYY, HH:mm')}
             </Typography>
             <Typography variant="body1">
                 {review}

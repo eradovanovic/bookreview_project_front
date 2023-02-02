@@ -12,26 +12,16 @@ const appInitializer = WrappedComponent => props => {
     const dispatch = useDispatch();
     const location = useLocation();
 
-    useEffect(() => {
-        // const localStorageUser = localStorage.getItem("user");
-        // const localStorageToken = localStorage.getItem("token");
-        // if(!user && localStorageUser){
-        //     api_auth.getUserByUsername(localStorageUser).then(res => {
-        //         dispatch(loginSuccess({'user': res, "token": localStorageToken}));
-        //     })
-        // }
-        // setTimeout(() => {
-        //     setLoaded(true);
-        // }, 1000);
+    useEffect( () => {
         const localStorageToken = localStorage.getItem("token");
         if(!user && localStorageToken){
             setAccessToken(localStorageToken)
             api_auth.getLoggedUser().then(res => {
-                dispatch(loginSuccess({'user': res.user, "token": localStorageToken}));
+                dispatch(loginSuccess({'user': res.user, "token": localStorageToken}))
             })
         }
+    }, [dispatch]);
 
-    }, []);
 
     useEffect(() => {
         dispatch(clearError());

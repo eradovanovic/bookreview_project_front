@@ -78,7 +78,7 @@ const NewAuthor = () => {
     }
 
     return <Box sx={{height: '650px', display: 'flex', alignContent: 'center', alignItems: 'center', textAlign: 'center', justifyContent:' center', paddingTop: '20px', paddingBottom: '20px'}}>
-        <Paper sx={{display: 'flex', width: '300px', alignContent: 'center', alignItems: 'center', textAlign: 'center', padding: '10px', justifyContent: 'center'}}>
+        <Paper elevation={5} sx={{display: 'flex', width: '300px', alignContent: 'center', alignItems: 'center', textAlign: 'center', padding: '10px', justifyContent: 'center'}}>
             <Stack sx={{display: 'flex', width:'80%',  alignContent: 'center', alignItems: 'center', textAlign: 'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Add author!</Typography>
                 <TextField sx={{width: '100%', marginBottom: '10px'}} variant="outlined" error={formState.name.error} helperText={formState.name.error ? 'Name is required!' : ' '} label="Name" name="name" onChange={inputHandler}/>

@@ -19,7 +19,6 @@ import Profile from "./pages/Profile";
 import DrawerAppBar from "./components/Layout/DrawerAppBar";
 import Bestsellers from "./pages/Bestsellers";
 import "./App.css";
-import ProtectedRoute from "./components/Router";
 
 const App = (props) => {
     return (
@@ -39,7 +38,6 @@ const App = (props) => {
                 <Route path='/collections/:username' element={<BookCollection/>}/>
                 <Route path='/newBook' element={<NewBook/>}/>
                 <Route path='/newAuthor' element={<NewAuthor/>}/>
-                <Route path='/notFound' element={<NotFound />} />
                 <Route path='*' element={<NotFound/>}/>
             </Route>
         </Routes>

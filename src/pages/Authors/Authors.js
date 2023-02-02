@@ -34,7 +34,7 @@ const Authors = () => {
     }
 
     return <Box>
-        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center',  alignContent: 'center', textAlign: 'center'}}>
+        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center',  alignContent: 'center', textAlign: 'center', marginBottom: '30px'}}>
             <List sx={{minWidth: '80%'}}>
                 <ListItem>
                     <Typography variant="h6" sx={{textAlign:'center'}}>Authors</Typography>
@@ -46,7 +46,7 @@ const Authors = () => {
             </List>
         </Box>
         {authors && authors.length > 0 && <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center">
-            <Grid item xs={3} sx={{position: 'absolute', bottom: '10px'}}>
+            <Grid item xs={3} sx={{position: 'absolute', bottom: '10px', paddingTop: '20px'}}>
                 <Pagination count={totalPages} page={page} onChange={pageHandler}/>
             </Grid>
         </Grid>}

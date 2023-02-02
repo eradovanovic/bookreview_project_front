@@ -2,11 +2,24 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from 'lodash';
 import Box from "@mui/material/Box";
-import {Button, Checkbox, FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Paper, Select, Stack, TextField} from "@mui/material";
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormHelperText,
+    InputLabel,
+    MenuItem,
+    OutlinedInput,
+    Paper,
+    Select,
+    Stack,
+    TextField
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import ListItemText from "@mui/material/ListItemText";
 import {PhotoCamera} from "@mui/icons-material";
 import api from 'services/api/api';
+import List from "@mui/material/List";
 
 
 const initialState = {
@@ -37,6 +50,7 @@ const MenuProps = {
         },
     },
 };
+
 
 const NewBook = () => {
     const [formState, setFormState] = useState(_.cloneDeep(initialState));
@@ -94,7 +108,6 @@ const NewBook = () => {
                     .then(key => {
                         api.uploadPhoto(imgFile, key)
                             .then(res => {
-                                console.log(res)
                                 api.addBook(formState.title.value, authorId, formGenres.value, formState.description.value , res.data.url).then(() => navigate('/books'));
                             })
                     })
@@ -131,7 +144,7 @@ const NewBook = () => {
     }
 
     return <Box sx={{height: '700px', display: 'flex', alignContent: 'center', alignItems: 'center', textAlign: 'center', justifyContent:' center', paddingTop: '20px', paddingBottom: '20px'}}>
-        <Paper sx={{display: 'flex', width: '300px', alignContent: 'center', alignItems: 'center', textAlign: 'center', padding: '10px', justifyContent: 'center'}}>
+        <Paper elevation={5} sx={{display: 'flex', width: '300px', alignContent: 'center', alignItems: 'center', textAlign: 'center', padding: '10px', justifyContent: 'center'}}>
             <Stack sx={{display: 'flex', width:'80%',  alignContent: 'center', alignItems: 'center', textAlign: 'center'}}>
                 <Typography variant="h6" sx={{padding: '10px'}}>Add book!</Typography>
                 <TextField sx={{width: '100%', marginBottom: '10px'}} defaultValue={initialState.title.value} variant="outlined" error={formState.title.error} helperText={formState.title.error ? 'Title is required!' : ' '} label="Title" name="title" onChange={inputHandler}/>
@@ -143,8 +156,9 @@ const NewBook = () => {
                         value={authorId}
                         label="Author"
                         onChange={authorHandler}
+                        MenuProps={MenuProps}
                     >
-                        {authors.map(a => <MenuItem key={a.id} value={a.id}>{a.name} {a.surname}</MenuItem> )}
+                            {authors.map(a => <MenuItem key={a.id} value={a.id}>{a.name} {a.surname}</MenuItem> )}
                     </Select>
                     <FormHelperText>{authorError ? "Author is required!": ' '}</FormHelperText>
                 </FormControl>

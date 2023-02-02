@@ -97,7 +97,7 @@ Book.propTypes = {
         })),
         photo: PropTypes.string.isRequired,
         photoFile: PropTypes.string,
-        rating: PropTypes.number.isRequired,
+        rating: PropTypes.number,
         numberOfReviews: PropTypes.number
     }),
     type: PropTypes.string.isRequired,

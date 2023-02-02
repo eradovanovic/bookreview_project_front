@@ -1,5 +1,5 @@
 export const BOOKS_PER_PAGE = 5;
-export const AUTHORS_PER_PAGE = 9;
+export const AUTHORS_PER_PAGE = 10;
 
 export const SORT = {
     DEFAULT: 'DEFAULT',
@@ -49,4 +49,6 @@ export const BESTSELLER_GENRES = {
 
 export const DEFAULT_AVATAR_PHOTO = 'https://static.vecteezy.com/system/resources/previews/004/477/337/original/face-young-man-in-frame-circular-avatar-character-icon-free-vector.jpg';
 export const DEFAULT_BOOK_PHOTO = 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1618329605l/56597885.jpg';
+
+
 
