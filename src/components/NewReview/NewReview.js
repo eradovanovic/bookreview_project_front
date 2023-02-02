@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import PropTypes from "prop-types";
 import {Button, Paper, Rating, TextField} from "@mui/material";
@@ -8,9 +8,11 @@ import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import api from 'services/api/api'
 import classes from './NewReview.module.scss'
+import {fetchBook} from "../../store/books/booksActions";
 
 const NewReview = ({book_id, title, discardHandler, getReviews, reviewed}) => {
     const user = useSelector((state) => state.authReducer.user);
+    const dispatch = useDispatch()
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
     const [error, setError] = useState(false);
@@ -20,6 +22,7 @@ const NewReview = ({book_id, title, discardHandler, getReviews, reviewed}) => {
         if (!rating) setError(true);
         else {
             api.addReview(user.username, book_id, rating, review).then(res => {
+                dispatch(fetchBook(book_id));
                 reviewed(true);
                 getReviews();
             });

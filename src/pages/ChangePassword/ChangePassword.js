@@ -66,7 +66,7 @@ const ChangePassword = () => {
         }
         if (!validationError) validationError = validate(formState.newPassword.value, formState.newPasswordConfirmation.value);
         if (!validationError) {
-            api_auth.changePassword(user.username, formState.oldPassword.value, formState.newPassword.value).then(() => {
+            api_auth.changePassword(user?.username, formState.oldPassword.value, formState.newPassword.value).then(() => {
                 dispatch(logout());
                 setChanged(true);
                 setTimeout(() => navigate('/login'), 1000)
